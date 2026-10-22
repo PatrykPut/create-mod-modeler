@@ -45,11 +45,11 @@ Sources (pinned):
 
 ### M0 — Project setup
 
-- [ ] `git init`, `.gitignore`, MIT `LICENSE`, README stub, project `CLAUDE.md` pointing to `docs/`
-- [ ] Vite + React + TypeScript (npm), ESLint, Prettier, Vitest, `@xyflow/react`, Zustand
-- [ ] public GitHub repo `PatrykPut/create-mod-modeler`
-- [ ] CI workflow (lint, typecheck, test) + Pages deploy workflow (`base: '/create-mod-modeler/'`)
-- **Done when:** an empty React Flow canvas is live on GitHub Pages and CI is green.
+- [x] `git init`, `.gitignore`, MIT `LICENSE`, README stub, project `CLAUDE.md` pointing to `docs/`
+- [x] Vite + React + TypeScript (npm), oxlint (Vite template default instead of ESLint), Prettier, Vitest, `@xyflow/react`, Zustand
+- [x] public GitHub repo `PatrykPut/create-mod-modeler`
+- [x] CI workflow (lint, typecheck, format, test) + Pages deploy workflow (`base: '/create-mod-modeler/'`)
+- **Done** (2026-10-22): empty canvas live at https://patrykput.github.io/create-mod-modeler/, CI green.
 
 ### M1 — Vertical slice: cobblestone → gravel → iron nugget → iron ingot
 
