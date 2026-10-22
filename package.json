@@ -12,12 +12,14 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "data": "node scripts/data/build.ts"
   },
   "dependencies": {
     "@xyflow/react": "^12.12.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
+    "yalps": "^0.6.4",
     "zustand": "^5.0.16"
   },
   "devDependencies": {

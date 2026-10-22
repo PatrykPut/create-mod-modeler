@@ -15,7 +15,10 @@ npm test           # unit tests (Vitest)
 npm run lint       # oxlint
 npm run typecheck  # tsc
 npm run build      # production build into dist/
+npm run data       # regenerate src/data/*.json and public/textures/ from the Create and vanilla sources
 ```
+
+Textures in `public/textures/` belong to the Create team and Mojang (see its `NOTICE.md`); they are not covered by this project's license.
 
 ## License
 

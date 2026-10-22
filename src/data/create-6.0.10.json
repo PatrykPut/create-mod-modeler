@@ -1,0 +1,5436 @@
+{
+ "meta": {
+  "create": "6.0.10",
+  "minecraft": "1.21.1",
+  "createTag": "mc1.21.1-6.0.10"
+ },
+ "items": {
+  "create:asurine": {
+   "id": "create:asurine",
+   "name": "Asurine"
+  },
+  "create:cardboard": {
+   "id": "create:cardboard",
+   "name": "Cardboard",
+   "icon": "textures/create/cardboard.png"
+  },
+  "create:copper_nugget": {
+   "id": "create:copper_nugget",
+   "name": "Copper Nugget",
+   "icon": "textures/create/copper_nugget.png"
+  },
+  "create:crimsite": {
+   "id": "create:crimsite",
+   "name": "Crimsite"
+  },
+  "create:crushed_raw_copper": {
+   "id": "create:crushed_raw_copper",
+   "name": "Crushed Raw Copper",
+   "icon": "textures/create/crushed_raw_copper.png"
+  },
+  "create:crushed_raw_gold": {
+   "id": "create:crushed_raw_gold",
+   "name": "Crushed Raw Gold",
+   "icon": "textures/create/crushed_raw_gold.png"
+  },
+  "create:crushed_raw_iron": {
+   "id": "create:crushed_raw_iron",
+   "name": "Crushed Raw Iron",
+   "icon": "textures/create/crushed_raw_iron.png"
+  },
+  "create:crushed_raw_zinc": {
+   "id": "create:crushed_raw_zinc",
+   "name": "Crushed Raw Zinc",
+   "icon": "textures/create/crushed_raw_zinc.png"
+  },
+  "create:deepslate_zinc_ore": {
+   "id": "create:deepslate_zinc_ore",
+   "name": "Deepslate Zinc Ore",
+   "icon": "textures/create/deepslate_zinc_ore.png"
+  },
+  "create:experience_nugget": {
+   "id": "create:experience_nugget",
+   "name": "Nugget of Experience",
+   "icon": "textures/create/experience_nugget.png"
+  },
+  "create:industrial_iron_block": {
+   "id": "create:industrial_iron_block",
+   "name": "Block of Industrial Iron",
+   "icon": "textures/create/industrial_iron_block.png"
+  },
+  "create:industrial_iron_window": {
+   "id": "create:industrial_iron_window",
+   "name": "Industrial Iron Window"
+  },
+  "create:industrial_iron_window_pane": {
+   "id": "create:industrial_iron_window_pane",
+   "name": "Industrial Iron Window Pane"
+  },
+  "create:ochrum": {
+   "id": "create:ochrum",
+   "name": "Ochrum"
+  },
+  "create:powdered_obsidian": {
+   "id": "create:powdered_obsidian",
+   "name": "Powdered Obsidian",
+   "icon": "textures/create/powdered_obsidian.png"
+  },
+  "create:pulp": {
+   "id": "create:pulp",
+   "name": "Pulp",
+   "icon": "textures/create/pulp.png"
+  },
+  "create:veridium": {
+   "id": "create:veridium",
+   "name": "Veridium"
+  },
+  "create:weathered_iron_block": {
+   "id": "create:weathered_iron_block",
+   "name": "Block of Weathered Iron",
+   "icon": "textures/create/weathered_iron_block.png"
+  },
+  "create:weathered_iron_window": {
+   "id": "create:weathered_iron_window",
+   "name": "Weathered Iron Window"
+  },
+  "create:weathered_iron_window_pane": {
+   "id": "create:weathered_iron_window_pane",
+   "name": "Weathered Iron Window Pane"
+  },
+  "create:wheat_flour": {
+   "id": "create:wheat_flour",
+   "name": "Wheat Flour",
+   "icon": "textures/create/wheat_flour.png"
+  },
+  "create:zinc_nugget": {
+   "id": "create:zinc_nugget",
+   "name": "Zinc Nugget",
+   "icon": "textures/create/zinc_nugget.png"
+  },
+  "create:zinc_ore": {
+   "id": "create:zinc_ore",
+   "name": "Zinc Ore",
+   "icon": "textures/create/zinc_ore.png"
+  },
+  "minecraft:acacia_log": {
+   "id": "minecraft:acacia_log",
+   "name": "Acacia Log",
+   "icon": "textures/minecraft/acacia_log.png"
+  },
+  "minecraft:acacia_wood": {
+   "id": "minecraft:acacia_wood",
+   "name": "Acacia Wood"
+  },
+  "minecraft:allium": {
+   "id": "minecraft:allium",
+   "name": "Allium",
+   "icon": "textures/minecraft/allium.png"
+  },
+  "minecraft:amethyst_block": {
+   "id": "minecraft:amethyst_block",
+   "name": "Block of Amethyst",
+   "icon": "textures/minecraft/amethyst_block.png"
+  },
+  "minecraft:amethyst_cluster": {
+   "id": "minecraft:amethyst_cluster",
+   "name": "Amethyst Cluster",
+   "icon": "textures/minecraft/amethyst_cluster.png"
+  },
+  "minecraft:amethyst_shard": {
+   "id": "minecraft:amethyst_shard",
+   "name": "Amethyst Shard",
+   "icon": "textures/minecraft/amethyst_shard.png"
+  },
+  "minecraft:andesite": {
+   "id": "minecraft:andesite",
+   "name": "Andesite",
+   "icon": "textures/minecraft/andesite.png"
+  },
+  "minecraft:azure_bluet": {
+   "id": "minecraft:azure_bluet",
+   "name": "Azure Bluet",
+   "icon": "textures/minecraft/azure_bluet.png"
+  },
+  "minecraft:bamboo": {
+   "id": "minecraft:bamboo",
+   "name": "Bamboo",
+   "icon": "textures/minecraft/bamboo.png"
+  },
+  "minecraft:bamboo_block": {
+   "id": "minecraft:bamboo_block",
+   "name": "Block of Bamboo",
+   "icon": "textures/minecraft/bamboo_block.png"
+  },
+  "minecraft:basalt": {
+   "id": "minecraft:basalt",
+   "name": "Basalt"
+  },
+  "minecraft:beetroot": {
+   "id": "minecraft:beetroot",
+   "name": "Beetroot",
+   "icon": "textures/minecraft/beetroot.png"
+  },
+  "minecraft:beetroot_seeds": {
+   "id": "minecraft:beetroot_seeds",
+   "name": "Beetroot Seeds",
+   "icon": "textures/minecraft/beetroot_seeds.png"
+  },
+  "minecraft:birch_log": {
+   "id": "minecraft:birch_log",
+   "name": "Birch Log",
+   "icon": "textures/minecraft/birch_log.png"
+  },
+  "minecraft:birch_wood": {
+   "id": "minecraft:birch_wood",
+   "name": "Birch Wood"
+  },
+  "minecraft:black_dye": {
+   "id": "minecraft:black_dye",
+   "name": "Black Dye",
+   "icon": "textures/minecraft/black_dye.png"
+  },
+  "minecraft:blackstone": {
+   "id": "minecraft:blackstone",
+   "name": "Blackstone",
+   "icon": "textures/minecraft/blackstone.png"
+  },
+  "minecraft:blaze_powder": {
+   "id": "minecraft:blaze_powder",
+   "name": "Blaze Powder",
+   "icon": "textures/minecraft/blaze_powder.png"
+  },
+  "minecraft:blaze_rod": {
+   "id": "minecraft:blaze_rod",
+   "name": "Blaze Rod",
+   "icon": "textures/minecraft/blaze_rod.png"
+  },
+  "minecraft:blue_dye": {
+   "id": "minecraft:blue_dye",
+   "name": "Blue Dye",
+   "icon": "textures/minecraft/blue_dye.png"
+  },
+  "minecraft:blue_ice": {
+   "id": "minecraft:blue_ice",
+   "name": "Blue Ice",
+   "icon": "textures/minecraft/blue_ice.png"
+  },
+  "minecraft:blue_orchid": {
+   "id": "minecraft:blue_orchid",
+   "name": "Blue Orchid",
+   "icon": "textures/minecraft/blue_orchid.png"
+  },
+  "minecraft:bone": {
+   "id": "minecraft:bone",
+   "name": "Bone",
+   "icon": "textures/minecraft/bone.png"
+  },
+  "minecraft:bone_block": {
+   "id": "minecraft:bone_block",
+   "name": "Bone Block"
+  },
+  "minecraft:bone_meal": {
+   "id": "minecraft:bone_meal",
+   "name": "Bone Meal",
+   "icon": "textures/minecraft/bone_meal.png"
+  },
+  "minecraft:brick": {
+   "id": "minecraft:brick",
+   "name": "Brick",
+   "icon": "textures/minecraft/brick.png"
+  },
+  "minecraft:bricks": {
+   "id": "minecraft:bricks",
+   "name": "Bricks",
+   "icon": "textures/minecraft/bricks.png"
+  },
+  "minecraft:brown_dye": {
+   "id": "minecraft:brown_dye",
+   "name": "Brown Dye",
+   "icon": "textures/minecraft/brown_dye.png"
+  },
+  "minecraft:cactus": {
+   "id": "minecraft:cactus",
+   "name": "Cactus"
+  },
+  "minecraft:calcite": {
+   "id": "minecraft:calcite",
+   "name": "Calcite",
+   "icon": "textures/minecraft/calcite.png"
+  },
+  "minecraft:charcoal": {
+   "id": "minecraft:charcoal",
+   "name": "Charcoal",
+   "icon": "textures/minecraft/charcoal.png"
+  },
+  "minecraft:cherry_log": {
+   "id": "minecraft:cherry_log",
+   "name": "Cherry Log",
+   "icon": "textures/minecraft/cherry_log.png"
+  },
+  "minecraft:cherry_wood": {
+   "id": "minecraft:cherry_wood",
+   "name": "Cherry Wood"
+  },
+  "minecraft:clay": {
+   "id": "minecraft:clay",
+   "name": "Clay",
+   "icon": "textures/minecraft/clay.png"
+  },
+  "minecraft:clay_ball": {
+   "id": "minecraft:clay_ball",
+   "name": "Clay Ball",
+   "icon": "textures/minecraft/clay_ball.png"
+  },
+  "minecraft:coal": {
+   "id": "minecraft:coal",
+   "name": "Coal",
+   "icon": "textures/minecraft/coal.png"
+  },
+  "minecraft:coal_block": {
+   "id": "minecraft:coal_block",
+   "name": "Block of Coal",
+   "icon": "textures/minecraft/coal_block.png"
+  },
+  "minecraft:coal_ore": {
+   "id": "minecraft:coal_ore",
+   "name": "Coal Ore",
+   "icon": "textures/minecraft/coal_ore.png"
+  },
+  "minecraft:cobbled_deepslate": {
+   "id": "minecraft:cobbled_deepslate",
+   "name": "Cobbled Deepslate",
+   "icon": "textures/minecraft/cobbled_deepslate.png"
+  },
+  "minecraft:cobblestone": {
+   "id": "minecraft:cobblestone",
+   "name": "Cobblestone",
+   "icon": "textures/minecraft/cobblestone.png"
+  },
+  "minecraft:cocoa_beans": {
+   "id": "minecraft:cocoa_beans",
+   "name": "Cocoa Beans",
+   "icon": "textures/minecraft/cocoa_beans.png"
+  },
+  "minecraft:copper_block": {
+   "id": "minecraft:copper_block",
+   "name": "Block of Copper",
+   "icon": "textures/minecraft/copper_block.png"
+  },
+  "minecraft:copper_ingot": {
+   "id": "minecraft:copper_ingot",
+   "name": "Copper Ingot",
+   "icon": "textures/minecraft/copper_ingot.png"
+  },
+  "minecraft:copper_ore": {
+   "id": "minecraft:copper_ore",
+   "name": "Copper Ore",
+   "icon": "textures/minecraft/copper_ore.png"
+  },
+  "minecraft:cornflower": {
+   "id": "minecraft:cornflower",
+   "name": "Cornflower",
+   "icon": "textures/minecraft/cornflower.png"
+  },
+  "minecraft:crimson_hyphae": {
+   "id": "minecraft:crimson_hyphae",
+   "name": "Crimson Hyphae"
+  },
+  "minecraft:crimson_stem": {
+   "id": "minecraft:crimson_stem",
+   "name": "Crimson Stem",
+   "icon": "textures/minecraft/crimson_stem.png"
+  },
+  "minecraft:cut_copper": {
+   "id": "minecraft:cut_copper",
+   "name": "Cut Copper",
+   "icon": "textures/minecraft/cut_copper.png"
+  },
+  "minecraft:cut_red_sandstone": {
+   "id": "minecraft:cut_red_sandstone",
+   "name": "Cut Red Sandstone",
+   "icon": "textures/minecraft/cut_red_sandstone.png"
+  },
+  "minecraft:cut_sandstone": {
+   "id": "minecraft:cut_sandstone",
+   "name": "Cut Sandstone",
+   "icon": "textures/minecraft/cut_sandstone.png"
+  },
+  "minecraft:cyan_dye": {
+   "id": "minecraft:cyan_dye",
+   "name": "Cyan Dye",
+   "icon": "textures/minecraft/cyan_dye.png"
+  },
+  "minecraft:dandelion": {
+   "id": "minecraft:dandelion",
+   "name": "Dandelion",
+   "icon": "textures/minecraft/dandelion.png"
+  },
+  "minecraft:dark_oak_log": {
+   "id": "minecraft:dark_oak_log",
+   "name": "Dark Oak Log",
+   "icon": "textures/minecraft/dark_oak_log.png"
+  },
+  "minecraft:dark_oak_wood": {
+   "id": "minecraft:dark_oak_wood",
+   "name": "Dark Oak Wood"
+  },
+  "minecraft:dead_bush": {
+   "id": "minecraft:dead_bush",
+   "name": "Dead Bush",
+   "icon": "textures/minecraft/dead_bush.png"
+  },
+  "minecraft:deepslate_bricks": {
+   "id": "minecraft:deepslate_bricks",
+   "name": "Deepslate Bricks",
+   "icon": "textures/minecraft/deepslate_bricks.png"
+  },
+  "minecraft:deepslate_coal_ore": {
+   "id": "minecraft:deepslate_coal_ore",
+   "name": "Deepslate Coal Ore",
+   "icon": "textures/minecraft/deepslate_coal_ore.png"
+  },
+  "minecraft:deepslate_copper_ore": {
+   "id": "minecraft:deepslate_copper_ore",
+   "name": "Deepslate Copper Ore",
+   "icon": "textures/minecraft/deepslate_copper_ore.png"
+  },
+  "minecraft:deepslate_diamond_ore": {
+   "id": "minecraft:deepslate_diamond_ore",
+   "name": "Deepslate Diamond Ore",
+   "icon": "textures/minecraft/deepslate_diamond_ore.png"
+  },
+  "minecraft:deepslate_emerald_ore": {
+   "id": "minecraft:deepslate_emerald_ore",
+   "name": "Deepslate Emerald Ore",
+   "icon": "textures/minecraft/deepslate_emerald_ore.png"
+  },
+  "minecraft:deepslate_gold_ore": {
+   "id": "minecraft:deepslate_gold_ore",
+   "name": "Deepslate Gold Ore",
+   "icon": "textures/minecraft/deepslate_gold_ore.png"
+  },
+  "minecraft:deepslate_iron_ore": {
+   "id": "minecraft:deepslate_iron_ore",
+   "name": "Deepslate Iron Ore",
+   "icon": "textures/minecraft/deepslate_iron_ore.png"
+  },
+  "minecraft:deepslate_lapis_ore": {
+   "id": "minecraft:deepslate_lapis_ore",
+   "name": "Deepslate Lapis Lazuli Ore",
+   "icon": "textures/minecraft/deepslate_lapis_ore.png"
+  },
+  "minecraft:deepslate_redstone_ore": {
+   "id": "minecraft:deepslate_redstone_ore",
+   "name": "Deepslate Redstone Ore",
+   "icon": "textures/minecraft/deepslate_redstone_ore.png"
+  },
+  "minecraft:deepslate_tiles": {
+   "id": "minecraft:deepslate_tiles",
+   "name": "Deepslate Tiles",
+   "icon": "textures/minecraft/deepslate_tiles.png"
+  },
+  "minecraft:diamond": {
+   "id": "minecraft:diamond",
+   "name": "Diamond",
+   "icon": "textures/minecraft/diamond.png"
+  },
+  "minecraft:diamond_block": {
+   "id": "minecraft:diamond_block",
+   "name": "Block of Diamond",
+   "icon": "textures/minecraft/diamond_block.png"
+  },
+  "minecraft:diamond_horse_armor": {
+   "id": "minecraft:diamond_horse_armor",
+   "name": "Diamond Horse Armor",
+   "icon": "textures/minecraft/diamond_horse_armor.png"
+  },
+  "minecraft:diamond_ore": {
+   "id": "minecraft:diamond_ore",
+   "name": "Diamond Ore",
+   "icon": "textures/minecraft/diamond_ore.png"
+  },
+  "minecraft:diorite": {
+   "id": "minecraft:diorite",
+   "name": "Diorite",
+   "icon": "textures/minecraft/diorite.png"
+  },
+  "minecraft:dirt_path": {
+   "id": "minecraft:dirt_path",
+   "name": "Dirt Path"
+  },
+  "minecraft:disc_fragment_5": {
+   "id": "minecraft:disc_fragment_5",
+   "name": "Disc Fragment",
+   "icon": "textures/minecraft/disc_fragment_5.png"
+  },
+  "minecraft:dried_kelp": {
+   "id": "minecraft:dried_kelp",
+   "name": "Dried Kelp",
+   "icon": "textures/minecraft/dried_kelp.png"
+  },
+  "minecraft:dried_kelp_block": {
+   "id": "minecraft:dried_kelp_block",
+   "name": "Dried Kelp Block"
+  },
+  "minecraft:dripstone_block": {
+   "id": "minecraft:dripstone_block",
+   "name": "Dripstone Block",
+   "icon": "textures/minecraft/dripstone_block.png"
+  },
+  "minecraft:emerald": {
+   "id": "minecraft:emerald",
+   "name": "Emerald",
+   "icon": "textures/minecraft/emerald.png"
+  },
+  "minecraft:emerald_block": {
+   "id": "minecraft:emerald_block",
+   "name": "Block of Emerald",
+   "icon": "textures/minecraft/emerald_block.png"
+  },
+  "minecraft:emerald_ore": {
+   "id": "minecraft:emerald_ore",
+   "name": "Emerald Ore",
+   "icon": "textures/minecraft/emerald_ore.png"
+  },
+  "minecraft:end_stone": {
+   "id": "minecraft:end_stone",
+   "name": "End Stone",
+   "icon": "textures/minecraft/end_stone.png"
+  },
+  "minecraft:end_stone_bricks": {
+   "id": "minecraft:end_stone_bricks",
+   "name": "End Stone Bricks",
+   "icon": "textures/minecraft/end_stone_bricks.png"
+  },
+  "minecraft:exposed_copper": {
+   "id": "minecraft:exposed_copper",
+   "name": "Exposed Copper",
+   "icon": "textures/minecraft/exposed_copper.png"
+  },
+  "minecraft:exposed_cut_copper": {
+   "id": "minecraft:exposed_cut_copper",
+   "name": "Exposed Cut Copper",
+   "icon": "textures/minecraft/exposed_cut_copper.png"
+  },
+  "minecraft:fern": {
+   "id": "minecraft:fern",
+   "name": "Fern",
+   "icon": "textures/minecraft/fern.png"
+  },
+  "minecraft:flint": {
+   "id": "minecraft:flint",
+   "name": "Flint",
+   "icon": "textures/minecraft/flint.png"
+  },
+  "minecraft:gilded_blackstone": {
+   "id": "minecraft:gilded_blackstone",
+   "name": "Gilded Blackstone",
+   "icon": "textures/minecraft/gilded_blackstone.png"
+  },
+  "minecraft:glowstone": {
+   "id": "minecraft:glowstone",
+   "name": "Glowstone",
+   "icon": "textures/minecraft/glowstone.png"
+  },
+  "minecraft:glowstone_dust": {
+   "id": "minecraft:glowstone_dust",
+   "name": "Glowstone Dust",
+   "icon": "textures/minecraft/glowstone_dust.png"
+  },
+  "minecraft:gold_block": {
+   "id": "minecraft:gold_block",
+   "name": "Block of Gold",
+   "icon": "textures/minecraft/gold_block.png"
+  },
+  "minecraft:gold_ingot": {
+   "id": "minecraft:gold_ingot",
+   "name": "Gold Ingot",
+   "icon": "textures/minecraft/gold_ingot.png"
+  },
+  "minecraft:gold_nugget": {
+   "id": "minecraft:gold_nugget",
+   "name": "Gold Nugget",
+   "icon": "textures/minecraft/gold_nugget.png"
+  },
+  "minecraft:gold_ore": {
+   "id": "minecraft:gold_ore",
+   "name": "Gold Ore",
+   "icon": "textures/minecraft/gold_ore.png"
+  },
+  "minecraft:golden_horse_armor": {
+   "id": "minecraft:golden_horse_armor",
+   "name": "Golden Horse Armor",
+   "icon": "textures/minecraft/golden_horse_armor.png"
+  },
+  "minecraft:granite": {
+   "id": "minecraft:granite",
+   "name": "Granite",
+   "icon": "textures/minecraft/granite.png"
+  },
+  "minecraft:grass_block": {
+   "id": "minecraft:grass_block",
+   "name": "Grass Block"
+  },
+  "minecraft:gravel": {
+   "id": "minecraft:gravel",
+   "name": "Gravel",
+   "icon": "textures/minecraft/gravel.png"
+  },
+  "minecraft:gray_dye": {
+   "id": "minecraft:gray_dye",
+   "name": "Gray Dye",
+   "icon": "textures/minecraft/gray_dye.png"
+  },
+  "minecraft:green_dye": {
+   "id": "minecraft:green_dye",
+   "name": "Green Dye",
+   "icon": "textures/minecraft/green_dye.png"
+  },
+  "minecraft:gunpowder": {
+   "id": "minecraft:gunpowder",
+   "name": "Gunpowder",
+   "icon": "textures/minecraft/gunpowder.png"
+  },
+  "minecraft:hay_block": {
+   "id": "minecraft:hay_block",
+   "name": "Hay Bale"
+  },
+  "minecraft:honey_block": {
+   "id": "minecraft:honey_block",
+   "name": "Honey Block"
+  },
+  "minecraft:honey_bottle": {
+   "id": "minecraft:honey_bottle",
+   "name": "Honey Bottle",
+   "icon": "textures/minecraft/honey_bottle.png"
+  },
+  "minecraft:honeycomb": {
+   "id": "minecraft:honeycomb",
+   "name": "Honeycomb",
+   "icon": "textures/minecraft/honeycomb.png"
+  },
+  "minecraft:honeycomb_block": {
+   "id": "minecraft:honeycomb_block",
+   "name": "Honeycomb Block",
+   "icon": "textures/minecraft/honeycomb_block.png"
+  },
+  "minecraft:ice": {
+   "id": "minecraft:ice",
+   "name": "Ice",
+   "icon": "textures/minecraft/ice.png"
+  },
+  "minecraft:ink_sac": {
+   "id": "minecraft:ink_sac",
+   "name": "Ink Sac",
+   "icon": "textures/minecraft/ink_sac.png"
+  },
+  "minecraft:iron_block": {
+   "id": "minecraft:iron_block",
+   "name": "Block of Iron",
+   "icon": "textures/minecraft/iron_block.png"
+  },
+  "minecraft:iron_horse_armor": {
+   "id": "minecraft:iron_horse_armor",
+   "name": "Iron Horse Armor",
+   "icon": "textures/minecraft/iron_horse_armor.png"
+  },
+  "minecraft:iron_ingot": {
+   "id": "minecraft:iron_ingot",
+   "name": "Iron Ingot",
+   "icon": "textures/minecraft/iron_ingot.png"
+  },
+  "minecraft:iron_nugget": {
+   "id": "minecraft:iron_nugget",
+   "name": "Iron Nugget",
+   "icon": "textures/minecraft/iron_nugget.png"
+  },
+  "minecraft:iron_ore": {
+   "id": "minecraft:iron_ore",
+   "name": "Iron Ore",
+   "icon": "textures/minecraft/iron_ore.png"
+  },
+  "minecraft:iron_trapdoor": {
+   "id": "minecraft:iron_trapdoor",
+   "name": "Iron Trapdoor",
+   "icon": "textures/minecraft/iron_trapdoor.png"
+  },
+  "minecraft:jungle_log": {
+   "id": "minecraft:jungle_log",
+   "name": "Jungle Log",
+   "icon": "textures/minecraft/jungle_log.png"
+  },
+  "minecraft:jungle_wood": {
+   "id": "minecraft:jungle_wood",
+   "name": "Jungle Wood"
+  },
+  "minecraft:lapis_block": {
+   "id": "minecraft:lapis_block",
+   "name": "Block of Lapis Lazuli",
+   "icon": "textures/minecraft/lapis_block.png"
+  },
+  "minecraft:lapis_lazuli": {
+   "id": "minecraft:lapis_lazuli",
+   "name": "Lapis Lazuli",
+   "icon": "textures/minecraft/lapis_lazuli.png"
+  },
+  "minecraft:lapis_ore": {
+   "id": "minecraft:lapis_ore",
+   "name": "Lapis Lazuli Ore",
+   "icon": "textures/minecraft/lapis_ore.png"
+  },
+  "minecraft:large_fern": {
+   "id": "minecraft:large_fern",
+   "name": "Large Fern"
+  },
+  "minecraft:leather": {
+   "id": "minecraft:leather",
+   "name": "Leather",
+   "icon": "textures/minecraft/leather.png"
+  },
+  "minecraft:leather_horse_armor": {
+   "id": "minecraft:leather_horse_armor",
+   "name": "Leather Horse Armor",
+   "icon": "textures/minecraft/leather_horse_armor.png"
+  },
+  "minecraft:light_blue_dye": {
+   "id": "minecraft:light_blue_dye",
+   "name": "Light Blue Dye",
+   "icon": "textures/minecraft/light_blue_dye.png"
+  },
+  "minecraft:light_gray_dye": {
+   "id": "minecraft:light_gray_dye",
+   "name": "Light Gray Dye",
+   "icon": "textures/minecraft/light_gray_dye.png"
+  },
+  "minecraft:lilac": {
+   "id": "minecraft:lilac",
+   "name": "Lilac"
+  },
+  "minecraft:lily_of_the_valley": {
+   "id": "minecraft:lily_of_the_valley",
+   "name": "Lily of the Valley",
+   "icon": "textures/minecraft/lily_of_the_valley.png"
+  },
+  "minecraft:lime_dye": {
+   "id": "minecraft:lime_dye",
+   "name": "Lime Dye",
+   "icon": "textures/minecraft/lime_dye.png"
+  },
+  "minecraft:magenta_dye": {
+   "id": "minecraft:magenta_dye",
+   "name": "Magenta Dye",
+   "icon": "textures/minecraft/magenta_dye.png"
+  },
+  "minecraft:magma_block": {
+   "id": "minecraft:magma_block",
+   "name": "Magma Block"
+  },
+  "minecraft:magma_cream": {
+   "id": "minecraft:magma_cream",
+   "name": "Magma Cream",
+   "icon": "textures/minecraft/magma_cream.png"
+  },
+  "minecraft:mangrove_log": {
+   "id": "minecraft:mangrove_log",
+   "name": "Mangrove Log",
+   "icon": "textures/minecraft/mangrove_log.png"
+  },
+  "minecraft:mangrove_wood": {
+   "id": "minecraft:mangrove_wood",
+   "name": "Mangrove Wood"
+  },
+  "minecraft:melon": {
+   "id": "minecraft:melon",
+   "name": "Melon"
+  },
+  "minecraft:melon_slice": {
+   "id": "minecraft:melon_slice",
+   "name": "Melon Slice",
+   "icon": "textures/minecraft/melon_slice.png"
+  },
+  "minecraft:mud_bricks": {
+   "id": "minecraft:mud_bricks",
+   "name": "Mud Bricks",
+   "icon": "textures/minecraft/mud_bricks.png"
+  },
+  "minecraft:music_disc_5": {
+   "id": "minecraft:music_disc_5",
+   "name": "Music Disc",
+   "icon": "textures/minecraft/music_disc_5.png"
+  },
+  "minecraft:nether_brick": {
+   "id": "minecraft:nether_brick",
+   "name": "Nether Brick",
+   "icon": "textures/minecraft/nether_brick.png"
+  },
+  "minecraft:nether_bricks": {
+   "id": "minecraft:nether_bricks",
+   "name": "Nether Bricks",
+   "icon": "textures/minecraft/nether_bricks.png"
+  },
+  "minecraft:nether_gold_ore": {
+   "id": "minecraft:nether_gold_ore",
+   "name": "Nether Gold Ore",
+   "icon": "textures/minecraft/nether_gold_ore.png"
+  },
+  "minecraft:nether_quartz_ore": {
+   "id": "minecraft:nether_quartz_ore",
+   "name": "Nether Quartz Ore",
+   "icon": "textures/minecraft/nether_quartz_ore.png"
+  },
+  "minecraft:nether_wart": {
+   "id": "minecraft:nether_wart",
+   "name": "Nether Wart",
+   "icon": "textures/minecraft/nether_wart.png"
+  },
+  "minecraft:nether_wart_block": {
+   "id": "minecraft:nether_wart_block",
+   "name": "Nether Wart Block",
+   "icon": "textures/minecraft/nether_wart_block.png"
+  },
+  "minecraft:netherite_block": {
+   "id": "minecraft:netherite_block",
+   "name": "Block of Netherite",
+   "icon": "textures/minecraft/netherite_block.png"
+  },
+  "minecraft:netherite_ingot": {
+   "id": "minecraft:netherite_ingot",
+   "name": "Netherite Ingot",
+   "icon": "textures/minecraft/netherite_ingot.png"
+  },
+  "minecraft:netherrack": {
+   "id": "minecraft:netherrack",
+   "name": "Netherrack",
+   "icon": "textures/minecraft/netherrack.png"
+  },
+  "minecraft:oak_log": {
+   "id": "minecraft:oak_log",
+   "name": "Oak Log",
+   "icon": "textures/minecraft/oak_log.png"
+  },
+  "minecraft:oak_wood": {
+   "id": "minecraft:oak_wood",
+   "name": "Oak Wood"
+  },
+  "minecraft:obsidian": {
+   "id": "minecraft:obsidian",
+   "name": "Obsidian",
+   "icon": "textures/minecraft/obsidian.png"
+  },
+  "minecraft:orange_dye": {
+   "id": "minecraft:orange_dye",
+   "name": "Orange Dye",
+   "icon": "textures/minecraft/orange_dye.png"
+  },
+  "minecraft:orange_tulip": {
+   "id": "minecraft:orange_tulip",
+   "name": "Orange Tulip",
+   "icon": "textures/minecraft/orange_tulip.png"
+  },
+  "minecraft:oxeye_daisy": {
+   "id": "minecraft:oxeye_daisy",
+   "name": "Oxeye Daisy",
+   "icon": "textures/minecraft/oxeye_daisy.png"
+  },
+  "minecraft:oxidized_copper": {
+   "id": "minecraft:oxidized_copper",
+   "name": "Oxidized Copper",
+   "icon": "textures/minecraft/oxidized_copper.png"
+  },
+  "minecraft:oxidized_cut_copper": {
+   "id": "minecraft:oxidized_cut_copper",
+   "name": "Oxidized Cut Copper",
+   "icon": "textures/minecraft/oxidized_cut_copper.png"
+  },
+  "minecraft:packed_ice": {
+   "id": "minecraft:packed_ice",
+   "name": "Packed Ice",
+   "icon": "textures/minecraft/packed_ice.png"
+  },
+  "minecraft:packed_mud": {
+   "id": "minecraft:packed_mud",
+   "name": "Packed Mud",
+   "icon": "textures/minecraft/packed_mud.png"
+  },
+  "minecraft:paper": {
+   "id": "minecraft:paper",
+   "name": "Paper",
+   "icon": "textures/minecraft/paper.png"
+  },
+  "minecraft:peony": {
+   "id": "minecraft:peony",
+   "name": "Peony"
+  },
+  "minecraft:pink_dye": {
+   "id": "minecraft:pink_dye",
+   "name": "Pink Dye",
+   "icon": "textures/minecraft/pink_dye.png"
+  },
+  "minecraft:pink_petals": {
+   "id": "minecraft:pink_petals",
+   "name": "Pink Petals",
+   "icon": "textures/minecraft/pink_petals.png"
+  },
+  "minecraft:pink_tulip": {
+   "id": "minecraft:pink_tulip",
+   "name": "Pink Tulip",
+   "icon": "textures/minecraft/pink_tulip.png"
+  },
+  "minecraft:pitcher_plant": {
+   "id": "minecraft:pitcher_plant",
+   "name": "Pitcher Plant",
+   "icon": "textures/minecraft/pitcher_plant.png"
+  },
+  "minecraft:pointed_dripstone": {
+   "id": "minecraft:pointed_dripstone",
+   "name": "Pointed Dripstone",
+   "icon": "textures/minecraft/pointed_dripstone.png"
+  },
+  "minecraft:polished_andesite": {
+   "id": "minecraft:polished_andesite",
+   "name": "Polished Andesite",
+   "icon": "textures/minecraft/polished_andesite.png"
+  },
+  "minecraft:polished_basalt": {
+   "id": "minecraft:polished_basalt",
+   "name": "Polished Basalt"
+  },
+  "minecraft:polished_blackstone": {
+   "id": "minecraft:polished_blackstone",
+   "name": "Polished Blackstone",
+   "icon": "textures/minecraft/polished_blackstone.png"
+  },
+  "minecraft:polished_blackstone_bricks": {
+   "id": "minecraft:polished_blackstone_bricks",
+   "name": "Polished Blackstone Bricks",
+   "icon": "textures/minecraft/polished_blackstone_bricks.png"
+  },
+  "minecraft:polished_deepslate": {
+   "id": "minecraft:polished_deepslate",
+   "name": "Polished Deepslate",
+   "icon": "textures/minecraft/polished_deepslate.png"
+  },
+  "minecraft:polished_diorite": {
+   "id": "minecraft:polished_diorite",
+   "name": "Polished Diorite",
+   "icon": "textures/minecraft/polished_diorite.png"
+  },
+  "minecraft:polished_granite": {
+   "id": "minecraft:polished_granite",
+   "name": "Polished Granite",
+   "icon": "textures/minecraft/polished_granite.png"
+  },
+  "minecraft:polished_tuff": {
+   "id": "minecraft:polished_tuff",
+   "name": "Polished Tuff",
+   "icon": "textures/minecraft/polished_tuff.png"
+  },
+  "minecraft:popped_chorus_fruit": {
+   "id": "minecraft:popped_chorus_fruit",
+   "name": "Popped Chorus Fruit",
+   "icon": "textures/minecraft/popped_chorus_fruit.png"
+  },
+  "minecraft:poppy": {
+   "id": "minecraft:poppy",
+   "name": "Poppy",
+   "icon": "textures/minecraft/poppy.png"
+  },
+  "minecraft:prismarine": {
+   "id": "minecraft:prismarine",
+   "name": "Prismarine",
+   "icon": "textures/minecraft/prismarine.png"
+  },
+  "minecraft:prismarine_bricks": {
+   "id": "minecraft:prismarine_bricks",
+   "name": "Prismarine Bricks",
+   "icon": "textures/minecraft/prismarine_bricks.png"
+  },
+  "minecraft:prismarine_crystals": {
+   "id": "minecraft:prismarine_crystals",
+   "name": "Prismarine Crystals",
+   "icon": "textures/minecraft/prismarine_crystals.png"
+  },
+  "minecraft:prismarine_shard": {
+   "id": "minecraft:prismarine_shard",
+   "name": "Prismarine Shard",
+   "icon": "textures/minecraft/prismarine_shard.png"
+  },
+  "minecraft:purple_dye": {
+   "id": "minecraft:purple_dye",
+   "name": "Purple Dye",
+   "icon": "textures/minecraft/purple_dye.png"
+  },
+  "minecraft:purpur_block": {
+   "id": "minecraft:purpur_block",
+   "name": "Purpur Block",
+   "icon": "textures/minecraft/purpur_block.png"
+  },
+  "minecraft:quartz": {
+   "id": "minecraft:quartz",
+   "name": "Nether Quartz",
+   "icon": "textures/minecraft/quartz.png"
+  },
+  "minecraft:quartz_block": {
+   "id": "minecraft:quartz_block",
+   "name": "Block of Quartz"
+  },
+  "minecraft:quartz_bricks": {
+   "id": "minecraft:quartz_bricks",
+   "name": "Quartz Bricks",
+   "icon": "textures/minecraft/quartz_bricks.png"
+  },
+  "minecraft:rabbit_hide": {
+   "id": "minecraft:rabbit_hide",
+   "name": "Rabbit Hide",
+   "icon": "textures/minecraft/rabbit_hide.png"
+  },
+  "minecraft:raw_copper": {
+   "id": "minecraft:raw_copper",
+   "name": "Raw Copper",
+   "icon": "textures/minecraft/raw_copper.png"
+  },
+  "minecraft:raw_copper_block": {
+   "id": "minecraft:raw_copper_block",
+   "name": "Block of Raw Copper",
+   "icon": "textures/minecraft/raw_copper_block.png"
+  },
+  "minecraft:raw_gold": {
+   "id": "minecraft:raw_gold",
+   "name": "Raw Gold",
+   "icon": "textures/minecraft/raw_gold.png"
+  },
+  "minecraft:raw_gold_block": {
+   "id": "minecraft:raw_gold_block",
+   "name": "Block of Raw Gold",
+   "icon": "textures/minecraft/raw_gold_block.png"
+  },
+  "minecraft:raw_iron": {
+   "id": "minecraft:raw_iron",
+   "name": "Raw Iron",
+   "icon": "textures/minecraft/raw_iron.png"
+  },
+  "minecraft:raw_iron_block": {
+   "id": "minecraft:raw_iron_block",
+   "name": "Block of Raw Iron",
+   "icon": "textures/minecraft/raw_iron_block.png"
+  },
+  "minecraft:red_dye": {
+   "id": "minecraft:red_dye",
+   "name": "Red Dye",
+   "icon": "textures/minecraft/red_dye.png"
+  },
+  "minecraft:red_sand": {
+   "id": "minecraft:red_sand",
+   "name": "Red Sand",
+   "icon": "textures/minecraft/red_sand.png"
+  },
+  "minecraft:red_sandstone": {
+   "id": "minecraft:red_sandstone",
+   "name": "Red Sandstone",
+   "icon": "textures/minecraft/red_sandstone.png"
+  },
+  "minecraft:red_tulip": {
+   "id": "minecraft:red_tulip",
+   "name": "Red Tulip",
+   "icon": "textures/minecraft/red_tulip.png"
+  },
+  "minecraft:redstone": {
+   "id": "minecraft:redstone",
+   "name": "Redstone Dust",
+   "icon": "textures/minecraft/redstone.png"
+  },
+  "minecraft:redstone_block": {
+   "id": "minecraft:redstone_block",
+   "name": "Block of Redstone",
+   "icon": "textures/minecraft/redstone_block.png"
+  },
+  "minecraft:redstone_ore": {
+   "id": "minecraft:redstone_ore",
+   "name": "Redstone Ore",
+   "icon": "textures/minecraft/redstone_ore.png"
+  },
+  "minecraft:rose_bush": {
+   "id": "minecraft:rose_bush",
+   "name": "Rose Bush"
+  },
+  "minecraft:saddle": {
+   "id": "minecraft:saddle",
+   "name": "Saddle",
+   "icon": "textures/minecraft/saddle.png"
+  },
+  "minecraft:sand": {
+   "id": "minecraft:sand",
+   "name": "Sand",
+   "icon": "textures/minecraft/sand.png"
+  },
+  "minecraft:sandstone": {
+   "id": "minecraft:sandstone",
+   "name": "Sandstone",
+   "icon": "textures/minecraft/sandstone.png"
+  },
+  "minecraft:sea_pickle": {
+   "id": "minecraft:sea_pickle",
+   "name": "Sea Pickle",
+   "icon": "textures/minecraft/sea_pickle.png"
+  },
+  "minecraft:short_grass": {
+   "id": "minecraft:short_grass",
+   "name": "Short Grass",
+   "icon": "textures/minecraft/short_grass.png"
+  },
+  "minecraft:slime_ball": {
+   "id": "minecraft:slime_ball",
+   "name": "Slimeball",
+   "icon": "textures/minecraft/slime_ball.png"
+  },
+  "minecraft:slime_block": {
+   "id": "minecraft:slime_block",
+   "name": "Slime Block",
+   "icon": "textures/minecraft/slime_block.png"
+  },
+  "minecraft:snow_block": {
+   "id": "minecraft:snow_block",
+   "name": "Snow Block"
+  },
+  "minecraft:snowball": {
+   "id": "minecraft:snowball",
+   "name": "Snowball",
+   "icon": "textures/minecraft/snowball.png"
+  },
+  "minecraft:soul_sand": {
+   "id": "minecraft:soul_sand",
+   "name": "Soul Sand",
+   "icon": "textures/minecraft/soul_sand.png"
+  },
+  "minecraft:spruce_log": {
+   "id": "minecraft:spruce_log",
+   "name": "Spruce Log",
+   "icon": "textures/minecraft/spruce_log.png"
+  },
+  "minecraft:spruce_wood": {
+   "id": "minecraft:spruce_wood",
+   "name": "Spruce Wood"
+  },
+  "minecraft:stone": {
+   "id": "minecraft:stone",
+   "name": "Stone",
+   "icon": "textures/minecraft/stone.png"
+  },
+  "minecraft:stone_bricks": {
+   "id": "minecraft:stone_bricks",
+   "name": "Stone Bricks",
+   "icon": "textures/minecraft/stone_bricks.png"
+  },
+  "minecraft:string": {
+   "id": "minecraft:string",
+   "name": "String",
+   "icon": "textures/minecraft/string.png"
+  },
+  "minecraft:stripped_acacia_log": {
+   "id": "minecraft:stripped_acacia_log",
+   "name": "Stripped Acacia Log",
+   "icon": "textures/minecraft/stripped_acacia_log.png"
+  },
+  "minecraft:stripped_acacia_wood": {
+   "id": "minecraft:stripped_acacia_wood",
+   "name": "Stripped Acacia Wood"
+  },
+  "minecraft:stripped_birch_log": {
+   "id": "minecraft:stripped_birch_log",
+   "name": "Stripped Birch Log",
+   "icon": "textures/minecraft/stripped_birch_log.png"
+  },
+  "minecraft:stripped_birch_wood": {
+   "id": "minecraft:stripped_birch_wood",
+   "name": "Stripped Birch Wood"
+  },
+  "minecraft:stripped_cherry_log": {
+   "id": "minecraft:stripped_cherry_log",
+   "name": "Stripped Cherry Log",
+   "icon": "textures/minecraft/stripped_cherry_log.png"
+  },
+  "minecraft:stripped_cherry_wood": {
+   "id": "minecraft:stripped_cherry_wood",
+   "name": "Stripped Cherry Wood"
+  },
+  "minecraft:stripped_crimson_hyphae": {
+   "id": "minecraft:stripped_crimson_hyphae",
+   "name": "Stripped Crimson Hyphae"
+  },
+  "minecraft:stripped_crimson_stem": {
+   "id": "minecraft:stripped_crimson_stem",
+   "name": "Stripped Crimson Stem",
+   "icon": "textures/minecraft/stripped_crimson_stem.png"
+  },
+  "minecraft:stripped_dark_oak_log": {
+   "id": "minecraft:stripped_dark_oak_log",
+   "name": "Stripped Dark Oak Log",
+   "icon": "textures/minecraft/stripped_dark_oak_log.png"
+  },
+  "minecraft:stripped_dark_oak_wood": {
+   "id": "minecraft:stripped_dark_oak_wood",
+   "name": "Stripped Dark Oak Wood"
+  },
+  "minecraft:stripped_jungle_log": {
+   "id": "minecraft:stripped_jungle_log",
+   "name": "Stripped Jungle Log",
+   "icon": "textures/minecraft/stripped_jungle_log.png"
+  },
+  "minecraft:stripped_jungle_wood": {
+   "id": "minecraft:stripped_jungle_wood",
+   "name": "Stripped Jungle Wood"
+  },
+  "minecraft:stripped_mangrove_log": {
+   "id": "minecraft:stripped_mangrove_log",
+   "name": "Stripped Mangrove Log",
+   "icon": "textures/minecraft/stripped_mangrove_log.png"
+  },
+  "minecraft:stripped_mangrove_wood": {
+   "id": "minecraft:stripped_mangrove_wood",
+   "name": "Stripped Mangrove Wood"
+  },
+  "minecraft:stripped_oak_log": {
+   "id": "minecraft:stripped_oak_log",
+   "name": "Stripped Oak Log",
+   "icon": "textures/minecraft/stripped_oak_log.png"
+  },
+  "minecraft:stripped_oak_wood": {
+   "id": "minecraft:stripped_oak_wood",
+   "name": "Stripped Oak Wood"
+  },
+  "minecraft:stripped_spruce_log": {
+   "id": "minecraft:stripped_spruce_log",
+   "name": "Stripped Spruce Log",
+   "icon": "textures/minecraft/stripped_spruce_log.png"
+  },
+  "minecraft:stripped_spruce_wood": {
+   "id": "minecraft:stripped_spruce_wood",
+   "name": "Stripped Spruce Wood"
+  },
+  "minecraft:stripped_warped_hyphae": {
+   "id": "minecraft:stripped_warped_hyphae",
+   "name": "Stripped Warped Hyphae"
+  },
+  "minecraft:stripped_warped_stem": {
+   "id": "minecraft:stripped_warped_stem",
+   "name": "Stripped Warped Stem",
+   "icon": "textures/minecraft/stripped_warped_stem.png"
+  },
+  "minecraft:sugar": {
+   "id": "minecraft:sugar",
+   "name": "Sugar",
+   "icon": "textures/minecraft/sugar.png"
+  },
+  "minecraft:sugar_cane": {
+   "id": "minecraft:sugar_cane",
+   "name": "Sugar Cane",
+   "icon": "textures/minecraft/sugar_cane.png"
+  },
+  "minecraft:sunflower": {
+   "id": "minecraft:sunflower",
+   "name": "Sunflower"
+  },
+  "minecraft:tall_grass": {
+   "id": "minecraft:tall_grass",
+   "name": "Tall Grass"
+  },
+  "minecraft:terracotta": {
+   "id": "minecraft:terracotta",
+   "name": "Terracotta",
+   "icon": "textures/minecraft/terracotta.png"
+  },
+  "minecraft:torchflower": {
+   "id": "minecraft:torchflower",
+   "name": "Torchflower",
+   "icon": "textures/minecraft/torchflower.png"
+  },
+  "minecraft:tuff": {
+   "id": "minecraft:tuff",
+   "name": "Tuff",
+   "icon": "textures/minecraft/tuff.png"
+  },
+  "minecraft:tuff_bricks": {
+   "id": "minecraft:tuff_bricks",
+   "name": "Tuff Bricks",
+   "icon": "textures/minecraft/tuff_bricks.png"
+  },
+  "minecraft:warped_hyphae": {
+   "id": "minecraft:warped_hyphae",
+   "name": "Warped Hyphae"
+  },
+  "minecraft:warped_stem": {
+   "id": "minecraft:warped_stem",
+   "name": "Warped Stem",
+   "icon": "textures/minecraft/warped_stem.png"
+  },
+  "minecraft:waxed_copper_block": {
+   "id": "minecraft:waxed_copper_block",
+   "name": "Waxed Block of Copper"
+  },
+  "minecraft:waxed_cut_copper": {
+   "id": "minecraft:waxed_cut_copper",
+   "name": "Waxed Cut Copper"
+  },
+  "minecraft:waxed_exposed_copper": {
+   "id": "minecraft:waxed_exposed_copper",
+   "name": "Waxed Exposed Copper"
+  },
+  "minecraft:waxed_exposed_cut_copper": {
+   "id": "minecraft:waxed_exposed_cut_copper",
+   "name": "Waxed Exposed Cut Copper"
+  },
+  "minecraft:waxed_oxidized_copper": {
+   "id": "minecraft:waxed_oxidized_copper",
+   "name": "Waxed Oxidized Copper"
+  },
+  "minecraft:waxed_oxidized_cut_copper": {
+   "id": "minecraft:waxed_oxidized_cut_copper",
+   "name": "Waxed Oxidized Cut Copper"
+  },
+  "minecraft:waxed_weathered_copper": {
+   "id": "minecraft:waxed_weathered_copper",
+   "name": "Waxed Weathered Copper"
+  },
+  "minecraft:waxed_weathered_cut_copper": {
+   "id": "minecraft:waxed_weathered_cut_copper",
+   "name": "Waxed Weathered Cut Copper"
+  },
+  "minecraft:weathered_copper": {
+   "id": "minecraft:weathered_copper",
+   "name": "Weathered Copper",
+   "icon": "textures/minecraft/weathered_copper.png"
+  },
+  "minecraft:weathered_cut_copper": {
+   "id": "minecraft:weathered_cut_copper",
+   "name": "Weathered Cut Copper",
+   "icon": "textures/minecraft/weathered_cut_copper.png"
+  },
+  "minecraft:wheat": {
+   "id": "minecraft:wheat",
+   "name": "Wheat",
+   "icon": "textures/minecraft/wheat.png"
+  },
+  "minecraft:wheat_seeds": {
+   "id": "minecraft:wheat_seeds",
+   "name": "Wheat Seeds",
+   "icon": "textures/minecraft/wheat_seeds.png"
+  },
+  "minecraft:white_dye": {
+   "id": "minecraft:white_dye",
+   "name": "White Dye",
+   "icon": "textures/minecraft/white_dye.png"
+  },
+  "minecraft:white_tulip": {
+   "id": "minecraft:white_tulip",
+   "name": "White Tulip",
+   "icon": "textures/minecraft/white_tulip.png"
+  },
+  "minecraft:white_wool": {
+   "id": "minecraft:white_wool",
+   "name": "White Wool",
+   "icon": "textures/minecraft/white_wool.png"
+  },
+  "minecraft:wither_rose": {
+   "id": "minecraft:wither_rose",
+   "name": "Wither Rose",
+   "icon": "textures/minecraft/wither_rose.png"
+  },
+  "minecraft:yellow_dye": {
+   "id": "minecraft:yellow_dye",
+   "name": "Yellow Dye",
+   "icon": "textures/minecraft/yellow_dye.png"
+  }
+ },
+ "recipes": [
+  {
+   "id": "create:compacting/ice",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:snow_block",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:ice",
+     "amount": 1,
+     "chance": 1
+    }
+   ]
+  },
+  {
+   "id": "create:crushing/amethyst_block",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:amethyst_block",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:amethyst_shard",
+     "amount": 3,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:amethyst_shard",
+     "amount": 1,
+     "chance": 0.5
+    }
+   ],
+   "processingTime": 150
+  },
+  {
+   "id": "create:crushing/amethyst_cluster",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:amethyst_cluster",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:amethyst_shard",
+     "amount": 7,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:amethyst_shard",
+     "amount": 1,
+     "chance": 0.5
+    }
+   ],
+   "processingTime": 150
+  },
+  {
+   "id": "create:crushing/asurine",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "create:asurine",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "create:crushed_raw_zinc",
+     "amount": 1,
+     "chance": 0.3
+    },
+    {
+     "item": "create:zinc_nugget",
+     "amount": 1,
+     "chance": 0.3
+    }
+   ],
+   "processingTime": 250
+  },
+  {
+   "id": "create:crushing/blaze_rod",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:blaze_rod",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:blaze_powder",
+     "amount": 3,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:blaze_powder",
+     "amount": 3,
+     "chance": 0.25
+    }
+   ],
+   "processingTime": 100
+  },
+  {
+   "id": "create:crushing/coal_ore",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:coal_ore",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:coal",
+     "amount": 1,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:coal",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "create:experience_nugget",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "minecraft:cobblestone",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ],
+   "processingTime": 150
+  },
+  {
+   "id": "create:crushing/copper_ore",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:copper_ore",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "create:crushed_raw_copper",
+     "amount": 5,
+     "chance": 1
+    },
+    {
+     "item": "create:crushed_raw_copper",
+     "amount": 1,
+     "chance": 0.25
+    },
+    {
+     "item": "create:experience_nugget",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "minecraft:cobblestone",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ],
+   "processingTime": 250
+  },
+  {
+   "id": "create:crushing/crimsite",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "create:crimsite",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "create:crushed_raw_iron",
+     "amount": 1,
+     "chance": 0.4
+    },
+    {
+     "item": "minecraft:iron_nugget",
+     "amount": 1,
+     "chance": 0.4
+    }
+   ],
+   "processingTime": 250
+  },
+  {
+   "id": "create:crushing/deepslate_coal_ore",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:deepslate_coal_ore",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:coal",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:coal",
+     "amount": 1,
+     "chance": 0.25
+    },
+    {
+     "item": "create:experience_nugget",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "minecraft:cobbled_deepslate",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ],
+   "processingTime": 300
+  },
+  {
+   "id": "create:crushing/deepslate_copper_ore",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:deepslate_copper_ore",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "create:crushed_raw_copper",
+     "amount": 7,
+     "chance": 1
+    },
+    {
+     "item": "create:crushed_raw_copper",
+     "amount": 1,
+     "chance": 0.25
+    },
+    {
+     "item": "create:experience_nugget",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "minecraft:cobbled_deepslate",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ],
+   "processingTime": 350
+  },
+  {
+   "id": "create:crushing/deepslate_diamond_ore",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:deepslate_diamond_ore",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:diamond",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:diamond",
+     "amount": 1,
+     "chance": 0.25
+    },
+    {
+     "item": "create:experience_nugget",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "minecraft:cobbled_deepslate",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ],
+   "processingTime": 450
+  },
+  {
+   "id": "create:crushing/deepslate_emerald_ore",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:deepslate_emerald_ore",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:emerald",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:emerald",
+     "amount": 1,
+     "chance": 0.25
+    },
+    {
+     "item": "create:experience_nugget",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "minecraft:cobbled_deepslate",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ],
+   "processingTime": 450
+  },
+  {
+   "id": "create:crushing/deepslate_gold_ore",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:deepslate_gold_ore",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "create:crushed_raw_gold",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "create:crushed_raw_gold",
+     "amount": 1,
+     "chance": 0.25
+    },
+    {
+     "item": "create:experience_nugget",
+     "amount": 2,
+     "chance": 0.75
+    },
+    {
+     "item": "minecraft:cobbled_deepslate",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ],
+   "processingTime": 350
+  },
+  {
+   "id": "create:crushing/deepslate_iron_ore",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:deepslate_iron_ore",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "create:crushed_raw_iron",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "create:crushed_raw_iron",
+     "amount": 1,
+     "chance": 0.25
+    },
+    {
+     "item": "create:experience_nugget",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "minecraft:cobbled_deepslate",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ],
+   "processingTime": 350
+  },
+  {
+   "id": "create:crushing/deepslate_lapis_ore",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:deepslate_lapis_ore",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:lapis_lazuli",
+     "amount": 12,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:lapis_lazuli",
+     "amount": 1,
+     "chance": 0.5
+    },
+    {
+     "item": "create:experience_nugget",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "minecraft:cobbled_deepslate",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ],
+   "processingTime": 350
+  },
+  {
+   "id": "create:crushing/deepslate_redstone_ore",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:deepslate_redstone_ore",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:redstone",
+     "amount": 7,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:redstone",
+     "amount": 1,
+     "chance": 0.5
+    },
+    {
+     "item": "create:experience_nugget",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "minecraft:cobbled_deepslate",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ],
+   "processingTime": 350
+  },
+  {
+   "id": "create:crushing/deepslate_zinc_ore",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "create:deepslate_zinc_ore",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "create:crushed_raw_zinc",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "create:crushed_raw_zinc",
+     "amount": 1,
+     "chance": 0.25
+    },
+    {
+     "item": "create:experience_nugget",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "minecraft:cobbled_deepslate",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ],
+   "processingTime": 350
+  },
+  {
+   "id": "create:crushing/diamond_horse_armor",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:diamond_horse_armor",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:diamond",
+     "amount": 1,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:leather",
+     "amount": 2,
+     "chance": 0.5
+    },
+    {
+     "item": "minecraft:diamond",
+     "amount": 3,
+     "chance": 0.1
+    },
+    {
+     "item": "minecraft:string",
+     "amount": 2,
+     "chance": 0.25
+    }
+   ],
+   "processingTime": 200
+  },
+  {
+   "id": "create:crushing/diamond_ore",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:diamond_ore",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:diamond",
+     "amount": 1,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:diamond",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "create:experience_nugget",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "minecraft:cobblestone",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ],
+   "processingTime": 350
+  },
+  {
+   "id": "create:crushing/emerald_ore",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:emerald_ore",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:emerald",
+     "amount": 1,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:emerald",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "create:experience_nugget",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "minecraft:cobblestone",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ],
+   "processingTime": 350
+  },
+  {
+   "id": "create:crushing/gilded_blackstone",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:gilded_blackstone",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:gold_nugget",
+     "amount": 18,
+     "chance": 1
+    },
+    {
+     "item": "create:experience_nugget",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "minecraft:blackstone",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ],
+   "processingTime": 400
+  },
+  {
+   "id": "create:crushing/glowstone",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:glowstone",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:glowstone_dust",
+     "amount": 3,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:glowstone_dust",
+     "amount": 1,
+     "chance": 0.5
+    }
+   ],
+   "processingTime": 150
+  },
+  {
+   "id": "create:crushing/gold_ore",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:gold_ore",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "create:crushed_raw_gold",
+     "amount": 1,
+     "chance": 1
+    },
+    {
+     "item": "create:crushed_raw_gold",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "create:experience_nugget",
+     "amount": 2,
+     "chance": 0.75
+    },
+    {
+     "item": "minecraft:cobblestone",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ],
+   "processingTime": 250
+  },
+  {
+   "id": "create:crushing/golden_horse_armor",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:golden_horse_armor",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:gold_ingot",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:leather",
+     "amount": 2,
+     "chance": 0.5
+    },
+    {
+     "item": "minecraft:gold_ingot",
+     "amount": 2,
+     "chance": 0.5
+    },
+    {
+     "item": "minecraft:string",
+     "amount": 2,
+     "chance": 0.25
+    },
+    {
+     "item": "minecraft:gold_nugget",
+     "amount": 8,
+     "chance": 0.25
+    }
+   ],
+   "processingTime": 200
+  },
+  {
+   "id": "create:crushing/gravel",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:gravel",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:sand",
+     "amount": 1,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:flint",
+     "amount": 1,
+     "chance": 0.1
+    },
+    {
+     "item": "minecraft:clay_ball",
+     "amount": 1,
+     "chance": 0.05
+    }
+   ],
+   "processingTime": 250
+  },
+  {
+   "id": "create:crushing/iron_horse_armor",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:iron_horse_armor",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:iron_ingot",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:leather",
+     "amount": 1,
+     "chance": 0.5
+    },
+    {
+     "item": "minecraft:iron_ingot",
+     "amount": 1,
+     "chance": 0.5
+    },
+    {
+     "item": "minecraft:string",
+     "amount": 2,
+     "chance": 0.25
+    },
+    {
+     "item": "minecraft:iron_nugget",
+     "amount": 4,
+     "chance": 0.25
+    }
+   ],
+   "processingTime": 200
+  },
+  {
+   "id": "create:crushing/iron_ore",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:iron_ore",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "create:crushed_raw_iron",
+     "amount": 1,
+     "chance": 1
+    },
+    {
+     "item": "create:crushed_raw_iron",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "create:experience_nugget",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "minecraft:cobblestone",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ],
+   "processingTime": 250
+  },
+  {
+   "id": "create:crushing/lapis_ore",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:lapis_ore",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:lapis_lazuli",
+     "amount": 10,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:lapis_lazuli",
+     "amount": 1,
+     "chance": 0.5
+    },
+    {
+     "item": "create:experience_nugget",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "minecraft:cobblestone",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ],
+   "processingTime": 250
+  },
+  {
+   "id": "create:crushing/leather_horse_armor",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:leather_horse_armor",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:leather",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:leather",
+     "amount": 2,
+     "chance": 0.5
+    }
+   ],
+   "processingTime": 200
+  },
+  {
+   "id": "create:crushing/nether_gold_ore",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:nether_gold_ore",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:gold_nugget",
+     "amount": 18,
+     "chance": 1
+    },
+    {
+     "item": "create:experience_nugget",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "minecraft:netherrack",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ],
+   "processingTime": 350
+  },
+  {
+   "id": "create:crushing/nether_quartz_ore",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:nether_quartz_ore",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:quartz",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:quartz",
+     "amount": 1,
+     "chance": 0.25
+    },
+    {
+     "item": "create:experience_nugget",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "minecraft:netherrack",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ],
+   "processingTime": 350
+  },
+  {
+   "id": "create:crushing/nether_wart_block",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:nether_wart_block",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:nether_wart",
+     "amount": 1,
+     "chance": 0.25
+    }
+   ],
+   "processingTime": 150
+  },
+  {
+   "id": "create:crushing/obsidian",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:obsidian",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "create:powdered_obsidian",
+     "amount": 1,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:obsidian",
+     "amount": 1,
+     "chance": 0.75
+    }
+   ],
+   "processingTime": 500
+  },
+  {
+   "id": "create:crushing/ochrum",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "create:ochrum",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "create:crushed_raw_gold",
+     "amount": 1,
+     "chance": 0.2
+    },
+    {
+     "item": "minecraft:gold_nugget",
+     "amount": 1,
+     "chance": 0.2
+    }
+   ],
+   "processingTime": 250
+  },
+  {
+   "id": "create:crushing/prismarine_crystals",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:prismarine_crystals",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:quartz",
+     "amount": 1,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:quartz",
+     "amount": 2,
+     "chance": 0.5
+    },
+    {
+     "item": "minecraft:glowstone_dust",
+     "amount": 2,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 150
+  },
+  {
+   "id": "create:crushing/redstone_ore",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:redstone_ore",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:redstone",
+     "amount": 6,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:redstone",
+     "amount": 1,
+     "chance": 0.5
+    },
+    {
+     "item": "create:experience_nugget",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "minecraft:cobblestone",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ],
+   "processingTime": 250
+  },
+  {
+   "id": "create:crushing/tuff",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "minecraft:tuff",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:flint",
+     "amount": 1,
+     "chance": 0.25
+    },
+    {
+     "item": "minecraft:gold_nugget",
+     "amount": 1,
+     "chance": 0.1
+    },
+    {
+     "item": "create:copper_nugget",
+     "amount": 1,
+     "chance": 0.1
+    },
+    {
+     "item": "create:zinc_nugget",
+     "amount": 1,
+     "chance": 0.1
+    },
+    {
+     "item": "minecraft:iron_nugget",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 350
+  },
+  {
+   "id": "create:crushing/veridium",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "create:veridium",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "create:crushed_raw_copper",
+     "amount": 1,
+     "chance": 0.8
+    },
+    {
+     "item": "create:copper_nugget",
+     "amount": 1,
+     "chance": 0.8
+    }
+   ],
+   "processingTime": 250
+  },
+  {
+   "id": "create:crushing/zinc_ore",
+   "type": "crushing",
+   "inputs": [
+    {
+     "item": "create:zinc_ore",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "create:crushed_raw_zinc",
+     "amount": 1,
+     "chance": 1
+    },
+    {
+     "item": "create:crushed_raw_zinc",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "create:experience_nugget",
+     "amount": 1,
+     "chance": 0.75
+    },
+    {
+     "item": "minecraft:cobblestone",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ],
+   "processingTime": 250
+  },
+  {
+   "id": "create:milling/allium",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:allium",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:magenta_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:purple_dye",
+     "amount": 2,
+     "chance": 0.1
+    },
+    {
+     "item": "minecraft:pink_dye",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/andesite",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:andesite",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:cobblestone",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "processingTime": 200
+  },
+  {
+   "id": "create:milling/azure_bluet",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:azure_bluet",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:light_gray_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:white_dye",
+     "amount": 2,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/beetroot",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:beetroot",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:red_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:beetroot_seeds",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 70
+  },
+  {
+   "id": "create:milling/blue_orchid",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:blue_orchid",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:light_blue_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:light_gray_dye",
+     "amount": 1,
+     "chance": 0.05
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/bone",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:bone",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:bone_meal",
+     "amount": 3,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:white_dye",
+     "amount": 1,
+     "chance": 0.25
+    },
+    {
+     "item": "minecraft:bone_meal",
+     "amount": 3,
+     "chance": 0.25
+    }
+   ],
+   "processingTime": 100
+  },
+  {
+   "id": "create:milling/bone_meal",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:bone_meal",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:white_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:light_gray_dye",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 70
+  },
+  {
+   "id": "create:milling/cactus",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:cactus",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:green_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:green_dye",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/calcite",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:calcite",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:bone_meal",
+     "amount": 1,
+     "chance": 0.75
+    }
+   ],
+   "processingTime": 250
+  },
+  {
+   "id": "create:milling/charcoal",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:charcoal",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:black_dye",
+     "amount": 1,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:gray_dye",
+     "amount": 2,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 100
+  },
+  {
+   "id": "create:milling/clay",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:clay",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:clay_ball",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/coal",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:coal",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:black_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:gray_dye",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 100
+  },
+  {
+   "id": "create:milling/cobblestone",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:cobblestone",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:gravel",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "processingTime": 250
+  },
+  {
+   "id": "create:milling/cocoa_beans",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:cocoa_beans",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:brown_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:brown_dye",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 70
+  },
+  {
+   "id": "create:milling/cornflower",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:cornflower",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:blue_dye",
+     "amount": 2,
+     "chance": 1
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/dandelion",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:dandelion",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:yellow_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:yellow_dye",
+     "amount": 1,
+     "chance": 0.05
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/dripstone_block",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:dripstone_block",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:clay_ball",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "processingTime": 250
+  },
+  {
+   "id": "create:milling/fern",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:fern",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:green_dye",
+     "amount": 1,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:wheat_seeds",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/granite",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:granite",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:red_sand",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "processingTime": 200
+  },
+  {
+   "id": "create:milling/gravel",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:gravel",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:flint",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "processingTime": 250
+  },
+  {
+   "id": "create:milling/ink_sac",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:ink_sac",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:black_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:gray_dye",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 100
+  },
+  {
+   "id": "create:milling/lapis_lazuli",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:lapis_lazuli",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:blue_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:blue_dye",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 100
+  },
+  {
+   "id": "create:milling/large_fern",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:large_fern",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:green_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:green_dye",
+     "amount": 1,
+     "chance": 0.5
+    },
+    {
+     "item": "minecraft:wheat_seeds",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/lilac",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:lilac",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:magenta_dye",
+     "amount": 3,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:magenta_dye",
+     "amount": 1,
+     "chance": 0.25
+    },
+    {
+     "item": "minecraft:purple_dye",
+     "amount": 1,
+     "chance": 0.25
+    }
+   ],
+   "processingTime": 100
+  },
+  {
+   "id": "create:milling/lily_of_the_valley",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:lily_of_the_valley",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:white_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:lime_dye",
+     "amount": 1,
+     "chance": 0.1
+    },
+    {
+     "item": "minecraft:white_dye",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/orange_tulip",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:orange_tulip",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:orange_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:lime_dye",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/oxeye_daisy",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:oxeye_daisy",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:light_gray_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:white_dye",
+     "amount": 1,
+     "chance": 0.2
+    },
+    {
+     "item": "minecraft:yellow_dye",
+     "amount": 1,
+     "chance": 0.05
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/peony",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:peony",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:pink_dye",
+     "amount": 3,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:magenta_dye",
+     "amount": 1,
+     "chance": 0.25
+    },
+    {
+     "item": "minecraft:pink_dye",
+     "amount": 1,
+     "chance": 0.25
+    }
+   ],
+   "processingTime": 100
+  },
+  {
+   "id": "create:milling/pink_petals",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:pink_petals",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:pink_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:lime_dye",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/pink_tulip",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:pink_tulip",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:pink_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:lime_dye",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/pitcher_plant",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:pitcher_plant",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:cyan_dye",
+     "amount": 4,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:purple_dye",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/poppy",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:poppy",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:red_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:green_dye",
+     "amount": 1,
+     "chance": 0.05
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/red_tulip",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:red_tulip",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:red_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:lime_dye",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/rose_bush",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:rose_bush",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:red_dye",
+     "amount": 3,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:green_dye",
+     "amount": 2,
+     "chance": 0.05
+    },
+    {
+     "item": "minecraft:red_dye",
+     "amount": 2,
+     "chance": 0.25
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/saddle",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:saddle",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:leather",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:leather",
+     "amount": 2,
+     "chance": 0.5
+    }
+   ],
+   "processingTime": 200
+  },
+  {
+   "id": "create:milling/sandstone",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:sandstone",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:sand",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "processingTime": 150
+  },
+  {
+   "id": "create:milling/sea_pickle",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:sea_pickle",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:lime_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:green_dye",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/short_grass",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:short_grass",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:wheat_seeds",
+     "amount": 1,
+     "chance": 0.25
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/sugar_cane",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:sugar_cane",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:sugar",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:sugar",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/sunflower",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:sunflower",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:yellow_dye",
+     "amount": 3,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:orange_dye",
+     "amount": 1,
+     "chance": 0.25
+    },
+    {
+     "item": "minecraft:yellow_dye",
+     "amount": 1,
+     "chance": 0.25
+    }
+   ],
+   "processingTime": 100
+  },
+  {
+   "id": "create:milling/tall_grass",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:tall_grass",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:wheat_seeds",
+     "amount": 1,
+     "chance": 0.5
+    }
+   ],
+   "processingTime": 100
+  },
+  {
+   "id": "create:milling/terracotta",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:terracotta",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:red_sand",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "processingTime": 200
+  },
+  {
+   "id": "create:milling/torchflower",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:torchflower",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:orange_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:green_dye",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/wheat",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:wheat",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "create:wheat_flour",
+     "amount": 1,
+     "chance": 1
+    },
+    {
+     "item": "create:wheat_flour",
+     "amount": 2,
+     "chance": 0.25
+    },
+    {
+     "item": "minecraft:wheat_seeds",
+     "amount": 1,
+     "chance": 0.25
+    }
+   ],
+   "processingTime": 150
+  },
+  {
+   "id": "create:milling/white_tulip",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:white_tulip",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:white_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:lime_dye",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:milling/wither_rose",
+   "type": "milling",
+   "inputs": [
+    {
+     "item": "minecraft:wither_rose",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:black_dye",
+     "amount": 2,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:black_dye",
+     "amount": 1,
+     "chance": 0.1
+    }
+   ],
+   "processingTime": 50
+  },
+  {
+   "id": "create:pressing/cardboard",
+   "type": "pressing",
+   "inputs": [
+    {
+     "item": "create:pulp",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "create:cardboard",
+     "amount": 1,
+     "chance": 1
+    }
+   ]
+  },
+  {
+   "id": "create:pressing/path_from_grass",
+   "type": "pressing",
+   "inputs": [
+    {
+     "item": "minecraft:grass_block",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:dirt_path",
+     "amount": 1,
+     "chance": 1
+    }
+   ]
+  },
+  {
+   "id": "create:pressing/sugar_cane",
+   "type": "pressing",
+   "inputs": [
+    {
+     "item": "minecraft:sugar_cane",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:paper",
+     "amount": 1,
+     "chance": 1
+    }
+   ]
+  },
+  {
+   "id": "create:splashing/crushed_raw_copper",
+   "type": "splashing",
+   "inputs": [
+    {
+     "item": "create:crushed_raw_copper",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "create:copper_nugget",
+     "amount": 9,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:clay_ball",
+     "amount": 1,
+     "chance": 0.5
+    }
+   ]
+  },
+  {
+   "id": "create:splashing/crushed_raw_gold",
+   "type": "splashing",
+   "inputs": [
+    {
+     "item": "create:crushed_raw_gold",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:gold_nugget",
+     "amount": 9,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:quartz",
+     "amount": 1,
+     "chance": 0.5
+    }
+   ]
+  },
+  {
+   "id": "create:splashing/crushed_raw_iron",
+   "type": "splashing",
+   "inputs": [
+    {
+     "item": "create:crushed_raw_iron",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:iron_nugget",
+     "amount": 9,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:redstone",
+     "amount": 1,
+     "chance": 0.75
+    }
+   ]
+  },
+  {
+   "id": "create:splashing/crushed_raw_zinc",
+   "type": "splashing",
+   "inputs": [
+    {
+     "item": "create:crushed_raw_zinc",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "create:zinc_nugget",
+     "amount": 9,
+     "chance": 1
+    },
+    {
+     "item": "minecraft:gunpowder",
+     "amount": 1,
+     "chance": 0.25
+    }
+   ]
+  },
+  {
+   "id": "create:splashing/gravel",
+   "type": "splashing",
+   "inputs": [
+    {
+     "item": "minecraft:gravel",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:flint",
+     "amount": 1,
+     "chance": 0.25
+    },
+    {
+     "item": "minecraft:iron_nugget",
+     "amount": 1,
+     "chance": 0.125
+    }
+   ]
+  },
+  {
+   "id": "create:splashing/ice",
+   "type": "splashing",
+   "inputs": [
+    {
+     "item": "minecraft:ice",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:packed_ice",
+     "amount": 1,
+     "chance": 1
+    }
+   ]
+  },
+  {
+   "id": "create:splashing/industrial_iron_block",
+   "type": "splashing",
+   "inputs": [
+    {
+     "item": "create:industrial_iron_block",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "create:weathered_iron_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ]
+  },
+  {
+   "id": "create:splashing/industrial_iron_window",
+   "type": "splashing",
+   "inputs": [
+    {
+     "item": "create:industrial_iron_window",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "create:weathered_iron_window",
+     "amount": 1,
+     "chance": 1
+    }
+   ]
+  },
+  {
+   "id": "create:splashing/industrial_iron_window_pane",
+   "type": "splashing",
+   "inputs": [
+    {
+     "item": "create:industrial_iron_window_pane",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "create:weathered_iron_window_pane",
+     "amount": 1,
+     "chance": 1
+    }
+   ]
+  },
+  {
+   "id": "create:splashing/magma_block",
+   "type": "splashing",
+   "inputs": [
+    {
+     "item": "minecraft:magma_block",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:obsidian",
+     "amount": 1,
+     "chance": 1
+    }
+   ]
+  },
+  {
+   "id": "create:splashing/red_sand",
+   "type": "splashing",
+   "inputs": [
+    {
+     "item": "minecraft:red_sand",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:gold_nugget",
+     "amount": 3,
+     "chance": 0.125
+    },
+    {
+     "item": "minecraft:dead_bush",
+     "amount": 1,
+     "chance": 0.05
+    }
+   ]
+  },
+  {
+   "id": "create:splashing/sand",
+   "type": "splashing",
+   "inputs": [
+    {
+     "item": "minecraft:sand",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:clay_ball",
+     "amount": 1,
+     "chance": 0.25
+    }
+   ]
+  },
+  {
+   "id": "create:splashing/soul_sand",
+   "type": "splashing",
+   "inputs": [
+    {
+     "item": "minecraft:soul_sand",
+     "amount": 1
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:quartz",
+     "amount": 4,
+     "chance": 0.125
+    },
+    {
+     "item": "minecraft:gold_nugget",
+     "amount": 1,
+     "chance": 0.02
+    }
+   ]
+  },
+  {
+   "id": "minecraft:acacia_wood",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:acacia_log",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:acacia_wood",
+     "amount": 3,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:amethyst_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:amethyst_shard",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:amethyst_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:bamboo_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:bamboo",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:bamboo_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:birch_wood",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:birch_log",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:birch_wood",
+     "amount": 3,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:blue_ice",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:packed_ice",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:blue_ice",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:bone_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:bone_meal",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:bone_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:bricks",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:brick",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:bricks",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:cherry_wood",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:cherry_log",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:cherry_wood",
+     "amount": 3,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:clay",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:clay_ball",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:clay",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:coal_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:coal",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:coal_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:copper_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:copper_ingot",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:copper_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:crimson_hyphae",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:crimson_stem",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:crimson_hyphae",
+     "amount": 3,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:cut_copper",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:copper_block",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:cut_copper",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:cut_red_sandstone",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:red_sandstone",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:cut_red_sandstone",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:cut_sandstone",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:sandstone",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:cut_sandstone",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:dark_oak_wood",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:dark_oak_log",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:dark_oak_wood",
+     "amount": 3,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:deepslate_bricks",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:polished_deepslate",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:deepslate_bricks",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:deepslate_tiles",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:deepslate_bricks",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:deepslate_tiles",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:diamond_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:diamond",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:diamond_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:dried_kelp_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:dried_kelp",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:dried_kelp_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:dripstone_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:pointed_dripstone",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:dripstone_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:emerald_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:emerald",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:emerald_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:end_stone_bricks",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:end_stone",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:end_stone_bricks",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:exposed_cut_copper",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:exposed_copper",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:exposed_cut_copper",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:glowstone",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:glowstone_dust",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:glowstone",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:gold_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:gold_ingot",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:gold_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:gold_ingot_from_nuggets",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:gold_nugget",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:gold_ingot",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:hay_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:wheat",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:hay_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:honey_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:honey_bottle",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:honey_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:honeycomb_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:honeycomb",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:honeycomb_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:iron_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:iron_ingot",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:iron_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:iron_ingot_from_nuggets",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:iron_nugget",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:iron_ingot",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:iron_trapdoor",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:iron_ingot",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:iron_trapdoor",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:jungle_wood",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:jungle_log",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:jungle_wood",
+     "amount": 3,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:lapis_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:lapis_lazuli",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:lapis_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:leather",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:rabbit_hide",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:leather",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:magma_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:magma_cream",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:magma_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:mangrove_wood",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:mangrove_log",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:mangrove_wood",
+     "amount": 3,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:melon",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:melon_slice",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:melon",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:mud_bricks",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:packed_mud",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:mud_bricks",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:music_disc_5",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:disc_fragment_5",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:music_disc_5",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:nether_bricks",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:nether_brick",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:nether_bricks",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:nether_wart_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:nether_wart",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:nether_wart_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:netherite_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:netherite_ingot",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:netherite_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:oak_wood",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:oak_log",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:oak_wood",
+     "amount": 3,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:oxidized_cut_copper",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:oxidized_copper",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:oxidized_cut_copper",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:packed_ice",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:ice",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:packed_ice",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:polished_andesite",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:andesite",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:polished_andesite",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:polished_basalt",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:basalt",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:polished_basalt",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:polished_blackstone",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:blackstone",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:polished_blackstone",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:polished_blackstone_bricks",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:polished_blackstone",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:polished_blackstone_bricks",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:polished_deepslate",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:cobbled_deepslate",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:polished_deepslate",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:polished_diorite",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:diorite",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:polished_diorite",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:polished_granite",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:granite",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:polished_granite",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:polished_tuff",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:tuff",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:polished_tuff",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:prismarine",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:prismarine_shard",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:prismarine",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:prismarine_bricks",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:prismarine_shard",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:prismarine_bricks",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:purpur_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:popped_chorus_fruit",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:purpur_block",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:quartz_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:quartz",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:quartz_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:quartz_bricks",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:quartz_block",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:quartz_bricks",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:raw_copper_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:raw_copper",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:raw_copper_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:raw_gold_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:raw_gold",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:raw_gold_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:raw_iron_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:raw_iron",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:raw_iron_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:red_sandstone",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:red_sand",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:red_sandstone",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:redstone_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:redstone",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:redstone_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:sandstone",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:sand",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:sandstone",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:slime_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:slime_ball",
+     "amount": 9
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:slime_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:snow_block",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:snowball",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:snow_block",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:spruce_wood",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:spruce_log",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:spruce_wood",
+     "amount": 3,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:stone_bricks",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:stone",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:stone_bricks",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:stripped_acacia_wood",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:stripped_acacia_log",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:stripped_acacia_wood",
+     "amount": 3,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:stripped_birch_wood",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:stripped_birch_log",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:stripped_birch_wood",
+     "amount": 3,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:stripped_cherry_wood",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:stripped_cherry_log",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:stripped_cherry_wood",
+     "amount": 3,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:stripped_crimson_hyphae",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:stripped_crimson_stem",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:stripped_crimson_hyphae",
+     "amount": 3,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:stripped_dark_oak_wood",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:stripped_dark_oak_log",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:stripped_dark_oak_wood",
+     "amount": 3,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:stripped_jungle_wood",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:stripped_jungle_log",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:stripped_jungle_wood",
+     "amount": 3,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:stripped_mangrove_wood",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:stripped_mangrove_log",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:stripped_mangrove_wood",
+     "amount": 3,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:stripped_oak_wood",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:stripped_oak_log",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:stripped_oak_wood",
+     "amount": 3,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:stripped_spruce_wood",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:stripped_spruce_log",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:stripped_spruce_wood",
+     "amount": 3,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:stripped_warped_hyphae",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:stripped_warped_stem",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:stripped_warped_hyphae",
+     "amount": 3,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:tuff_bricks",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:polished_tuff",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:tuff_bricks",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:warped_hyphae",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:warped_stem",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:warped_hyphae",
+     "amount": 3,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:waxed_cut_copper",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:waxed_copper_block",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:waxed_cut_copper",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:waxed_exposed_cut_copper",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:waxed_exposed_copper",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:waxed_exposed_cut_copper",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:waxed_oxidized_cut_copper",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:waxed_oxidized_copper",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:waxed_oxidized_cut_copper",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:waxed_weathered_cut_copper",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:waxed_weathered_copper",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:waxed_weathered_cut_copper",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:weathered_cut_copper",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:weathered_copper",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:weathered_cut_copper",
+     "amount": 4,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  },
+  {
+   "id": "minecraft:white_wool_from_string",
+   "type": "compacting",
+   "inputs": [
+    {
+     "item": "minecraft:string",
+     "amount": 4
+    }
+   ],
+   "outputs": [
+    {
+     "item": "minecraft:white_wool",
+     "amount": 1,
+     "chance": 1
+    }
+   ],
+   "derivedFrom": "crafting"
+  }
+ ]
+}

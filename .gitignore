@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Data build cache
+.cache
+
+# Local Claude Code config
+.claude

@@ -2,10 +2,20 @@
   /* Create palette: andesite, brass, copper */
   --andesite-900: #1c1d1f;
   --andesite-800: #26282b;
+  --andesite-700: #33363a;
   --andesite-600: #4a4d52;
+  --andesite-500: #6b6f75;
+  --andesite-400: #8d9197;
+  --andesite-300: #aeb1b6;
   --andesite-200: #c9cbcf;
+  --andesite-100: #e6e7e9;
+  --brass-600: #b88a35;
   --brass-500: #d8a84a;
+  --brass-400: #e8c170;
   --copper-500: #c26a3f;
+  --copper-400: #dc8a5e;
+  --danger: #ef6b5b;
+  --warning: #e8b34a;
 
   color-scheme: dark;
   font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
@@ -24,6 +34,8 @@ body,
   height: 100%;
 }
 
+/* --- layout --- */
+
 .app {
   display: flex;
   flex-direction: column;
@@ -32,7 +44,7 @@ body,
 
 .app-header {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 1rem;
   padding: 0.5rem 1rem;
   background: var(--andesite-800);
@@ -47,10 +59,436 @@ body,
 
 .app-version {
   font-size: 0.8rem;
-  color: var(--andesite-600);
+  color: var(--andesite-400);
+}
+
+.app-settings {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: auto;
+}
+
+.app-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
 }
 
 .app-canvas {
   flex: 1;
-  min-height: 0;
+  min-width: 0;
+}
+
+.app-footer {
+  padding: 0.25rem 1rem;
+  font-size: 0.7rem;
+  color: var(--andesite-500);
+  background: var(--andesite-800);
+}
+
+/* --- controls --- */
+
+.button {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.7rem;
+  color: var(--andesite-200);
+  background: var(--andesite-700);
+  border: 1px solid var(--andesite-600);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button:hover {
+  border-color: var(--brass-500);
+}
+
+.button-primary {
+  color: var(--andesite-900);
+  background: var(--brass-500);
+  border-color: var(--brass-500);
+}
+
+.field {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  color: var(--andesite-400);
+}
+
+.field input[type='number'],
+select {
+  font: inherit;
+  font-size: 0.8rem;
+  color: var(--andesite-100);
+  background: var(--andesite-900);
+  border: 1px solid var(--andesite-600);
+  border-radius: 3px;
+  padding: 0.15rem 0.3rem;
+}
+
+.field input[type='number'] {
+  width: 4.5rem;
+}
+
+input:focus-visible,
+select:focus-visible,
+.button:focus-visible {
+  outline: 2px solid var(--brass-500);
+  outline-offset: 1px;
+}
+
+/* --- canvas --- */
+
+.canvas-toolbar {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.canvas-hint {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  color: var(--andesite-300);
+  background: var(--andesite-800);
+  border: 1px solid var(--andesite-600);
+  border-radius: 4px;
+}
+
+.flow-edge .react-flow__edge-path {
+  stroke: var(--brass-600);
+  stroke-width: 2;
+}
+
+.flow-edge.selected .react-flow__edge-path {
+  stroke: var(--brass-400);
+}
+
+.react-flow__edge-textbg {
+  fill: var(--andesite-800);
+}
+
+.react-flow__edge-text {
+  fill: var(--andesite-100);
+  font-size: 11px;
+}
+
+/* --- nodes --- */
+
+.node {
+  min-width: 260px;
+  font-size: 0.8rem;
+  background: var(--andesite-800);
+  border: 1px solid var(--andesite-600);
+  border-top: 3px solid var(--brass-500);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 35%);
+}
+
+.node-source {
+  min-width: 200px;
+  border-top-color: var(--copper-500);
+}
+
+.react-flow__node.selected .node {
+  border-color: var(--brass-400);
+}
+
+.node-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.6rem;
+  border-bottom: 1px solid var(--andesite-700);
+}
+
+.node-title {
+  font-weight: 600;
+  color: var(--brass-400);
+}
+
+.node-source .node-title {
+  color: var(--copper-400);
+}
+
+.node-info {
+  margin-left: auto;
+  cursor: help;
+  color: var(--andesite-400);
+}
+
+.node-ports {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+}
+
+.port {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 0.35rem;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+}
+
+.port .item-icon {
+  grid-row: span 3;
+}
+
+.port-out {
+  text-align: right;
+  grid-template-columns: 1fr auto;
+}
+
+.port-out .item-icon {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+}
+
+.port-out .port-name,
+.port-out .port-rate,
+.port-out .port-problem {
+  grid-column: 1;
+}
+
+.port-name {
+  color: var(--andesite-100);
+  white-space: nowrap;
+}
+
+.port-chance {
+  color: var(--andesite-400);
+  font-size: 0.7rem;
+}
+
+.port-rate {
+  color: var(--brass-400);
+  font-variant-numeric: tabular-nums;
+}
+
+.port-problem {
+  font-size: 0.7rem;
+}
+
+.is-shortage,
+.summary-section.is-shortage h2 {
+  color: var(--danger);
+}
+
+.is-surplus,
+.summary-section.is-surplus h2 {
+  color: var(--warning);
+}
+
+.node .react-flow__handle {
+  width: 10px;
+  height: 10px;
+  background: var(--brass-500);
+  border: 2px solid var(--andesite-900);
+}
+
+.port-in .react-flow__handle {
+  left: -6px;
+}
+
+.port-out .react-flow__handle {
+  right: -6px;
+}
+
+.node-stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.35rem 0.6rem;
+  border-top: 1px solid var(--andesite-700);
+  font-variant-numeric: tabular-nums;
+}
+
+.node-stress {
+  color: var(--copper-400);
+}
+
+.node-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  padding: 0.35rem 0.6rem 0.5rem;
+  border-top: 1px solid var(--andesite-700);
+}
+
+.node-fields .field input[type='number'] {
+  width: 3.8rem;
+}
+
+/* --- icons --- */
+
+.item-icon {
+  display: inline-block;
+  flex: none;
+  image-rendering: pixelated;
+}
+
+.item-icon-placeholder {
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* --- summary --- */
+
+.summary {
+  width: 280px;
+  flex: none;
+  overflow-y: auto;
+  padding: 0.75rem 1rem;
+  background: var(--andesite-800);
+  border-left: 1px solid var(--andesite-600);
+  font-size: 0.85rem;
+}
+
+.summary-section {
+  margin-bottom: 1rem;
+}
+
+.summary-section h2 {
+  margin: 0 0 0.4rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--andesite-400);
+}
+
+.summary-section ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.summary-section li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.15rem 0;
+}
+
+.summary-name {
+  flex: 1;
+}
+
+.summary-value,
+.summary-count {
+  font-variant-numeric: tabular-nums;
+  color: var(--brass-400);
+}
+
+.summary-stress {
+  margin: 0;
+  font-size: 1.3rem;
+  color: var(--copper-400);
+}
+
+.summary-error {
+  color: var(--danger);
+}
+
+/* --- add dialog --- */
+
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: start center;
+  padding-top: 10vh;
+  background: rgb(0 0 0 / 50%);
+}
+
+.dialog {
+  width: min(560px, calc(100vw - 32px));
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--andesite-800);
+  border: 1px solid var(--andesite-600);
+  border-top: 3px solid var(--brass-500);
+  border-radius: 6px;
+}
+
+.dialog-head {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.6rem;
+}
+
+.dialog-search {
+  flex: 1;
+  font: inherit;
+  padding: 0.4rem 0.6rem;
+  color: var(--andesite-100);
+  background: var(--andesite-900);
+  border: 1px solid var(--andesite-600);
+  border-radius: 4px;
+}
+
+.dialog-results {
+  margin: 0;
+  padding: 0 0.4rem 0.4rem;
+  list-style: none;
+  overflow-y: auto;
+}
+
+.dialog-results button {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.4rem 0.5rem;
+  font: inherit;
+  font-size: 0.85rem;
+  text-align: left;
+  color: var(--andesite-200);
+  background: none;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dialog-results button:hover,
+.dialog-results button:focus-visible {
+  background: var(--andesite-700);
+}
+
+.dialog-empty {
+  padding: 0.6rem;
+  color: var(--andesite-400);
+}
+
+.recipe-io {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex: none;
+  min-width: 9rem;
+}
+
+.recipe-stack {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  font-size: 0.7rem;
+  color: var(--andesite-300);
+}
+
+.recipe-arrow {
+  color: var(--andesite-500);
+}
+
+.recipe-label small {
+  color: var(--andesite-400);
 }

@@ -53,12 +53,14 @@ Sources (pinned):
 
 ### M1 — Vertical slice: cobblestone → gravel → iron nugget → iron ingot
 
-- [ ] Data script v0: crushing, milling, splashing recipes; vanilla 3×3 crafting → derived compacting; textures for the involved items
-- [ ] Formulas (test-first): crushing wheels, millstone, fan (splashing), press/compactor; stress impacts
-- [ ] Model + solver (test-first). Reference test: 60 cobblestone/min → 60 gravel/min → 7.5 iron nuggets/min + 15 flint/min → 0.833 iron ingots/min, with machine counts at 256 RPM
-- [ ] Derive: machine count (fraction, ceil, utilisation), SU per node and total
-- [ ] UI: canvas, add recipe node via item search, recipe variant picker, typed ports with icons, connect/disconnect, input/source node, global RPM + time unit bar, per-node RPM and stack size, basic summary panel (inputs, outputs, machines, SU), autosave
-- **Done when:** the example chain can be built in the deployed app and shows correct rates, machine counts and SU.
+- [x] Data script v0 (`npm run data`): crushing, milling, splashing, pressing, compacting (item ingredients only — tags and fluids skipped for now); vanilla 2×2/3×3 crafting → derived compacting; names from lang files; flat item/block textures
+- [x] Formulas (test-first): crushing wheels, millstone, fan (splashing), press/compactor; stress impacts
+- [x] Model + LP solver (`yalps`, test-first), incl. reference chain test (`src/core/derive.test.ts`)
+- [x] Derive: machine count (fraction, ceil, utilisation), SU per node and total, summary
+- [x] UI: canvas, add recipe/source via search, drag from a port onto empty canvas to add a matching node, machine variant picker, typed ports with icons, global RPM + time unit, per-node RPM / stack size / stacks in air / target, summary panel, autosave
+- **Done** (2026-10-22): the example chain builds in the app with the rates, machine counts and SU of the reference test.
+
+Left for later milestones: tag ingredients (e.g. `c:eggs`), block icons via item models (some blocks show placeholders), fixed per-edge ratios.
 
 ### M2 — Breadth: recipes, fluids, heat
 
@@ -84,5 +86,5 @@ Sources (pinned):
 ## Open verifications
 
 - Mixer cycle formula (DESIGN §4.1) — recompute from source before implementing
-- License of Create's textures — check before the first deploy that ships icons (M1)
-- Exact git tag name of the Create 6.0.10 release on the 1.21.1 branch
+- ~~License of Create's textures~~ — checked: assets are All Rights Reserved; decided to ship them anyway (DESIGN §1)
+- ~~Git tag of the Create 6.0.10 release~~ — `mc1.21.1-6.0.10`
