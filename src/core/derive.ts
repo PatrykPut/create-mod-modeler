@@ -1,7 +1,12 @@
 // Everything the UI shows about a plan: solved rates plus machine counts, stress and totals.
 import type { Catalog } from './catalog'
-import { MACHINES, type MachineId, type MachineConditions } from './machines'
-import type { Plan, RecipeNode } from './model/plan'
+import {
+  DRILL,
+  MACHINES,
+  type BuiltMachineId,
+  type MachineConditions,
+} from './machines'
+import type { Plan, RecipeNode, SourceNode } from './model/plan'
 import { solve, type NodeResult } from './solver/solve'
 
 const EPSILON = 1e-9
@@ -9,10 +14,16 @@ const EPSILON = 1e-9
 export const DEFAULT_STACK_SIZE = 1
 export const DEFAULT_PARALLEL_STACKS = 1
 
+export interface MachineCount {
+  exact: number
+  count: number
+  utilization: number
+}
+
 export interface NodeAnalysis {
   solved: NodeResult
-  /** Recipe nodes only; sources have count 0. */
-  machines: { exact: number; count: number; utilization: number }
+  /** Recipe machines, or drills for sources of generated items; otherwise count 0. */
+  machines: MachineCount
   /** SU, computed with the rounded-up machine count. */
   stress: number
   conditions?: MachineConditions
@@ -34,7 +45,7 @@ export interface PlanAnalysis {
     products: ItemRate[]
     surplus: ItemRate[]
     shortage: ItemRate[]
-    machines: { machine: MachineId; count: number }[]
+    machines: { machine: BuiltMachineId; count: number }[]
     stress: number
   }
 }
@@ -45,6 +56,19 @@ export function conditionsOf(node: RecipeNode, plan: Plan): MachineConditions {
     stackSize: node.stackSize ?? DEFAULT_STACK_SIZE,
     parallelStacks: node.parallelStacks ?? DEFAULT_PARALLEL_STACKS,
   }
+}
+
+/** Drills per minute capacity for a source, or undefined when it is not drilled. */
+export function drillCapacity(node: SourceNode, plan: Plan) {
+  if (node.drill === false) return undefined
+  return DRILL.blocksPerMinute(node.item, node.rpm ?? plan.settings.rpm)
+}
+
+function machineCount(runsPerMinute: number, capacity: number): MachineCount {
+  const exact =
+    capacity > 0 && Number.isFinite(capacity) ? runsPerMinute / capacity : 0
+  const count = Math.max(0, Math.ceil(exact - EPSILON))
+  return { exact, count, utilization: count ? exact / count : 0 }
 }
 
 function addRate(rates: Map<string, number>, item: string, perMinute: number) {
@@ -63,8 +87,14 @@ export function analyze(plan: Plan, catalog: Catalog): PlanAnalysis {
   const products = new Map<string, number>()
   const surplus = new Map<string, number>()
   const shortage = new Map<string, number>()
-  const machineCounts = new Map<MachineId, number>()
+  const machineCounts = new Map<BuiltMachineId, number>()
   let totalStress = 0
+
+  const build = (machine: BuiltMachineId, count: number, stress: number) => {
+    totalStress += stress
+    if (count)
+      machineCounts.set(machine, (machineCounts.get(machine) ?? 0) + count)
+  }
 
   for (const node of plan.nodes) {
     const result = solved.nodes[node.id]
@@ -81,36 +111,28 @@ export function analyze(plan: Plan, catalog: Catalog): PlanAnalysis {
 
     if (node.kind === 'source') {
       addRate(inputs, node.item, result.runsPerMinute)
-      nodes[node.id] = {
-        solved: result,
-        machines: { exact: 0, count: 0, utilization: 0 },
-        stress: 0,
-      }
+      const capacity = drillCapacity(node, plan)
+      const machines = machineCount(result.runsPerMinute, capacity ?? 0)
+      const stress =
+        machines.count *
+        DRILL.stressImpact *
+        Math.abs(node.rpm ?? plan.settings.rpm)
+      nodes[node.id] = { solved: result, machines, stress }
+      build(DRILL.id, machines.count, stress)
       continue
     }
 
     const machine = MACHINES[node.machineId]
     const recipe = catalog.recipe(node.recipeId)
     const conditions = conditionsOf(node, plan)
-    const capacity = recipe ? machine.runsPerMinute(recipe, conditions) : 0
-    const exact =
-      capacity > 0 && Number.isFinite(capacity)
-        ? result.runsPerMinute / capacity
-        : 0
-    const count = Math.ceil(exact - EPSILON)
-    const stress = count * machine.stressImpact * Math.abs(conditions.rpm)
-    nodes[node.id] = {
-      solved: result,
-      machines: { exact, count, utilization: count ? exact / count : 0 },
-      stress,
-      conditions,
-    }
-    totalStress += stress
-    if (count)
-      machineCounts.set(
-        node.machineId,
-        (machineCounts.get(node.machineId) ?? 0) + count,
-      )
+    const machines = machineCount(
+      result.runsPerMinute,
+      recipe ? machine.runsPerMinute(recipe, conditions) : 0,
+    )
+    const stress =
+      machines.count * machine.stressImpact * Math.abs(conditions.rpm)
+    nodes[node.id] = { solved: result, machines, stress, conditions }
+    build(node.machineId, machines.count, stress)
   }
 
   return {

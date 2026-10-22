@@ -1,5 +1,6 @@
 import type { Recipe, RecipeType } from '../data/types'
 import { crushingCycleTicks } from './formulas/crushing'
+import { drillCycleTicks } from './formulas/drill'
 import { fanCycleTicks } from './formulas/fan'
 import { millstoneCycleTicks } from './formulas/millstone'
 import { pressCycleTicks } from './formulas/press'
@@ -114,3 +115,30 @@ export const MACHINES_BY_TYPE: Record<RecipeType, MachineId[]> = {
   pressing: ['mechanical_press'],
   compacting: ['press_basin'],
 }
+
+/**
+ * Blocks a fluid generator makes that a drill can mine with CobbleGenOptimisation,
+ * keyed by the dropped item. Hardness from vanilla.
+ */
+export const GENERATED_BLOCKS: Record<string, { hardness: number }> = {
+  'minecraft:cobblestone': { hardness: 2 },
+  'minecraft:basalt': { hardness: 1.25 },
+}
+
+export const DRILL = {
+  id: 'mechanical_drill',
+  name: 'Mechanical Drill',
+  stressImpact: 4,
+  note: 'Assumes an optimised generator: a belt, hopper or chute right next to the generated block takes the drops, so nothing has to regrow.',
+  /** Blocks per minute for one drill, or undefined if the item cannot be generated. */
+  blocksPerMinute(item: string, rpm: number): number | undefined {
+    const block = GENERATED_BLOCKS[item]
+    return block && perMinuteFromTicks(drillCycleTicks(block.hardness, rpm))
+  },
+} as const
+
+/** Anything that is counted in the machine list: recipe machines and source drills. */
+export type BuiltMachineId = MachineId | typeof DRILL.id
+
+export const machineName = (id: BuiltMachineId) =>
+  id === DRILL.id ? DRILL.name : MACHINES[id].name

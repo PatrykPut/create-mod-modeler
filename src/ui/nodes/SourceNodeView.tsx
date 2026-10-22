@@ -1,7 +1,9 @@
 import type { Node, NodeProps } from '@xyflow/react'
+import { DRILL, GENERATED_BLOCKS } from '../../core/machines'
 import type { SourceNode } from '../../core/model/plan'
 import { fromPerMinute, toPerMinute } from '../../core/units'
 import { useAnalysis } from '../analysis'
+import { formatNumber, formatPercent, formatStress } from '../format'
 import { usePlanStore } from '../store'
 import { NumberField } from './NumberField'
 import { PortRow } from './PortRow'
@@ -10,15 +12,25 @@ export type SourceFlowNode = Node<{ node: SourceNode }, 'source'>
 
 export function SourceNodeView({ data: { node } }: NodeProps<SourceFlowNode>) {
   const analysis = useAnalysis().nodes[node.id]
-  const unit = usePlanStore((s) => s.plan.settings.timeUnit)
+  const settings = usePlanStore((s) => s.plan.settings)
   const updateNode = usePlanStore((s) => s.updateSourceNode)
   if (!analysis) return null
+  const unit = settings.timeUnit
   const unlimited = node.perMinute === null
+  const drillable = node.item in GENERATED_BLOCKS
+  const drilled = drillable && node.drill !== false
 
   return (
     <div className="node node-source">
       <header className="node-header">
-        <span className="node-title">Source</span>
+        <span className="node-title">
+          {drilled ? `Source · ${DRILL.name}` : 'Source'}
+        </span>
+        {drilled && (
+          <span className="node-info" title={DRILL.note}>
+            ⓘ
+          </span>
+        )}
       </header>
       <div className="node-ports">
         <div />
@@ -28,6 +40,17 @@ export function SourceNodeView({ data: { node } }: NodeProps<SourceFlowNode>) {
           ))}
         </div>
       </div>
+      {drilled && (
+        <div className="node-stats">
+          <span title="Drills needed (exact → built), utilisation">
+            {formatNumber(analysis.machines.exact)} →{' '}
+            <strong>{analysis.machines.count}×</strong>{' '}
+            {analysis.machines.count > 0 &&
+              `(${formatPercent(analysis.machines.utilization)})`}
+          </span>
+          <span className="node-stress">{formatStress(analysis.stress)}</span>
+        </div>
+      )}
       <div className="node-fields">
         {!unlimited && (
           <NumberField
@@ -49,6 +72,27 @@ export function SourceNodeView({ data: { node } }: NodeProps<SourceFlowNode>) {
           />
           <span>Unlimited</span>
         </label>
+        {drillable && (
+          <label className="field nodrag" title={DRILL.note}>
+            <input
+              type="checkbox"
+              checked={drilled}
+              onChange={(e) => updateNode(node.id, { drill: e.target.checked })}
+            />
+            <span>Drills</span>
+          </label>
+        )}
+        {drilled && (
+          <NumberField
+            label="RPM"
+            value={node.rpm}
+            placeholder={String(settings.rpm)}
+            min={1}
+            max={256}
+            title="Overrides the global RPM for the drills"
+            onChange={(rpm) => updateNode(node.id, { rpm })}
+          />
+        )}
       </div>
     </div>
   )

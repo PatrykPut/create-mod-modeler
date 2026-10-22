@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { crushingCycleTicks } from './crushing'
+import { drillCycleTicks } from './drill'
 import { fanCycleTicks } from './fan'
 import { millstoneCycleTicks } from './millstone'
 import { pressCycleTicks } from './press'
@@ -40,6 +41,24 @@ describe('encased fan', () => {
     expect(fanCycleTicks(16)).toBe(153)
     expect(fanCycleTicks(17)).toBe(303)
     expect(fanCycleTicks(64)).toBe(603)
+  })
+})
+
+describe('mechanical drill (optimised cobble generator)', () => {
+  it('matches the cobblestone table in DESIGN §4.1', () => {
+    expect(drillCycleTicks(2, 16)).toBe(121)
+    expect(drillCycleTicks(2, 32)).toBe(66)
+    expect(drillCycleTicks(2, 64)).toBe(44)
+    expect(drillCycleTicks(2, 128)).toBe(22)
+    expect(drillCycleTicks(2, 256)).toBe(11)
+  })
+
+  it('is capped by the 11-tick lazy tick for soft blocks', () => {
+    expect(drillCycleTicks(1.25, 256)).toBe(11)
+  })
+
+  it('never breaks without rotation', () => {
+    expect(drillCycleTicks(2, 0)).toBe(Infinity)
   })
 })
 

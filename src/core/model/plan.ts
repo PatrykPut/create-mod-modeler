@@ -34,6 +34,10 @@ export interface SourceNode {
   item: string
   /** null = unlimited, takes whatever is demanded. */
   perMinute: number | null
+  /** Generated items only: mined by drills on a generator. Defaults to on. */
+  drill?: boolean
+  /** Drill RPM, overrides Settings.rpm. */
+  rpm?: number
   position: Position
 }
 

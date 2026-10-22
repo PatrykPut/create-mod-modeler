@@ -34,12 +34,12 @@ Status: design agreed, implementation not started.
 
 ## 3. Node types (v1)
 
-| Node                | Notes                                                                                                                                                                                                                             |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Recipe node         | Any supported recipe type (see §5). Shows machines needed, SU, heat requirement                                                                                                                                                   |
-| Input / source node | Raw resource with a user-set rate or "unlimited"                                                                                                                                                                                  |
-| Mechanical Drill    | Always modelled as an **optimised cobblestone generator** (drops are inserted directly into the belt/hopper/chute below, so nothing has to regrow). An info tooltip on the node states this assumption to avoid misunderstandings |
-| Power source nodes  | Water wheel, large water wheel, windmill (sail count), hand crank, creative motor, steam engine (see §4.4)                                                                                                                        |
+| Node                | Notes                                                                                                                                                                                                                                                             |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Recipe node         | Any supported recipe type (see §5). Shows machines needed, SU, heat requirement                                                                                                                                                                                   |
+| Input / source node | Raw resource with a user-set rate or "unlimited". For items a fluid generator makes (cobblestone, basalt) the source also shows the **Mechanical Drills** needed (count, utilisation, SU at the source's own or the global RPM); can be switched off              |
+| Mechanical Drill    | Part of the source node, not a node of its own. Always modelled as an **optimised generator** (`CobbleGenOptimisation`: drops go straight into a belt/hopper/chute next to the generated block, so nothing has to regrow). An info tooltip states this assumption |
+| Power source nodes  | Water wheel, large water wheel, windmill (sail count), hand crank, creative motor, steam engine (see §4.4)                                                                                                                                                        |
 
 ### Heat and fuel
 

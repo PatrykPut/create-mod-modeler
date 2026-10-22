@@ -91,7 +91,13 @@ describe('analyze: cobblestone → gravel → iron nuggets → iron ingot at 256
     expect(nodes.compact.machines.count).toBe(1)
     expect(nodes.compact.machines.utilization).toBeCloseTo(0.8333 / 120, 4)
     expect(nodes.compact.stress).toBe(2048)
-    expect(summary.stress).toBe(1024 + 4096 + 2048)
+    // cobblestone source, drill on an optimised generator: 1200 / 11 ticks = 109/min → 0.55 → 1
+    expect(nodes.cobble.machines).toMatchObject({
+      exact: expect.closeTo(0.55),
+      count: 1,
+    })
+    expect(nodes.cobble.stress).toBe(1024)
+    expect(summary.stress).toBe(1024 + 1024 + 4096 + 2048)
   })
 
   it('lists inputs, products and machines', () => {
@@ -103,10 +109,58 @@ describe('analyze: cobblestone → gravel → iron nuggets → iron ingot at 256
       { item: 'minecraft:iron_ingot', perMinute: expect.closeTo(0.8333, 3) },
     ])
     expect(summary.machines).toEqual([
+      { machine: 'mechanical_drill', count: 1 },
       { machine: 'millstone', count: 1 },
       { machine: 'fan_washing', count: 8 },
       { machine: 'press_basin', count: 1 },
     ])
+  })
+
+  it('counts drills for generated sources unless switched off', () => {
+    const slow = analyze(ironChain({ cobble: { rpm: 32 } }), catalog).nodes
+    // 1200 / 66 ticks = 18.2/min → 3.3 → 4 drills × 4 SU/RPM × 32
+    expect(slow.cobble.machines.count).toBe(4)
+    expect(slow.cobble.stress).toBe(4 * 4 * 32)
+
+    const off = analyze(ironChain({ cobble: { drill: false } }), catalog)
+    expect(off.nodes.cobble.machines.count).toBe(0)
+    expect(off.summary.machines.map((m) => m.machine)).not.toContain(
+      'mechanical_drill',
+    )
+  })
+
+  it('sizes drills of an unlimited source by what is drawn', () => {
+    const { nodes } = analyze(
+      ironChain({
+        cobble: { perMinute: null },
+        compact: { target: { item: 'minecraft:iron_ingot', perMinute: 2 } },
+      }),
+      catalog,
+    )
+    // 2 ingots = 18 nuggets = 144 gravel = 144 cobblestone/min → 1.32 → 2 drills
+    expect(nodes.cobble.solved.runsPerMinute).toBeCloseTo(144)
+    expect(nodes.cobble.machines.count).toBe(2)
+  })
+
+  it('has no drill for items a generator cannot make', () => {
+    const { nodes } = analyze(
+      {
+        ...ironChain(),
+        nodes: [
+          {
+            id: 'gravel',
+            kind: 'source',
+            item: 'minecraft:gravel',
+            perMinute: 60,
+            position: at,
+          },
+        ],
+        edges: [],
+      },
+      catalog,
+    )
+    expect(nodes.gravel.machines.count).toBe(0)
+    expect(nodes.gravel.stress).toBe(0)
   })
 
   it('applies per-node overrides', () => {

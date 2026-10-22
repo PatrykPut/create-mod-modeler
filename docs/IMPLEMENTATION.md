@@ -66,7 +66,7 @@ Left for later milestones: tag ingredients (e.g. `c:eggs`), block icons via item
 
 - [ ] Data script: all v1 recipe types; derived shapeless → mixer, stonecutting → saw; fan blasting/smoking from vanilla smelting/smoking; furnace node
 - [ ] Formulas: mixer (**re-verify first**), saw, deployer, spout, item drain, mechanical crafter (approximation, flagged in UI), item application, sandpaper polishing
-- [ ] Mechanical drill node (optimised cobble gen + info tooltip)
+- [x] Mechanical drills on cobblestone/basalt sources (optimised generator + info tooltip, tick-simulated against the source)
 - [ ] Fluids as resources (mB/min ports)
 - [ ] Heat: burner count, fuel input port with fuel picker, continuous consumption
 
