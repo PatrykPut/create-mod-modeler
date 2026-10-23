@@ -43,7 +43,38 @@ export interface SourceNode {
   position: Position
 }
 
-export type PlanNode = RecipeNode | SourceNode
+export type PowerSourceId =
+  | 'water_wheel'
+  | 'large_water_wheel'
+  | 'windmill'
+  | 'hand_crank'
+  | 'creative_motor'
+  | 'steam_engine'
+
+/** Supplies stress to the whole plan; it has no ports. */
+export interface PowerNode {
+  id: string
+  kind: 'power'
+  source: PowerSourceId
+  /** Units built (steam engine: engines). Absent = enough to cover the remaining stress. */
+  count?: number
+  /** Windmill: sail blocks. */
+  sails?: number
+  /** Creative motor: its set speed; steam engine: speed of the boiler's water pumps. */
+  rpm?: number
+  position: Position
+}
+
+export type PlanNode = RecipeNode | SourceNode | PowerNode
+
+/** How an edge is built. Absent = ideal, without a limit. */
+export interface Transport {
+  type: 'belt' | 'chute' | 'pipe'
+  /** Belt or pump speed, overrides Settings.rpm. */
+  rpm?: number
+  /** Belts and chutes: items per entry (1 = single items, up to 64 with a brass funnel). */
+  itemsPerEntry?: number
+}
 
 /** Carries one item from an output port of `source` to an input port of `target`. */
 export interface PlanEdge {
@@ -53,6 +84,7 @@ export interface PlanEdge {
   item: string
   /** The input port, when it is a tag the item belongs to. */
   targetItem?: string
+  transport?: Transport
 }
 
 /** The resource of the input port an edge feeds. */

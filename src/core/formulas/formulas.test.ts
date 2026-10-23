@@ -8,6 +8,12 @@ import { crafterCycleTicks } from './crafter'
 import { deployerCycleTicks } from './deployer'
 import { mixerCycleTicks } from './mixer'
 import { sawCycleTicks } from './saw'
+import { boilerFor, windmillStress } from './power'
+import {
+  beltItemsPerMinute,
+  chuteItemsPerMinute,
+  pipeMbPerMinute,
+} from './transport'
 
 describe('crushing wheels', () => {
   it('single items: phase 1 runs at the 20/tick cap, phase 2 at RPM speed', () => {
@@ -128,5 +134,39 @@ describe('mechanical crafter', () => {
     // speed is clamped to at least 4
     expect(crafterCycleTicks(2, 1)).toBe(252 + 502)
     expect(crafterCycleTicks(1, 0)).toBe(Infinity)
+  })
+})
+
+describe('transport', () => {
+  it('belts carry 2.5 entries per minute per RPM', () => {
+    expect(beltItemsPerMinute(256, 1)).toBe(640)
+    expect(beltItemsPerMinute(64, 64)).toBe(160 * 64)
+  })
+
+  it('chutes move 4 stacks per second by gravity', () => {
+    expect(chuteItemsPerMinute(1)).toBe(240)
+    expect(chuteItemsPerMinute(16)).toBe(3840)
+  })
+
+  it('pumps push max(1, RPM / 2) mB per tick', () => {
+    expect(pipeMbPerMinute(256)).toBe(128 * 1200)
+    expect(pipeMbPerMinute(1)).toBe(1200)
+    expect(pipeMbPerMinute(0)).toBe(0)
+  })
+})
+
+describe('power', () => {
+  it('windmills gain 1 RPM per 8 sails, up to 16 RPM', () => {
+    expect(windmillStress(8)).toBe(512)
+    expect(windmillStress(100)).toBe(512 * 12)
+    expect(windmillStress(500)).toBe(512 * 16)
+  })
+
+  it('a boiler needs one level per engine, 2 pumps from level 13', () => {
+    expect(boilerFor(5)).toEqual({ boilers: 1, level: 5, pumpsPerBoiler: 1 })
+    expect(boilerFor(13)).toEqual({ boilers: 1, level: 13, pumpsPerBoiler: 2 })
+    // more than 18 engines need a second boiler
+    expect(boilerFor(20)).toEqual({ boilers: 2, level: 10, pumpsPerBoiler: 1 })
+    expect(boilerFor(0).boilers).toBe(0)
   })
 })

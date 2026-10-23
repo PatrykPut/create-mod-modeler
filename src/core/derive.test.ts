@@ -3,7 +3,12 @@ import data from '../data/create-6.0.10.json'
 import type { GameData } from '../data/types'
 import { createCatalog } from './catalog'
 import { analyze } from './derive'
-import { emptyPlan, type Plan, type PlanNode } from './model/plan'
+import {
+  emptyPlan,
+  type Plan,
+  type PlanEdge,
+  type PlanNode,
+} from './model/plan'
 
 const catalog = createCatalog(data as GameData)
 const at = { x: 0, y: 0 }
@@ -299,5 +304,154 @@ describe('mechanical crafter', () => {
     )
     expect(nodes.n.machines.count).toBe(1)
     expect(nodes.n.stress).toBe(21 * 2 * 256)
+  })
+})
+
+describe('transport limits', () => {
+  const withTransport = (transport: PlanEdge['transport']) => {
+    const plan = ironChain()
+    plan.edges[0] = { ...plan.edges[0], transport }
+    return analyze(plan, catalog).edges.e1
+  }
+
+  it('leaves ideal edges unlimited', () => {
+    expect(withTransport(undefined)).toEqual({
+      flow: expect.closeTo(60),
+      lanes: 1,
+      over: false,
+    })
+  })
+
+  it('checks belts against their speed and items per entry', () => {
+    // 256 RPM, single items: 640/min
+    expect(withTransport({ type: 'belt' })).toMatchObject({
+      limit: 640,
+      lanes: 1,
+      over: false,
+    })
+    // 16 RPM: 40/min → 2 belts for 60/min
+    expect(withTransport({ type: 'belt', rpm: 16 })).toMatchObject({
+      limit: 40,
+      lanes: 2,
+      over: true,
+    })
+    expect(
+      withTransport({ type: 'belt', rpm: 16, itemsPerEntry: 64 }).over,
+    ).toBe(false)
+  })
+
+  it('lists edges over their limit as bottlenecks', () => {
+    const plan = ironChain()
+    plan.edges[0] = { ...plan.edges[0], transport: { type: 'chute' } }
+    plan.edges[1] = {
+      ...plan.edges[1],
+      transport: { type: 'belt', rpm: 8 },
+    }
+    const { summary } = analyze(plan, catalog)
+    // 8 RPM belt: 20/min for 60 gravel/min
+    expect(summary.bottlenecks).toEqual([
+      { edge: 'e2', item: 'minecraft:gravel', lanes: 3 },
+    ])
+  })
+
+  it('puts a pump on every pipe', () => {
+    const plan: Plan = {
+      ...emptyPlan(),
+      nodes: [
+        {
+          id: 'lava',
+          kind: 'source',
+          item: 'fluid:minecraft:lava',
+          perMinute: null,
+          position: at,
+        },
+        {
+          id: 'fill',
+          kind: 'recipe',
+          recipeId: 'derived:filling/minecraft/lava',
+          machineId: 'spout',
+          target: { item: 'minecraft:lava_bucket', perMinute: 10 },
+          position: at,
+        },
+      ],
+      edges: [
+        {
+          id: 'p',
+          source: 'lava',
+          target: 'fill',
+          item: 'fluid:minecraft:lava',
+          transport: { type: 'pipe', rpm: 64 },
+        },
+      ],
+    }
+    const { edges, summary } = analyze(plan, catalog)
+    // 64 RPM: 32 mB/tick = 38,400 mB/min
+    expect(edges.p).toMatchObject({ limit: 38400, lanes: 1, stress: 4 * 64 })
+    expect(summary.machines).toContainEqual({
+      machine: 'mechanical_pump',
+      count: 1,
+    })
+    expect(summary.stress).toBe(256)
+  })
+})
+
+describe('power', () => {
+  const powered = (...power: object[]) => {
+    const plan = ironChain()
+    plan.nodes.push(
+      ...power.map(
+        (p, i) =>
+          ({ id: `p${i}`, kind: 'power', position: at, ...p }) as PlanNode,
+      ),
+    )
+    return analyze(plan, catalog)
+  }
+
+  it('builds enough of an auto source to cover the stress', () => {
+    // the chain needs 8192 SU; a water wheel gives 256
+    const { power, summary } = powered({ source: 'water_wheel' })
+    expect(power.p0).toMatchObject({ count: 32, capacity: 8192 })
+    expect(summary.capacity).toBe(8192)
+    expect(summary.machines).toContainEqual({
+      machine: 'water_wheel',
+      count: 32,
+    })
+  })
+
+  it('lets fixed counts go first and auto sources cover the rest', () => {
+    const { power, summary } = powered(
+      { source: 'water_wheel', count: 10 },
+      { source: 'large_water_wheel' },
+    )
+    expect(power.p0.capacity).toBe(2560)
+    // 8192 − 2560 = 5632 = 11 large wheels
+    expect(power.p1.count).toBe(11)
+    expect(summary.capacity).toBe(8192)
+  })
+
+  it('reports missing capacity of fixed sources', () => {
+    const { summary } = powered({ source: 'windmill', count: 1, sails: 64 })
+    // 64 sails: 8 RPM × 512
+    expect(summary.capacity).toBe(4096)
+    expect(summary.stress).toBe(8192)
+  })
+
+  it('sizes steam engines by boiler level and adds their water pumps', () => {
+    const { power, summary } = powered({ source: 'steam_engine', count: 13 })
+    expect(power.p0).toMatchObject({
+      count: 13,
+      capacity: 13 * 16384,
+      boiler: { boilers: 1, level: 13, pumpsPerBoiler: 2 },
+      stress: 2 * 4 * 256,
+    })
+    expect(summary.stress).toBe(8192 + 2048)
+    expect(summary.machines).toContainEqual({
+      machine: 'mechanical_pump',
+      count: 2,
+    })
+
+    // auto: 8192 SU + its own pump fits on one engine
+    const auto = powered({ source: 'steam_engine' })
+    expect(auto.power.p0).toMatchObject({ count: 1, boiler: { level: 1 } })
   })
 })

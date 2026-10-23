@@ -34,12 +34,12 @@ Status: design agreed, implementation not started.
 
 ## 3. Node types (v1)
 
-| Node                | Notes                                                                                                                                                                                                                                                             |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Recipe node         | Any supported recipe type (see §5). Shows machines needed, SU, heat requirement                                                                                                                                                                                   |
-| Input / source node | Raw resource with a user-set rate or "unlimited". For items a fluid generator makes (cobblestone, basalt) the source also shows the **Mechanical Drills** needed (count, utilisation, SU at the source's own or the global RPM); can be switched off              |
-| Mechanical Drill    | Part of the source node, not a node of its own. Always modelled as an **optimised generator** (`CobbleGenOptimisation`: drops go straight into a belt/hopper/chute next to the generated block, so nothing has to regrow). An info tooltip states this assumption |
-| Power source nodes  | Water wheel, large water wheel, windmill (sail count), hand crank, creative motor, steam engine (see §4.4)                                                                                                                                                        |
+| Node                | Notes                                                                                                                                                                                                                                                                                                                               |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Recipe node         | Any supported recipe type (see §5). Shows machines needed, SU, heat requirement                                                                                                                                                                                                                                                     |
+| Input / source node | Raw resource with a user-set rate or "unlimited". For items a fluid generator makes (cobblestone, basalt) the source also shows the **Mechanical Drills** needed (count, utilisation, SU at the source's own or the global RPM); can be switched off                                                                                |
+| Mechanical Drill    | Part of the source node, not a node of its own. Always modelled as an **optimised generator** (`CobbleGenOptimisation`: drops go straight into a belt/hopper/chute next to the generated block, so nothing has to regrow). An info tooltip states this assumption                                                                   |
+| Power source nodes  | Water wheel, large water wheel, windmill (sail count), hand crank, creative motor (set speed), steam engine (see §4.4). No ports: they supply the whole plan as one network. A set count is built as given; without a count the node builds enough to cover the stress the fixed sources leave, split evenly between all such nodes |
 
 ### Heat and fuel
 
@@ -48,12 +48,12 @@ Status: design agreed, implementation not started.
 
 ### Edges (transport)
 
-Each edge has a transport type: **Belt**, **Chute**, **Pipe** or **Ideal** (unlimited).
+Each edge has a transport type: **Belt**, **Chute**, **Pipe** or **Ideal** (unlimited). New edges are ideal, so nothing is limited until a type is chosen on the edge label. Items can use belts and chutes, fluids pipes.
 
-- Belt: limit from belt RPM and stack size per entry. The belt RPM is the global RPM unless overridden on the edge. The insertion method (andesite vs. brass funnel) determines the stack size on the belt.
-- Chute: stack-based, gravity speed (see §4.3).
-- Pipe: for fluids, limit from pump RPM.
-- Over-limit edges show a warning.
+- Belt: `2.5 · RPM` entries per minute (§4.3). The belt RPM is the global RPM unless overridden on the edge. Items per entry default to **1** (andesite funnel, machine output); a brass funnel puts up to 64 per entry.
+- Chute: 4 entries per second by gravity, same items-per-entry setting; fans are not modelled.
+- Pipe: `max(1, RPM/2)` mB per tick from one pump; each pipe lane counts one Mechanical Pump (4 SU/RPM) in the stress.
+- Limits only warn, they do not cap the flow: an edge over its limit turns red and says how many parallel lanes it needs ("needs 3 belts"); the summary lists it under bottlenecks.
 
 ### Summary panel
 
@@ -108,14 +108,14 @@ Consumption = impact × |RPM|; capacity = capacity value × generator RPM. Defau
 | Encased Fan, Mechanical Crafter, Mechanical Arm, Ejector | 2               |
 | Chain Conveyor                                           | 1               |
 
-| Source            | Capacity (SU/RPM) | RPM                                               | Total SU             |
-| ----------------- | ----------------- | ------------------------------------------------- | -------------------- |
-| Water Wheel       | 32                | 8                                                 | 256                  |
-| Large Water Wheel | 128               | 4                                                 | 512                  |
-| Hand Crank        | 8                 | 32                                                | 256                  |
-| Windmill          | 512               | `clamp(floor(sails/8), 1, 16)`                    | depends on sails     |
-| Creative Motor    | 16384             | 16–256 (set)                                      | —                    |
-| Steam Engine      | 1024              | `16·m`, `m = 1 + (e ≥ 1 ? 3 : min(2, floor(4e)))` | ≈ 16384·e per engine |
+| Source            | Capacity (SU/RPM) | RPM                                                                                                    | Total SU           |
+| ----------------- | ----------------- | ------------------------------------------------------------------------------------------------------ | ------------------ |
+| Water Wheel       | 32                | 8                                                                                                      | 256                |
+| Large Water Wheel | 128               | 4                                                                                                      | 512                |
+| Hand Crank        | 8                 | 32                                                                                                     | 256                |
+| Windmill          | 512               | `clamp(floor(sails/8), 1, 16)`                                                                         | depends on sails   |
+| Creative Motor    | 16384             | 16–256 (set)                                                                                           | —                  |
+| Steam Engine      | 1024              | 16 at full efficiency (`16·m` with `m = 1 + (e ≥ 1 ? 3 : min(2, floor(4e)))`, capacity divided by `m`) | 16384·e per engine |
 
 `e` = engine efficiency from `BoilerData.getEngineEfficiency` (heat level / number of engines).
 
@@ -132,7 +132,7 @@ Consumption = impact × |RPM|; capacity = capacity value × generator RPM. Defau
 
 ### 4.4 Steam engine (simplified)
 
-The modeler does not model boiler internals or water consumption. It computes the **boiler level required** to cover the SU demand assigned to steam engines. The water pumps feeding the boiler are added to total SU consumption (pump impact 4 SU/RPM at the node's RPM) with a fixed rule:
+The modeler does not model boiler internals or water consumption. It computes the **boiler level required** to cover the SU demand assigned to steam engines: one level per engine at full efficiency (`BoilerData.getEngineEfficiency`), at most 18 per boiler, so more than 18 engines are split over several boilers. Heat sources, water and tank size are not modelled. The water pumps feeding the boiler are added to total SU consumption (pump impact 4 SU/RPM at the node's RPM) with a fixed rule:
 
 - boiler level 1–12 → **1 pump**
 - boiler level 13+ → **2 pumps**

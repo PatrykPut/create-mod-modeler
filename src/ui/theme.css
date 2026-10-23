@@ -166,6 +166,62 @@ select:focus-visible,
   stroke: var(--brass-400);
 }
 
+.react-flow__edge-path.is-over {
+  stroke: var(--danger);
+}
+
+/* edge labels and their popovers stay above the nodes */
+.react-flow__edgelabel-renderer {
+  z-index: 1001;
+}
+
+.edge-label {
+  position: absolute;
+  pointer-events: all;
+  font-size: 11px;
+}
+
+.edge-label-button {
+  padding: 0.1rem 0.35rem;
+  border: 1px solid var(--andesite-600);
+  border-radius: 3px;
+  font: inherit;
+  color: var(--andesite-100);
+  background: var(--andesite-800);
+  cursor: pointer;
+}
+
+.edge-label.is-selected .edge-label-button {
+  border-color: var(--brass-400);
+}
+
+.edge-label.is-over .edge-label-button {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.edge-popover {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 50%;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 13rem;
+  padding: 0.5rem;
+  transform: translateX(-50%);
+  border: 1px solid var(--andesite-600);
+  border-radius: 4px;
+  background: var(--andesite-800);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 40%);
+}
+
+.edge-limit {
+  margin: 0;
+  color: var(--andesite-400);
+}
+
 .react-flow__edge-textbg {
   fill: var(--andesite-800);
 }
@@ -207,6 +263,16 @@ select:focus-visible,
 .node-title {
   font-weight: 600;
   color: var(--brass-400);
+}
+
+.node-power {
+  min-width: 220px;
+  border-top-color: var(--copper-500);
+}
+
+.node-capacity {
+  color: var(--copper-400);
+  font-weight: 600;
 }
 
 .node-source .node-title {
@@ -516,5 +582,47 @@ select:focus-visible,
 }
 
 .recipe-label small {
+  color: var(--andesite-400);
+}
+
+/* --- summary: stress capacity --- */
+
+.summary-capacity {
+  color: var(--andesite-400);
+  font-size: 0.85em;
+}
+
+.summary-stress.is-over {
+  color: var(--danger);
+}
+
+.stress-bar {
+  height: 6px;
+  margin-top: 0.4rem;
+  border-radius: 3px;
+  background: var(--andesite-700);
+  overflow: hidden;
+}
+
+.stress-bar > div {
+  height: 100%;
+  background: var(--brass-500);
+}
+
+.stress-bar.is-over > div {
+  background: var(--danger);
+}
+
+.summary-warning,
+.summary-hint {
+  margin: 0.4rem 0 0;
+  font-size: 0.8rem;
+}
+
+.summary-warning {
+  color: var(--danger);
+}
+
+.summary-hint {
   color: var(--andesite-400);
 }

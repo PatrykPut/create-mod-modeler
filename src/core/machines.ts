@@ -8,6 +8,7 @@ import { millstoneCycleTicks } from './formulas/millstone'
 import { MIXER_MIN_RPM, mixerCycleTicks } from './formulas/mixer'
 import { pressCycleTicks } from './formulas/press'
 import { sawCycleTicks } from './formulas/saw'
+import type { PowerSourceId } from './model/plan'
 import { perMinuteFromTicks } from './units'
 
 export type MachineId =
@@ -308,13 +309,17 @@ export const BLAZE_BURNER = {
   name: 'Blaze Burner',
 } as const
 
-/** Anything that is counted in the machine list: recipe machines, source drills, burners. */
-export type BuiltMachineId =
-  MachineId | typeof DRILL.id | typeof BLAZE_BURNER.id
+/** Pipes and boiler water supply: 4 SU/RPM (AllBlocks.java). */
+export const PUMP = {
+  id: 'mechanical_pump',
+  name: 'Mechanical Pump',
+  stressImpact: 4,
+} as const
 
-export const machineName = (id: BuiltMachineId) =>
-  id === DRILL.id
-    ? DRILL.name
-    : id === BLAZE_BURNER.id
-      ? BLAZE_BURNER.name
-      : MACHINES[id].name
+/** Anything that is counted in the machine list. */
+export type BuiltMachineId =
+  | MachineId
+  | PowerSourceId
+  | typeof DRILL.id
+  | typeof BLAZE_BURNER.id
+  | typeof PUMP.id

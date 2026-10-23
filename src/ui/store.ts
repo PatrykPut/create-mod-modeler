@@ -11,6 +11,8 @@ import {
   type PlanEdge,
   type PlanNode,
   type Position,
+  type PowerNode,
+  type PowerSourceId,
   type RecipeNode,
   type Settings,
   type SourceNode,
@@ -24,11 +26,14 @@ interface PlanState {
     position: Position,
   ): string
   addSourceNode(item: string, position: Position): string
+  addPowerNode(source: PowerSourceId, position: Position): string
   updateRecipeNode(id: string, patch: Partial<RecipeNode>): void
   updateSourceNode(id: string, patch: Partial<SourceNode>): void
+  updatePowerNode(id: string, patch: Partial<PowerNode>): void
   moveNode(id: string, position: Position): void
   removeNodes(ids: string[]): void
   connect(edge: Omit<PlanEdge, 'id'>): void
+  updateEdge(id: string, patch: Partial<PlanEdge>): void
   removeEdges(ids: string[]): void
   updateSettings(patch: Partial<Settings>): void
   clear(): void
@@ -95,8 +100,11 @@ export const usePlanStore = create<PlanState>()(
             perMinute: 60,
             position,
           }),
+        addPowerNode: (source, position) =>
+          addNode({ id: newId(), kind: 'power', source, position }),
         updateRecipeNode: patchNode,
         updateSourceNode: patchNode,
+        updatePowerNode: patchNode,
         moveNode: (id, position) => patchNode(id, { position }),
         removeNodes: (ids) =>
           update((plan) => ({
@@ -117,6 +125,12 @@ export const usePlanStore = create<PlanState>()(
               ? {}
               : { edges: [...plan.edges, { ...edge, id: newId() }] },
           ),
+        updateEdge: (id, patch) =>
+          update((plan) => ({
+            edges: plan.edges.map((e) =>
+              e.id === id ? { ...e, ...patch } : e,
+            ),
+          })),
         removeEdges: (ids) =>
           update((plan) => ({
             edges: plan.edges.filter((e) => !ids.includes(e.id)),

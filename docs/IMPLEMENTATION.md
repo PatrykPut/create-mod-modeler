@@ -77,9 +77,12 @@ Left for later: fixed per-edge ratios, potion fluids, sandpaper as a consumed in
 
 ### M3 — Logistics & power
 
-- [ ] Edge transport types Belt / Chute / Pipe / Ideal, limits, over-limit warnings, per-edge belt RPM, insertion type (andesite/brass funnel) → stack size
-- [ ] Power source nodes: water wheel, large water wheel, windmill, hand crank, creative motor, steam engine (required boiler level; 1 pump up to level 12, 2 from level 13)
-- [ ] Summary: SU usage vs. capacity, burners and fuel, bottlenecks
+- [x] Edge transport types Belt / Chute / Pipe / Ideal, limits, over-limit warnings with lanes needed, per-edge belt/pump RPM, items per entry (single items or brass-funnel stacks)
+- [x] Power source nodes: water wheel, large water wheel, windmill, hand crank, creative motor, steam engine (required boiler level; 1 pump up to level 12, 2 from level 13); auto count or fixed
+- [x] Summary: SU usage vs. capacity, burners and fuel, bottlenecks
+- **Done** (2026-10-23): the iron chain on belts and a chute with a steam engine and water wheels shows 10,240 / 17,408 SU, including pipe and boiler pumps; a slow belt shows up as a bottleneck.
+
+Left for later: fan-driven chutes, funnel extraction rates, separate kinetic networks.
 
 ### M4 — Sharing & polish
 

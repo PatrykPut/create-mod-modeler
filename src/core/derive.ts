@@ -1,13 +1,16 @@
 // Everything the UI shows about a plan: solved rates plus machine counts, stress and totals.
 import type { Catalog } from './catalog'
+import { analyzeEdge, type EdgeAnalysis } from './logistics'
 import {
   BLAZE_BURNER,
   DRILL,
   MACHINES,
+  PUMP,
   type BuiltMachineId,
   type MachineConditions,
 } from './machines'
-import type { Plan, RecipeNode, SourceNode } from './model/plan'
+import type { Plan, PowerNode, RecipeNode, SourceNode } from './model/plan'
+import { analyzePower, type PowerAnalysis } from './power'
 import { fuelOf } from './model/ports'
 import { solve, type NodeResult, type SolveResult } from './solver/solve'
 
@@ -43,7 +46,8 @@ export interface ItemRate {
 export interface PlanAnalysis {
   ok: boolean
   nodes: Record<string, NodeAnalysis>
-  edges: Record<string, number>
+  edges: Record<string, EdgeAnalysis>
+  power: Record<string, PowerAnalysis>
   summary: {
     /** Fixed/unlimited sources plus demand on unconnected inputs. */
     inputs: ItemRate[]
@@ -52,7 +56,12 @@ export interface PlanAnalysis {
     surplus: ItemRate[]
     shortage: ItemRate[]
     machines: { machine: BuiltMachineId; count: number }[]
+    /** SU used, including pumps of pipes and boilers. */
     stress: number
+    /** SU supplied by the power nodes. */
+    capacity: number
+    /** Edges that need more than one belt, chute or pipe. */
+    bottlenecks: { edge: string; item: string; lanes: number }[]
   }
 }
 
@@ -141,6 +150,7 @@ export function analyze(plan: Plan, catalog: Catalog): PlanAnalysis {
   }
 
   for (const node of plan.nodes) {
+    if (node.kind === 'power') continue
     const result = solved.nodes[node.id]
     for (const port of result.outputs) {
       // an unconnected source is just an input, not a product
@@ -188,10 +198,44 @@ export function analyze(plan: Plan, catalog: Catalog): PlanAnalysis {
     if (analysis.burners) build(BLAZE_BURNER.id, analysis.burners, 0)
   }
 
+  const edges: Record<string, EdgeAnalysis> = {}
+  const bottlenecks: PlanAnalysis['summary']['bottlenecks'] = []
+  for (const edge of plan.edges) {
+    const analysis = analyzeEdge(
+      edge,
+      solved.edges[edge.id] ?? 0,
+      plan.settings,
+    )
+    edges[edge.id] = analysis
+    if (analysis.stress !== undefined)
+      build(PUMP.id, analysis.lanes, analysis.stress)
+    if (analysis.over)
+      bottlenecks.push({
+        edge: edge.id,
+        item: edge.item,
+        lanes: analysis.lanes,
+      })
+  }
+
+  const power = analyzePower(
+    plan.nodes.filter((n): n is PowerNode => n.kind === 'power'),
+    totalStress,
+    plan.settings.rpm,
+  )
+  let capacity = 0
+  for (const node of plan.nodes) {
+    if (node.kind !== 'power') continue
+    const p = power[node.id]
+    capacity += p.capacity
+    build(node.source, p.count, p.stress)
+    if (p.pumps) build(PUMP.id, p.pumps, 0)
+  }
+
   return {
     ok: solved.ok,
     nodes,
-    edges: solved.edges,
+    edges,
+    power,
     summary: {
       inputs: sorted(inputs),
       products: sorted(products),
@@ -202,6 +246,8 @@ export function analyze(plan: Plan, catalog: Catalog): PlanAnalysis {
         count,
       })),
       stress: totalStress,
+      capacity,
+      bottlenecks,
     },
   }
 }

@@ -8,7 +8,6 @@ import {
   ReactFlow,
   useReactFlow,
   type Connection,
-  type Edge,
   type EdgeChange,
   type FinalConnectionState,
   type IsValidConnection,
@@ -17,17 +16,22 @@ import {
 import { useCallback, useMemo, useState } from 'react'
 import { targetPortOf, type PlanEdge, type Position } from '../core/model/plan'
 import { AddDialog, type AddChoice, type AddRequest } from './AddDialog'
-import { useAnalysis } from './analysis'
 import { catalog } from './catalog'
-import { formatRate } from './format'
 import { handleId, itemOfHandle } from './nodes/handles'
+import { PowerNodeView, type PowerFlowNode } from './nodes/PowerNodeView'
 import { RecipeNodeView, type RecipeFlowNode } from './nodes/RecipeNodeView'
 import { SourceNodeView, type SourceFlowNode } from './nodes/SourceNodeView'
 import { usePlanStore } from './store'
+import { TransportEdge, type TransportFlowEdge } from './TransportEdge'
 
-type FlowNode = RecipeFlowNode | SourceFlowNode
+type FlowNode = RecipeFlowNode | SourceFlowNode | PowerFlowNode
 
-const nodeTypes = { recipe: RecipeNodeView, source: SourceNodeView }
+const nodeTypes = {
+  recipe: RecipeNodeView,
+  source: SourceNodeView,
+  power: PowerNodeView,
+}
+const edgeTypes = { transport: TransportEdge }
 
 // rough width of a recipe node, for placing new nodes left of a dragged input port
 const NODE_WIDTH = 280
@@ -52,7 +56,6 @@ function edgeBetween(
 export function Canvas() {
   const plan = usePlanStore((s) => s.plan)
   const store = usePlanStore.getState
-  const analysis = useAnalysis()
   const { screenToFlowPosition } = useReactFlow()
   const [dialog, setDialog] = useState<DialogState>()
 
@@ -78,8 +81,7 @@ export function Canvas() {
     [plan.nodes, nodeState],
   )
 
-  const unit = plan.settings.timeUnit
-  const edges = useMemo<Edge[]>(
+  const edges = useMemo<TransportFlowEdge[]>(
     () =>
       plan.edges.map((edge) => ({
         id: edge.id,
@@ -87,11 +89,12 @@ export function Canvas() {
         target: edge.target,
         sourceHandle: handleId('out', edge.item),
         targetHandle: handleId('in', targetPortOf(edge)),
-        label: formatRate(analysis.edges[edge.id] ?? 0, unit, edge.item),
+        type: 'transport',
+        data: { edge },
         className: 'flow-edge',
         selected: selectedEdges.has(edge.id),
       })),
-    [plan.edges, analysis.edges, unit, selectedEdges],
+    [plan.edges, selectedEdges],
   )
 
   const onNodesChange = useCallback(
@@ -117,7 +120,7 @@ export function Canvas() {
   )
 
   const onEdgesChange = useCallback(
-    (changes: EdgeChange[]) => {
+    (changes: EdgeChange<TransportFlowEdge>[]) => {
       const next = applyEdgeChanges(changes, edges)
       setSelectedEdges(new Set(next.filter((e) => e.selected).map((e) => e.id)))
       const removed = changes.flatMap((c) =>
@@ -223,10 +226,11 @@ export function Canvas() {
 
   return (
     <>
-      <ReactFlow<FlowNode>
+      <ReactFlow<FlowNode, TransportFlowEdge>
         nodes={nodes}
         edges={edges}
         nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
@@ -250,6 +254,21 @@ export function Canvas() {
           </button>
           <button className="button" onClick={() => openAt({ kind: 'source' })}>
             + Source
+          </button>
+          <button
+            className="button"
+            title="Add a stress source; it covers the whole plan"
+            onClick={() =>
+              store().addPowerNode(
+                'water_wheel',
+                screenToFlowPosition({
+                  x: window.innerWidth / 2 - 150,
+                  y: window.innerHeight / 2 - 100,
+                }),
+              )
+            }
+          >
+            + Power
           </button>
         </Panel>
         {plan.nodes.length === 0 && (

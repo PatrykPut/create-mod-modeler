@@ -68,6 +68,7 @@ export function portsOf(
   catalog: Catalog,
   options: PortOptions = {},
 ): NodePorts {
+  if (node.kind === 'power') return { inputs: [], outputs: [] }
   if (node.kind === 'source')
     return { inputs: [], outputs: [{ item: node.item, perRun: 1 }] }
 
