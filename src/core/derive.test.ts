@@ -195,3 +195,109 @@ describe('analyze: cobblestone → gravel → iron nuggets → iron ingot at 256
     expect(nodes.mill.stress).toBe(16 * 256)
   })
 })
+
+const single = (node: object): Plan => ({
+  ...emptyPlan(),
+  nodes: [{ id: 'n', kind: 'recipe', position: at, ...node } as PlanNode],
+  edges: [],
+})
+
+describe('heat and fuel', () => {
+  const brass = (perMinute: number, extra: object = {}) =>
+    single({
+      recipeId: 'create:mixing/brass_ingot',
+      machineId: 'mixer',
+      target: { item: 'create:brass_ingot', perMinute },
+      ...extra,
+    })
+
+  it('puts a Blaze Burner under every basin that burns fuel all the time', () => {
+    // mixer at 256 RPM: 17 ticks → 70.6 runs/min; 100 brass = 50 runs → 1 mixer
+    const { nodes, summary } = analyze(brass(100), catalog)
+    expect(nodes.n.machines.count).toBe(1)
+    expect(nodes.n.burners).toBe(1)
+    expect(nodes.n.stress).toBe(4 * 256)
+    expect(nodes.n.solved.inputs[2]).toMatchObject({
+      item: 'minecraft:coal',
+      perMinute: expect.closeTo(0.75),
+      fuel: true,
+    })
+    expect(summary.machines).toContainEqual({
+      machine: 'blaze_burner',
+      count: 1,
+    })
+    expect(summary.inputs).toContainEqual({
+      item: 'minecraft:coal',
+      perMinute: expect.closeTo(0.75),
+    })
+  })
+
+  it('counts fuel per burner, not per run', () => {
+    // 150 runs → 2.1 → 3 mixers, 3 burners
+    const { nodes } = analyze(brass(300), catalog)
+    expect(nodes.n.burners).toBe(3)
+    expect(nodes.n.solved.inputs[2].perMinute).toBeCloseTo(2.25)
+  })
+
+  it('uses the chosen fuel and returns buckets', () => {
+    const { nodes } = analyze(
+      brass(100, { fuel: 'minecraft:lava_bucket' }),
+      catalog,
+    )
+    expect(nodes.n.solved.inputs[2].perMinute).toBeCloseTo(1200 / 20000)
+    expect(nodes.n.solved.outputs).toContainEqual(
+      expect.objectContaining({
+        item: 'minecraft:bucket',
+        perMinute: expect.closeTo(1200 / 20000),
+      }),
+    )
+  })
+
+  it('needs no burner for unheated recipes', () => {
+    const { nodes } = analyze(
+      single({
+        recipeId: 'create:mixing/andesite_alloy',
+        machineId: 'mixer',
+        target: { item: 'create:andesite_alloy', perMinute: 10 },
+      }),
+      catalog,
+    )
+    expect(nodes.n.burners).toBe(0)
+    expect(nodes.n.solved.inputs).toHaveLength(2)
+  })
+
+  it('warns when a mixer turns too slowly', () => {
+    const { nodes } = analyze(brass(100, { rpm: 16 }), catalog)
+    expect(nodes.n.warning).toMatch(/at least 30 RPM/)
+  })
+
+  it('burns furnace fuel per item', () => {
+    const { nodes } = analyze(
+      single({
+        recipeId: 'minecraft:iron_ingot_from_smelting_raw_iron',
+        machineId: 'furnace',
+        target: { item: 'minecraft:iron_ingot', perMinute: 12 },
+      }),
+      catalog,
+    )
+    // 200 ticks → 6 per furnace; 12 × 200 / 1600 coal
+    expect(nodes.n.machines.count).toBe(2)
+    expect(nodes.n.stress).toBe(0)
+    expect(nodes.n.solved.inputs[1].perMinute).toBeCloseTo(1.5)
+  })
+})
+
+describe('mechanical crafter', () => {
+  it('counts one crafter per grid cell for stress', () => {
+    const { nodes } = analyze(
+      single({
+        recipeId: 'create:mechanical_crafting/crushing_wheel',
+        machineId: 'mechanical_crafter',
+        target: { item: 'create:crushing_wheel', perMinute: 2 },
+      }),
+      catalog,
+    )
+    expect(nodes.n.machines.count).toBe(1)
+    expect(nodes.n.stress).toBe(21 * 2 * 256)
+  })
+})

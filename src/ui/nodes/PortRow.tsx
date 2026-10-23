@@ -16,9 +16,9 @@ export function PortRow({
 }) {
   const problem =
     side === 'in' && port.shortage > 1e-6
-      ? `Missing ${formatRate(port.shortage, unit)}`
+      ? `Missing ${formatRate(port.shortage, unit, port.item)}`
       : side === 'out' && port.surplus > 1e-6
-        ? `Surplus ${formatRate(port.surplus, unit)}`
+        ? `Surplus ${formatRate(port.surplus, unit, port.item)}`
         : undefined
 
   return (
@@ -31,11 +31,14 @@ export function PortRow({
       <ItemIcon item={port.item} />
       <span className="port-name">
         <ItemName item={port.item} />
+        {port.fuel && <span className="port-tag"> fuel</span>}
         {port.chance !== undefined && (
           <span className="port-chance"> {formatPercent(port.chance)}</span>
         )}
       </span>
-      <span className="port-rate">{formatRate(port.perMinute, unit)}</span>
+      <span className="port-rate">
+        {formatRate(port.perMinute, unit, port.item)}
+      </span>
       {problem && (
         <span
           className={`port-problem ${side === 'in' ? 'is-shortage' : 'is-surplus'}`}

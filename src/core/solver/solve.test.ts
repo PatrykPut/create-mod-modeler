@@ -13,7 +13,27 @@ import { solve } from './solve'
 const data: GameData = {
   meta: { create: 'test', minecraft: 'test', createTag: 'test' },
   items: {},
+  tags: { '#t': ['x', 'y'] },
   recipes: [
+    {
+      id: 'tc',
+      type: 'milling',
+      inputs: [{ item: '#t', amount: 1 }],
+      outputs: [{ item: 'c', amount: 1, chance: 1 }],
+    },
+    {
+      id: 'smelt',
+      type: 'smelting',
+      inputs: [{ item: 'a', amount: 1 }],
+      outputs: [{ item: 'b', amount: 1, chance: 1 }],
+    },
+    {
+      id: 'hot',
+      type: 'mixing',
+      heat: 'heated',
+      inputs: [{ item: 'a', amount: 1 }],
+      outputs: [{ item: 'b', amount: 1, chance: 1 }],
+    },
     {
       id: 'ab',
       type: 'milling',
@@ -183,5 +203,61 @@ describe('solve', () => {
       catalog,
     )
     expect(result.nodes.r1.runsPerMinute).toBeCloseTo(0)
+  })
+
+  it('feeds members of a tag into a tag input', () => {
+    const result = solve(
+      plan(
+        [source('x', 'x', 10), source('y', 'y', 5), recipe('r', 'tc')],
+        [
+          { ...edge('x', 'r', 'x'), targetItem: '#t' },
+          { ...edge('y', 'r', 'y'), targetItem: '#t' },
+        ],
+      ),
+      catalog,
+    )
+    expect(result.nodes.r.runsPerMinute).toBeCloseTo(15)
+    expect(result.nodes.r.inputs[0]).toMatchObject({
+      item: '#t',
+      connected: true,
+      shortage: 0,
+    })
+  })
+
+  it('adds a fixed fuel demand for the Blaze Burners of a heated recipe', () => {
+    const hot = {
+      ...recipe('r', 'hot', { item: 'b', perMinute: 10 }),
+      machineId: 'mixer',
+    } as PlanNode
+    const result = solve(plan([hot], []), catalog, { burners: { r: 2 } })
+    expect(result.nodes.r.inputs[1]).toMatchObject({
+      item: 'minecraft:coal',
+      // 2 burners × 1200 / 1600 ticks
+      perMinute: expect.closeTo(1.5),
+      fuel: true,
+    })
+    // a connected fuel supply has to cover it
+    const fed = solve(
+      plan(
+        [hot, source('coal', 'minecraft:coal', 1)],
+        [edge('coal', 'r', 'minecraft:coal')],
+      ),
+      catalog,
+      { burners: { r: 2 } },
+    )
+    expect(fed.nodes.r.inputs[1].shortage).toBeCloseTo(0.5)
+  })
+
+  it('burns furnace fuel per item', () => {
+    const smelt = {
+      ...recipe('r', 'smelt', { item: 'b', perMinute: 16 }),
+      machineId: 'furnace',
+    } as PlanNode
+    const result = solve(plan([smelt], []), catalog)
+    // 200 ticks per item, coal burns 1600
+    expect(result.nodes.r.inputs[1]).toMatchObject({
+      item: 'minecraft:coal',
+      perMinute: expect.closeTo(2),
+    })
   })
 })

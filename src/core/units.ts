@@ -10,6 +10,9 @@ const MINUTES_PER_UNIT: Record<TimeUnit, number> = {
 
 export const TICKS_PER_SECOND = 20
 
+/** Fluids are resources with a "fluid:" prefix; their amounts are in mB. */
+export const isFluid = (resource: string) => resource.startsWith('fluid:')
+
 export function fromPerMinute(ratePerMinute: number, unit: TimeUnit): number {
   return ratePerMinute * MINUTES_PER_UNIT[unit]
 }

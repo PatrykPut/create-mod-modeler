@@ -1,14 +1,16 @@
 // Turns a plan into one linear program (see docs/IMPLEMENTATION.md "Solver").
 import { solve as solveLp, type Coefficients, type Constraint } from 'yalps'
 import type { Catalog } from '../catalog'
-import type { Plan, PlanEdge } from '../model/plan'
-import { portsOf } from '../model/ports'
+import { targetPortOf, type Plan, type PlanEdge } from '../model/plan'
+import { portsOf, type PortOptions } from '../model/ports'
 
 export interface PortResult {
   item: string
   /** Total production (outputs) or consumption (inputs) per minute. */
   perMinute: number
   chance?: number
+  /** Fuel port of a heated basin or furnace. */
+  fuel?: boolean
   connected: boolean
   /** Inputs: demand the connected suppliers cannot cover. */
   shortage: number
@@ -38,7 +40,11 @@ const IMBALANCE_COST = 1e-3
 const portKey = (node: string, side: 'in' | 'out', item: string) =>
   `port:${node}:${side}:${item}`
 
-export function solve(plan: Plan, catalog: Catalog): SolveResult {
+export function solve(
+  plan: Plan,
+  catalog: Catalog,
+  options: PortOptions = {},
+): SolveResult {
   const constraints = new Map<string, Constraint>()
   const variables = new Map<string, Coefficients<string>>()
   const addTo = (variable: string, constraint: string, coefficient: number) => {
@@ -54,7 +60,7 @@ export function solve(plan: Plan, catalog: Catalog): SolveResult {
   const edgesInto = new Map<string, PlanEdge[]>()
   const edgesOutOf = new Map<string, PlanEdge[]>()
   for (const edge of plan.edges) {
-    const into = portKey(edge.target, 'in', edge.item)
+    const into = portKey(edge.target, 'in', targetPortOf(edge))
     const outOf = portKey(edge.source, 'out', edge.item)
     edgesInto.set(into, [...(edgesInto.get(into) ?? []), edge])
     edgesOutOf.set(outOf, [...(edgesOutOf.get(outOf) ?? []), edge])
@@ -62,7 +68,7 @@ export function solve(plan: Plan, catalog: Catalog): SolveResult {
   }
 
   const ports = new Map(
-    plan.nodes.map((node) => [node.id, portsOf(node, catalog)]),
+    plan.nodes.map((node) => [node.id, portsOf(node, catalog, options)]),
   )
 
   for (const node of plan.nodes) {
@@ -75,7 +81,8 @@ export function solve(plan: Plan, catalog: Catalog): SolveResult {
       const key = portKey(node.id, 'out', port.item)
       const edges = edgesOutOf.get(key)
       if (!edges) continue
-      constraints.set(key, { equal: 0 })
+      // fixed amounts (e.g. burner fuel) do not scale with the runs
+      constraints.set(key, { equal: -(port.fixed ?? 0) })
       addTo(run, key, port.perRun)
       for (const edge of edges) addTo(`flow:${edge.id}`, key, -1)
       variable(`surplus:${key}`, SURPLUS_COST)
@@ -88,7 +95,7 @@ export function solve(plan: Plan, catalog: Catalog): SolveResult {
       const key = portKey(node.id, 'in', port.item)
       const edges = edgesInto.get(key)
       if (!edges) continue
-      constraints.set(key, { equal: 0 })
+      constraints.set(key, { equal: -(port.fixed ?? 0) })
       addTo(run, key, port.perRun)
       for (const edge of edges) addTo(`flow:${edge.id}`, key, -1)
       variable(`shortage:${key}`, SHORTAGE_COST)
@@ -149,8 +156,9 @@ export function solve(plan: Plan, catalog: Catalog): SolveResult {
       const connected = (side === 'in' ? edgesInto : edgesOutOf).has(key)
       return {
         item: port.item,
-        perMinute: runs * port.perRun,
+        perMinute: runs * port.perRun + (port.fixed ?? 0),
         ...(port.chance !== undefined && { chance: port.chance }),
+        ...(port.fuel && { fuel: true }),
         connected,
         shortage: side === 'in' ? get(`shortage:${key}`) : 0,
         surplus: side === 'out' ? get(`surplus:${key}`) : 0,

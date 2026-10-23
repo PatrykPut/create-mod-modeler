@@ -14,10 +14,13 @@ import { dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import type { GameData, ItemInfo, Recipe } from '../../src/data/types.ts'
 import {
-  deriveCompacting,
-  isSupportedCreateType,
-  normalizeCreateRecipe,
+  bucketRecipes,
+  createNormalizer,
+  type Normalizer,
 } from './normalize.ts'
+import { iconTexture } from './models.ts'
+import { runtimeRecipes } from './runtime.ts'
+import { TagIndex, type TagKind } from './tags.ts'
 
 const CREATE_VERSION = '6.0.10'
 const MINECRAFT_VERSION = '1.21.1'
@@ -42,22 +45,40 @@ const sources = {
     ref: CREATE_TAG,
     paths: [
       'src/generated/resources/data/create/recipe/',
+      'src/generated/resources/data/*/tags/item/',
+      'src/generated/resources/data/*/tags/fluid/',
       'src/generated/resources/assets/create/lang/en_us.json',
       'src/main/resources/assets/create/textures/item/',
       'src/main/resources/assets/create/textures/block/',
+      'src/main/resources/assets/create/models/',
+      'src/generated/resources/assets/create/models/',
     ],
   },
   vanillaData: {
     dir: join(cache, `mcmeta-${MINECRAFT_VERSION}-data-json`),
     repo: 'https://github.com/misode/mcmeta.git',
     ref: `${MINECRAFT_VERSION}-data-json`,
-    paths: ['data/minecraft/recipe/'],
+    paths: [
+      'data/minecraft/recipe/',
+      'data/minecraft/tags/item/',
+      'data/minecraft/tags/fluid/',
+    ],
+  },
+  // `c:` convention tags (Create's recipes use e.g. #c:ingots/iron)
+  neoforge: {
+    dir: join(cache, `neoforge-${MINECRAFT_VERSION}`),
+    repo: 'https://github.com/neoforged/NeoForge.git',
+    ref: MINECRAFT_VERSION,
+    paths: [
+      'src/generated/resources/data/c/tags/item/',
+      'src/generated/resources/data/c/tags/fluid/',
+    ],
   },
   vanillaLang: {
     dir: join(cache, `mcmeta-${MINECRAFT_VERSION}-assets-json`),
     repo: 'https://github.com/misode/mcmeta.git',
     ref: `${MINECRAFT_VERSION}-assets-json`,
-    paths: ['assets/minecraft/lang/en_us.json'],
+    paths: ['assets/minecraft/lang/en_us.json', 'assets/minecraft/models/'],
   },
   vanillaTextures: {
     dir: join(cache, `mcmeta-${MINECRAFT_VERSION}-assets`),
@@ -71,24 +92,30 @@ const sources = {
 } satisfies Record<string, Source>
 
 function git(cwd: string, ...args: string[]) {
-  execFileSync('git', args, { cwd, stdio: 'inherit' })
+  // HTTP/1.1: large blob fetches over HTTP/2 fail with "RPC failed; curl 16"
+  execFileSync('git', ['-c', 'http.version=HTTP/1.1', ...args], {
+    cwd,
+    stdio: 'inherit',
+  })
 }
 
 function fetchSource({ dir, repo, ref, paths }: Source) {
-  if (existsSync(dir)) return
-  console.log(`Fetching ${repo} @ ${ref}`)
-  mkdirSync(dirname(dir), { recursive: true })
-  git(
-    dirname(dir),
-    'clone',
-    '--quiet',
-    '--depth=1',
-    `--branch=${ref}`,
-    '--filter=blob:none',
-    '--sparse',
-    repo,
-    dir,
-  )
+  if (!existsSync(dir)) {
+    console.log(`Fetching ${repo} @ ${ref}`)
+    mkdirSync(dirname(dir), { recursive: true })
+    git(
+      dirname(dir),
+      'clone',
+      '--quiet',
+      '--depth=1',
+      `--branch=${ref}`,
+      '--filter=blob:none',
+      '--sparse',
+      repo,
+      dir,
+    )
+  }
+  // also run for cached clones, so new paths get checked out
   git(dir, 'sparse-checkout', 'set', '--no-cone', ...paths.map((p) => `/${p}`))
 }
 
@@ -110,7 +137,28 @@ function jsonFiles(dir: string): [string, string][] {
   return result.sort(([a], [b]) => a.localeCompare(b))
 }
 
-function collectRecipes(): Recipe[] {
+/** Tags of the namespaces we model; files below `<root>/<namespace>/tags/<kind>/`. */
+function collectTags(): TagIndex {
+  const tags = new TagIndex((id) => /^(minecraft|create):/.test(id))
+  const roots = [
+    join(sources.vanillaData.dir, 'data'),
+    join(sources.neoforge.dir, 'src/generated/resources/data'),
+    join(sources.create.dir, 'src/generated/resources/data'),
+  ]
+  for (const root of roots) {
+    for (const namespace of readdirSync(root)) {
+      for (const kind of ['item', 'fluid'] satisfies TagKind[]) {
+        const dir = join(root, namespace, 'tags', kind)
+        if (!existsSync(dir)) continue
+        for (const [name, path] of jsonFiles(dir))
+          tags.add(kind, `${namespace}:${name}`, readJson(path))
+      }
+    }
+  }
+  return tags
+}
+
+function collectRecipes(normalizer: Normalizer, lang: Lang): Recipe[] {
   const recipes: Recipe[] = []
   let skipped = 0
 
@@ -120,30 +168,54 @@ function collectRecipes(): Recipe[] {
   )
   for (const [name, path] of jsonFiles(createDir)) {
     const raw = readJson(path)
-    if (!isSupportedCreateType(raw)) continue
-    const recipe = normalizeCreateRecipe(`create:${name}`, raw)
+    // Create's own crafting, stonecutting and smelting recipes
+    if (String(raw.type).startsWith('minecraft:')) {
+      recipes.push(...normalizer.vanillaRecipes(`create:${name}`, raw))
+      continue
+    }
+    const recipe = normalizer.createRecipe(`create:${name}`, raw)
     if (recipe) recipes.push(recipe)
-    else skipped++
+    else if (/^create:(?!sequenced_assembly)/.test(String(raw.type))) skipped++
   }
 
   const vanillaDir = join(sources.vanillaData.dir, 'data/minecraft/recipe')
-  for (const [name, path] of jsonFiles(vanillaDir)) {
-    const recipe = deriveCompacting(`minecraft:${name}`, readJson(path))
-    if (recipe) recipes.push(recipe)
+  for (const [name, path] of jsonFiles(vanillaDir))
+    recipes.push(
+      ...normalizer.vanillaRecipes(`minecraft:${name}`, readJson(path)),
+    )
+
+  // item registry, approximated by the item and block names in the language files
+  const registry = new Set(
+    Object.keys(lang).flatMap((key) => {
+      const match = /^(?:item|block)\.(minecraft|create)\.([a-z0-9_]+)$/.exec(
+        key,
+      )
+      return match ? [`${match[1]}:${match[2]}`] : []
+    }),
+  )
+  recipes.push(...runtimeRecipes(registry))
+
+  const fluids = new Set<string>()
+  for (const recipe of recipes)
+    for (const { item } of [...recipe.inputs, ...recipe.outputs])
+      if (item.startsWith('fluid:') && !item.includes('#'))
+        fluids.add(item.slice(6))
+  for (const fluid of [...fluids].sort()) {
+    const [namespace, path] = fluid.split(':')
+    if (lang[`item.${namespace}.${path}_bucket`])
+      recipes.push(...bucketRecipes(fluid, `${namespace}:${path}_bucket`))
   }
 
   console.log(
-    `${recipes.length} recipes (skipped ${skipped} of the supported types: mod compat, tags or fluids)`,
+    `${recipes.length} recipes (skipped ${skipped} Create recipes: mod compat or unsupported ingredients)`,
   )
   return recipes
 }
 
-function titleCase(path: string) {
-  return path.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
-}
+type Lang = Record<string, string>
 
-function collectItems(recipes: Recipe[]): Record<string, ItemInfo> {
-  const lang = {
+function readLang(): Lang {
+  return {
     ...readJson(
       join(sources.vanillaLang.dir, 'assets/minecraft/lang/en_us.json'),
     ),
@@ -153,50 +225,129 @@ function collectItems(recipes: Recipe[]): Record<string, ItemInfo> {
         'src/generated/resources/assets/create/lang/en_us.json',
       ),
     ),
-  } as Record<string, string>
+  } as Lang
+}
 
+function titleCase(path: string) {
+  return path.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+}
+
+const MAX_LISTED_MEMBERS = 3
+
+function collectItems(
+  recipes: Recipe[],
+  normalizer: Normalizer,
+  lang: Lang,
+): Record<string, ItemInfo> {
   const ids = new Set<string>()
   for (const recipe of recipes) {
     for (const { item } of [...recipe.inputs, ...recipe.outputs]) ids.add(item)
+    if (recipe.tool) ids.add(recipe.tool)
   }
+  for (const id of [...ids])
+    for (const member of normalizer.tags.get(id) ?? []) ids.add(member)
 
   rmSync(textureDir, { recursive: true, force: true })
   const items: Record<string, ItemInfo> = {}
-  let withoutIcon = 0
-  for (const id of [...ids].sort()) {
-    const [namespace, path] = id.split(':')
-    const name =
-      lang[`item.${namespace}.${path}`] ??
-      lang[`block.${namespace}.${path}`] ??
-      titleCase(path)
-    const item: ItemInfo = { id, name }
 
-    const texturesRoot =
-      namespace === 'create'
-        ? join(sources.create.dir, 'src/main/resources/assets/create/textures')
-        : join(sources.vanillaTextures.dir, 'assets/minecraft/textures')
-    const texture = ['item', 'block']
-      .map((kind) => join(texturesRoot, kind, `${path}.png`))
+  /** Copies the item's (or block's) texture and returns its icon path. */
+  const modelFiles = (namespace: string, path: string) =>
+    namespace === 'create'
+      ? ['generated', 'main'].map((set) =>
+          join(
+            sources.create.dir,
+            `src/${set}/resources/assets/create/models/${path}.json`,
+          ),
+        )
+      : [
+          join(
+            sources.vanillaLang.dir,
+            `assets/${namespace}/models/${path}.json`,
+          ),
+        ]
+  const readModel = (id: string) => {
+    const [namespace, path] = id.split(':')
+    const file = modelFiles(namespace, path).find(existsSync)
+    return file ? readJson(file) : undefined
+  }
+  const textureFile = (texture: string) => {
+    const [namespace, path] = texture.split(':')
+    return namespace === 'create'
+      ? join(
+          sources.create.dir,
+          `src/main/resources/assets/create/textures/${path}.png`,
+        )
+      : join(
+          sources.vanillaTextures.dir,
+          `assets/${namespace}/textures/${path}.png`,
+        )
+  }
+
+  /** Copies the texture that best shows the item and returns its icon path. */
+  function icon(namespace: string, path: string): string | undefined {
+    const texture = [
+      `${namespace}:item/${path}`,
+      `${namespace}:block/${path}`,
+      iconTexture(`${namespace}:${path}`, readModel),
+    ]
+      .filter((t) => t !== undefined)
+      .map(textureFile)
       .find(existsSync)
-    if (texture) {
-      const target = join(textureDir, namespace, `${path}.png`)
-      mkdirSync(dirname(target), { recursive: true })
-      copyFileSync(texture, target)
-      item.icon = `textures/${namespace}/${path}.png`
-    } else {
-      withoutIcon++
-    }
+    if (!texture) return undefined
+    const target = join(textureDir, namespace, `${path}.png`)
+    mkdirSync(dirname(target), { recursive: true })
+    copyFileSync(texture, target)
+    return `textures/${namespace}/${path}.png`
+  }
+
+  const sorted = [...ids].sort()
+  // plain items and fluids first: tag names and icons are built from their members
+  for (const id of sorted.filter((id) => !id.includes('#'))) {
+    const fluid = id.startsWith('fluid:')
+    const [namespace, path] = (fluid ? id.slice(6) : id).split(':')
+    const name = fluid
+      ? (lang[`fluid.${namespace}.${path}`] ??
+        lang[`block.${namespace}.${path}`] ??
+        titleCase(path))
+      : (lang[`item.${namespace}.${path}`] ??
+        lang[`block.${namespace}.${path}`] ??
+        titleCase(path))
+    const item: ItemInfo = { id, name }
+    const iconPath = icon(namespace, fluid ? `${path}_bucket` : path)
+    if (iconPath) item.icon = iconPath
     items[id] = item
   }
-  console.log(`${ids.size} items (${withoutIcon} without icon)`)
+  for (const id of sorted.filter((id) => id.includes('#'))) {
+    const members = normalizer.tags.get(id) ?? []
+    const names = members.map((member) => items[member].name)
+    let name: string
+    if (names.length <= MAX_LISTED_MEMBERS) name = names.join(' / ')
+    else if (normalizer.syntheticTags.has(id))
+      name = `${names[0]} (or ${names.length - 1} others)`
+    else name = `${titleCase(id.split(/[:/]/).at(-1)!)} (any)`
+    const item: ItemInfo = { id, name }
+    const iconPath = items[members[0]]?.icon
+    if (iconPath) item.icon = iconPath
+    items[id] = item
+  }
+
+  const withoutIcon = Object.values(items).filter((i) => !i.icon).length
+  console.log(
+    `${sorted.length} items, fluids and tags (${withoutIcon} without icon)`,
+  )
   return items
 }
 
 function main() {
   for (const source of Object.values(sources)) fetchSource(source)
 
-  const recipes = collectRecipes()
-  const items = collectItems(recipes)
+  const lang = readLang()
+  const normalizer = createNormalizer(collectTags())
+  const recipes = collectRecipes(normalizer, lang)
+  const items = collectItems(recipes, normalizer, lang)
+  const tags = Object.fromEntries(
+    [...normalizer.tags].sort(([a], [b]) => a.localeCompare(b)),
+  )
   const data: GameData = {
     meta: {
       create: CREATE_VERSION,
@@ -204,6 +355,7 @@ function main() {
       createTag: CREATE_TAG,
     },
     items,
+    tags,
     recipes,
   }
   writeFileSync(outFile, JSON.stringify(data, null, 1) + '\n')

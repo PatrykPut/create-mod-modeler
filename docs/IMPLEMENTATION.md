@@ -64,11 +64,16 @@ Left for later milestones: tag ingredients (e.g. `c:eggs`), block icons via item
 
 ### M2 — Breadth: recipes, fluids, heat
 
-- [ ] Data script: all v1 recipe types; derived shapeless → mixer, stonecutting → saw; fan blasting/smoking from vanilla smelting/smoking; furnace node
-- [ ] Formulas: mixer (**re-verify first**), saw, deployer, spout, item drain, mechanical crafter (approximation, flagged in UI), item application, sandpaper polishing
+- [x] Data script: all v1 recipe types; derived shapeless → mixer, stonecutting → saw; fan blasting/smoking from vanilla smelting/smoking; furnace node
+- [x] Formulas: mixer (re-verified), saw, deployer, spout, item drain, mechanical crafter (approximation, flagged in UI), item application, sandpaper polishing
 - [x] Mechanical drills on cobblestone/basalt sources (optimised generator + info tooltip, tick-simulated against the source)
-- [ ] Fluids as resources (mB/min ports)
-- [ ] Heat: burner count, fuel input port with fuel picker, continuous consumption
+- [x] Fluids as resources (mB/min ports)
+- [x] Heat: burner count, fuel input port with fuel picker, continuous consumption
+- [x] Carried over from M1: tag ingredients (tag ports any member can feed), block icons via item models
+- [x] Create's runtime-generated recipes (log sawing, concrete washing), bucket filling/emptying
+- **Done** (2026-10-23): 1710 recipes; brass (heated mixer + burner + coal), log → planks → crushing wheel (crafter, tag input) and lava → bucket (spout) solve in the app.
+
+Left for later: fixed per-edge ratios, potion fluids, sandpaper as a consumed input.
 
 ### M3 — Logistics & power
 
@@ -85,6 +90,8 @@ Left for later milestones: tag ingredients (e.g. `c:eggs`), block icons via item
 
 ## Open verifications
 
-- Mixer cycle formula (DESIGN §4.1) — recompute from source before implementing
+- ~~Mixer cycle formula~~ — recomputed from source (DESIGN §4.1)
+- Belt hand-off delays for saw, drain and other belt-fed machines (assumed not to be the bottleneck)
+- Mechanical crafter refill time and grid layout (approximation)
 - ~~License of Create's textures~~ — checked: assets are All Rights Reserved; decided to ship them anyway (DESIGN §1)
 - ~~Git tag of the Create 6.0.10 release~~ — `mc1.21.1-6.0.10`

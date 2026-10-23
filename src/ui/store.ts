@@ -111,7 +111,8 @@ export const usePlanStore = create<PlanState>()(
               (e) =>
                 e.source === edge.source &&
                 e.target === edge.target &&
-                e.item === edge.item,
+                e.item === edge.item &&
+                e.targetItem === edge.targetItem,
             )
               ? {}
               : { edges: [...plan.edges, { ...edge, id: newId() }] },

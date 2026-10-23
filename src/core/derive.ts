@@ -1,13 +1,15 @@
 // Everything the UI shows about a plan: solved rates plus machine counts, stress and totals.
 import type { Catalog } from './catalog'
 import {
+  BLAZE_BURNER,
   DRILL,
   MACHINES,
   type BuiltMachineId,
   type MachineConditions,
 } from './machines'
 import type { Plan, RecipeNode, SourceNode } from './model/plan'
-import { solve, type NodeResult } from './solver/solve'
+import { fuelOf } from './model/ports'
+import { solve, type NodeResult, type SolveResult } from './solver/solve'
 
 const EPSILON = 1e-9
 
@@ -27,6 +29,10 @@ export interface NodeAnalysis {
   /** SU, computed with the rounded-up machine count. */
   stress: number
   conditions?: MachineConditions
+  /** Blaze Burners under the basins of a heated recipe (one per machine). */
+  burners?: number
+  /** The machine cannot run like this, e.g. too slow. */
+  warning?: string
 }
 
 export interface ItemRate {
@@ -80,8 +86,46 @@ const sorted = (rates: Map<string, number>): ItemRate[] =>
     .map(([item, perMinute]) => ({ item, perMinute }))
     .sort((a, b) => a.item.localeCompare(b.item))
 
+/** Machine units a recipe node needs for its solved runs. */
+function recipeMachines(
+  node: RecipeNode,
+  result: NodeResult,
+  plan: Plan,
+  catalog: Catalog,
+): MachineCount {
+  const recipe = catalog.recipe(node.recipeId)
+  return machineCount(
+    result.runsPerMinute,
+    recipe
+      ? MACHINES[node.machineId].runsPerMinute(recipe, conditionsOf(node, plan))
+      : 0,
+  )
+}
+
+/**
+ * Blaze Burners burn fuel continuously, so their fuel depends on the rounded-up machine count:
+ * solve once for the counts, then again with each heated node's burner fuel as a fixed demand.
+ */
+function solveWithBurners(plan: Plan, catalog: Catalog) {
+  const first = solve(plan, catalog)
+  const burners: Record<string, number> = {}
+  for (const node of plan.nodes) {
+    if (node.kind !== 'recipe' || !fuelOf(node, catalog)?.burner) continue
+    burners[node.id] = recipeMachines(
+      node,
+      first.nodes[node.id],
+      plan,
+      catalog,
+    ).count
+  }
+  const solved: SolveResult = Object.keys(burners).length
+    ? solve(plan, catalog, { burners })
+    : first
+  return { solved, burners }
+}
+
 export function analyze(plan: Plan, catalog: Catalog): PlanAnalysis {
-  const solved = solve(plan, catalog)
+  const { solved, burners } = solveWithBurners(plan, catalog)
   const nodes: Record<string, NodeAnalysis> = {}
   const inputs = new Map<string, number>()
   const products = new Map<string, number>()
@@ -125,14 +169,23 @@ export function analyze(plan: Plan, catalog: Catalog): PlanAnalysis {
     const machine = MACHINES[node.machineId]
     const recipe = catalog.recipe(node.recipeId)
     const conditions = conditionsOf(node, plan)
-    const machines = machineCount(
-      result.runsPerMinute,
-      recipe ? machine.runsPerMinute(recipe, conditions) : 0,
-    )
+    const machines = recipeMachines(node, result, plan, catalog)
+    const blocks =
+      recipe && machine.blocksPerUnit ? machine.blocksPerUnit(recipe) : 1
     const stress =
-      machines.count * machine.stressImpact * Math.abs(conditions.rpm)
-    nodes[node.id] = { solved: result, machines, stress, conditions }
+      machines.count * blocks * machine.stressImpact * Math.abs(conditions.rpm)
+    const analysis: NodeAnalysis = {
+      solved: result,
+      machines,
+      stress,
+      conditions,
+    }
+    if (machine.basin) analysis.burners = burners[node.id] ?? 0
+    if (machine.minRpm && Math.abs(conditions.rpm) < machine.minRpm)
+      analysis.warning = `${machine.name} needs at least ${machine.minRpm} RPM.`
+    nodes[node.id] = analysis
     build(node.machineId, machines.count, stress)
+    if (analysis.burners) build(BLAZE_BURNER.id, analysis.burners, 0)
   }
 
   return {

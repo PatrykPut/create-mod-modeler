@@ -16,6 +16,7 @@
   --copper-400: #dc8a5e;
   --danger: #ef6b5b;
   --warning: #e8b34a;
+  --superheated: #7fb8e8;
 
   color-scheme: dark;
   font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
@@ -259,9 +260,31 @@ select:focus-visible,
   white-space: nowrap;
 }
 
-.port-chance {
+.port-chance,
+.port-tag {
   color: var(--andesite-400);
   font-size: 0.7rem;
+}
+
+.node-heat {
+  padding: 0.05rem 0.35rem;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--andesite-900);
+  background: var(--copper-400);
+}
+
+.node-heat.is-superheated {
+  background: var(--superheated);
+}
+
+.node-warning {
+  margin: 0;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.75rem;
+  color: var(--andesite-900);
+  background: var(--warning);
 }
 
 .port-rate {
@@ -329,6 +352,9 @@ select:focus-visible,
   display: inline-block;
   flex: none;
   image-rendering: pixelated;
+  /* animated textures are vertical strips of frames: show the first */
+  object-fit: cover;
+  object-position: top;
 }
 
 .item-icon-placeholder {

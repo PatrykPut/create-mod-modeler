@@ -1,4 +1,4 @@
-import { fromPerMinute, type TimeUnit } from '../core/units'
+import { fromPerMinute, isFluid, type TimeUnit } from '../core/units'
 
 const UNIT_SUFFIX: Record<TimeUnit, string> = {
   second: '/s',
@@ -12,8 +12,14 @@ export function formatNumber(value: number): string {
   return value.toLocaleString('en-US', { maximumFractionDigits: digits })
 }
 
-export function formatRate(perMinute: number, unit: TimeUnit): string {
-  return `${formatNumber(fromPerMinute(perMinute, unit))}${UNIT_SUFFIX[unit]}`
+/** @param resource fluids are shown in mB */
+export function formatRate(
+  perMinute: number,
+  unit: TimeUnit,
+  resource?: string,
+): string {
+  const mB = resource && isFluid(resource) ? ' mB' : ''
+  return `${formatNumber(fromPerMinute(perMinute, unit))}${mB}${UNIT_SUFFIX[unit]}`
 }
 
 export function formatStress(su: number): string {

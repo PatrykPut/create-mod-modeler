@@ -26,7 +26,9 @@ function RateList({
             <span className="summary-name">
               <ItemName item={item} />
             </span>
-            <span className="summary-value">{formatRate(perMinute, unit)}</span>
+            <span className="summary-value">
+              {formatRate(perMinute, unit, item)}
+            </span>
           </li>
         ))}
       </ul>

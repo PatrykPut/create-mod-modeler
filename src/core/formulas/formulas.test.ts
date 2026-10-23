@@ -4,6 +4,10 @@ import { drillCycleTicks } from './drill'
 import { fanCycleTicks } from './fan'
 import { millstoneCycleTicks } from './millstone'
 import { pressCycleTicks } from './press'
+import { crafterCycleTicks } from './crafter'
+import { deployerCycleTicks } from './deployer'
+import { mixerCycleTicks } from './mixer'
+import { sawCycleTicks } from './saw'
 
 describe('crushing wheels', () => {
   it('single items: phase 1 runs at the 20/tick cap, phase 2 at RPM speed', () => {
@@ -69,5 +73,60 @@ describe('mechanical press', () => {
     // 16 RPM: step 2 → 60 + 61 + 1
     expect(pressCycleTicks(16)).toBe(122)
     expect(pressCycleTicks(0)).toBe(Infinity)
+  })
+})
+
+describe('mechanical mixer', () => {
+  it('processes one recipe every P + 1 ticks while running continuously', () => {
+    // P = floor(log2(floor(512 / rpm))) * ceil(15 * T / 100) + 1, T defaults to 100
+    expect(mixerCycleTicks(undefined, 256)).toBe(17)
+    expect(mixerCycleTicks(undefined, 128)).toBe(32)
+    expect(mixerCycleTicks(undefined, 64)).toBe(47)
+    expect(mixerCycleTicks(undefined, 30)).toBe(62)
+  })
+
+  it('scales with the recipe processing time', () => {
+    // brass: no time → factor 15; T = 200 → factor 30
+    expect(mixerCycleTicks(200, 64)).toBe(3 * 30 + 1 + 1)
+  })
+
+  it('is as fast as possible from 512 RPM and stops below 30 RPM', () => {
+    expect(mixerCycleTicks(undefined, 512)).toBe(2)
+    expect(mixerCycleTicks(undefined, 29)).toBe(Infinity)
+  })
+})
+
+describe('mechanical saw', () => {
+  it('cuts after floor((T - 5) / s) + 1 ticks and outputs ceil(20 / s) later', () => {
+    // s = rpm / 24 = 10.67 at 256 RPM
+    expect(sawCycleTicks(50, 256)).toBe(5 + 2)
+    // s = 1.33 at 32 RPM: 34 + 15
+    expect(sawCycleTicks(50, 32)).toBe(49)
+  })
+
+  it('clamps the speed to 1..128 per tick', () => {
+    expect(sawCycleTicks(50, 8)).toBe(46 + 20)
+    expect(sawCycleTicks(200, 4096)).toBe(2 + 1)
+    expect(sawCycleTicks(50, 0)).toBe(Infinity)
+  })
+})
+
+describe('deployer', () => {
+  it('needs 2 * ceil(1000 / v) + 2 ticks per item on a belt or depot', () => {
+    // v = clamp(2 * rpm, 8, 512)
+    expect(deployerCycleTicks(256)).toBe(6)
+    expect(deployerCycleTicks(64)).toBe(18)
+    expect(deployerCycleTicks(1)).toBe(252)
+    expect(deployerCycleTicks(0)).toBe(Infinity)
+  })
+})
+
+describe('mechanical crafter', () => {
+  it('hands items along a snake through the grid, then crafts', () => {
+    // 3×3 snake: 8 hand-offs of floor(1000 / 250) + 2, crafting floor(2000 / 250) + 2
+    expect(crafterCycleTicks(9, 256)).toBe(8 * 6 + 10)
+    // speed is clamped to at least 4
+    expect(crafterCycleTicks(2, 1)).toBe(252 + 502)
+    expect(crafterCycleTicks(1, 0)).toBe(Infinity)
   })
 })

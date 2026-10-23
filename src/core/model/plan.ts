@@ -25,6 +25,8 @@ export interface RecipeNode {
   parallelStacks?: number
   /** Fixes this node's production of one output item (per minute). */
   target?: { item: string; perMinute: number }
+  /** Fuel for the Blaze Burners or furnace; defaults per heat level (core/fuels.ts). */
+  fuel?: string
   position: Position
 }
 
@@ -49,7 +51,12 @@ export interface PlanEdge {
   source: string
   target: string
   item: string
+  /** The input port, when it is a tag the item belongs to. */
+  targetItem?: string
 }
+
+/** The resource of the input port an edge feeds. */
+export const targetPortOf = (edge: PlanEdge) => edge.targetItem ?? edge.item
 
 export interface Plan {
   schemaVersion: typeof SCHEMA_VERSION
