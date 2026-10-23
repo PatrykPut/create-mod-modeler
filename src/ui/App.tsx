@@ -6,6 +6,7 @@ import { AnalysisContext } from './analysis'
 import { Canvas } from './Canvas'
 import { catalog } from './catalog'
 import { NumberField } from './nodes/NumberField'
+import { PlanMenu } from './PlanMenu'
 import { usePlanStore } from './store'
 import { Summary } from './Summary'
 
@@ -17,8 +18,8 @@ const UNITS: { value: TimeUnit; label: string }[] = [
 
 export function App() {
   const plan = usePlanStore((s) => s.plan)
+  const currentId = usePlanStore((s) => s.currentId)
   const updateSettings = usePlanStore((s) => s.updateSettings)
-  const clear = usePlanStore((s) => s.clear)
   const analysis = useMemo(() => analyze(plan, catalog), [plan])
   const { meta } = catalog.data
 
@@ -30,6 +31,7 @@ export function App() {
           <span className="app-version">
             Create {meta.create} · Minecraft {meta.minecraft}
           </span>
+          <PlanMenu />
           <div className="app-settings">
             <NumberField
               label="Global RPM"
@@ -53,17 +55,12 @@ export function App() {
                 ))}
               </select>
             </label>
-            <button
-              className="button"
-              onClick={() => confirm('Discard the current plan?') && clear()}
-            >
-              New plan
-            </button>
           </div>
         </header>
         <div className="app-body">
           <main className="app-canvas">
-            <ReactFlowProvider>
+            {/* a fresh canvas per plan, so it fits the view to the plan */}
+            <ReactFlowProvider key={currentId}>
               <Canvas />
             </ReactFlowProvider>
           </main>

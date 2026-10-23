@@ -86,10 +86,12 @@ Left for later: fan-driven chutes, funnel extraction rates, separate kinetic net
 
 ### M4 — Sharing & polish
 
-- [ ] Multiple named plans, JSON export/import, share link (compressed plan in URL), CSV export of the summary
+- [x] Multiple named plans, JSON export/import, share link (compressed plan in URL), CSV export of the summary
+  - Plan library in browser storage (v1 single plan migrates to "My plan"); file format `create-mod-modeler/plan`; share link `#plan=` with deflate-raw + base64url; CSV `section,id,name,amount,unit` in the chosen time unit
 - [ ] Create-style dark theme (andesite / brass / copper), readable font, pixel icons
 - [ ] Tooltips for approximations and assumptions; "Not affiliated" notice
 - [ ] Playwright smoke test; README with screenshots
+- **Plans & sharing done** (2026-10-23): the iron chain renames, duplicates, exports to JSON and CSV, and reopens from a share link as "Iron chain (2)"; a foreign JSON file is rejected with a message.
 
 ## Open verifications
 

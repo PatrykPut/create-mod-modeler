@@ -18,8 +18,26 @@ import {
   type SourceNode,
 } from '../core/model/plan'
 
-interface PlanState {
+export interface SavedPlan {
+  id: string
+  name: string
+  /** ms since epoch */
+  updatedAt: number
   plan: Plan
+}
+
+interface PlanState {
+  /** The open plan; also kept in `library` under `currentId`. */
+  plan: Plan
+  currentId: string
+  library: Record<string, SavedPlan>
+  newPlan(): void
+  openPlan(id: string): void
+  renamePlan(id: string, name: string): void
+  duplicatePlan(id: string): void
+  deletePlan(id: string): void
+  /** Adds a plan (from a file or share link) and opens it. */
+  importPlan(name: string, plan: Plan): void
   addRecipeNode(
     recipeId: string,
     machineId: MachineId,
@@ -36,7 +54,6 @@ interface PlanState {
   updateEdge(id: string, patch: Partial<PlanEdge>): void
   removeEdges(ids: string[]): void
   updateSettings(patch: Partial<Settings>): void
-  clear(): void
 }
 
 // Storage can be unavailable (private mode, blocked site data); the app then works without autosave.
@@ -66,11 +83,53 @@ const safeStorage: StateStorage = {
 
 const newId = () => crypto.randomUUID()
 
+const DEFAULT_NAME = 'My plan'
+
+function savedPlan(name: string, plan: Plan): SavedPlan {
+  return { id: newId(), name, updatedAt: Date.now(), plan }
+}
+
+/** A name not yet used in the library: "Iron", "Iron (2)", … */
+export function uniqueName(name: string, taken: string[]): string {
+  if (!taken.includes(name)) return name
+  for (let i = 2; ; i++)
+    if (!taken.includes(`${name} (${i})`)) return `${name} (${i})`
+}
+
+type Persisted = Pick<PlanState, 'currentId' | 'library'>
+
+/** Version 1 stored a single plan; it becomes the first plan of the library. */
+export function migrate(persisted: unknown, version: number): Persisted {
+  if (version < 2) {
+    const { plan } = (persisted ?? {}) as { plan?: Plan }
+    const first = savedPlan(DEFAULT_NAME, plan ?? emptyPlan())
+    return { currentId: first.id, library: { [first.id]: first } }
+  }
+  return persisted as Persisted
+}
+
+const initial = savedPlan(DEFAULT_NAME, emptyPlan())
+
 export const usePlanStore = create<PlanState>()(
   persist(
-    (set) => {
+    (set, get) => {
       const update = (fn: (plan: Plan) => Partial<Plan>) =>
-        set(({ plan }) => ({ plan: { ...plan, ...fn(plan) } }))
+        set(({ plan, currentId, library }) => {
+          const next = { ...plan, ...fn(plan) }
+          const saved = {
+            ...library[currentId],
+            plan: next,
+            updatedAt: Date.now(),
+          }
+          return { plan: next, library: { ...library, [currentId]: saved } }
+        })
+      const open = (saved: SavedPlan, library = get().library) =>
+        set({
+          plan: saved.plan,
+          currentId: saved.id,
+          library: { ...library, [saved.id]: saved },
+        })
+      const names = () => Object.values(get().library).map((p) => p.name)
       const addNode = (node: PlanNode) => {
         update((plan) => ({ nodes: [...plan.nodes, node] }))
         return node.id
@@ -83,7 +142,39 @@ export const usePlanStore = create<PlanState>()(
         }))
 
       return {
-        plan: emptyPlan(),
+        plan: initial.plan,
+        currentId: initial.id,
+        library: { [initial.id]: initial },
+        newPlan: () =>
+          open(savedPlan(uniqueName('New plan', names()), emptyPlan())),
+        openPlan: (id) => {
+          const saved = get().library[id]
+          if (saved) open(saved)
+        },
+        renamePlan: (id, name) =>
+          set(({ library }) => ({
+            library: { ...library, [id]: { ...library[id], name } },
+          })),
+        duplicatePlan: (id) => {
+          const source = get().library[id]
+          if (source)
+            open(
+              savedPlan(
+                uniqueName(`${source.name} copy`, names()),
+                structuredClone(source.plan),
+              ),
+            )
+        },
+        deletePlan: (id) => {
+          const { [id]: _removed, ...rest } = get().library
+          const remaining = Object.values(rest).sort(
+            (a, b) => b.updatedAt - a.updatedAt,
+          )
+          if (id !== get().currentId) return set({ library: rest })
+          open(remaining[0] ?? savedPlan(DEFAULT_NAME, emptyPlan()), rest)
+        },
+        importPlan: (name, plan) =>
+          open(savedPlan(uniqueName(name, names()), plan)),
         addRecipeNode: (recipeId, machineId, position) =>
           addNode({
             id: newId(),
@@ -137,13 +228,25 @@ export const usePlanStore = create<PlanState>()(
           })),
         updateSettings: (patch) =>
           update((plan) => ({ settings: { ...plan.settings, ...patch } })),
-        clear: () => set({ plan: emptyPlan() }),
       }
     },
     {
       name: 'create-mod-modeler:plan',
-      version: 1,
+      version: 2,
       storage: createJSONStorage(() => safeStorage),
+      // the open plan is stored once, inside the library
+      partialize: ({ currentId, library }): Persisted => ({
+        currentId,
+        library,
+      }),
+      migrate,
+      merge: (persisted, current) => {
+        const { currentId, library } = persisted as Persisted
+        const open = library?.[currentId]
+        return open
+          ? { ...current, currentId, library, plan: open.plan }
+          : current
+      },
     },
   ),
 )
