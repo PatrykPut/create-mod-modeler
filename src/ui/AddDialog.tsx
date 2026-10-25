@@ -46,7 +46,11 @@ function RecipeSummary({ option }: { option: RecipeOption }) {
       </span>
       <span className="recipe-label">
         {recipe.outputs.map((o) => catalog.item(o.item).name).join(', ')}
-        <small> · {MACHINES[machine].name}</small>
+        <small>
+          {' · '}
+          <ItemIcon item={MACHINES[machine].block} size={16} />{' '}
+          {MACHINES[machine].name}
+        </small>
       </span>
     </>
   )
@@ -143,7 +147,14 @@ export function AddDialog({
                   <ItemIcon item={item} />
                   <span className="recipe-label">
                     Source of {catalog.item(item).name}
-                    <small> · {SOURCE_KINDS[sourceKind(item)!].name}</small>
+                    <small>
+                      {' · '}
+                      <ItemIcon
+                        item={SOURCE_KINDS[sourceKind(item)!].block}
+                        size={16}
+                      />{' '}
+                      {SOURCE_KINDS[sourceKind(item)!].name}
+                    </small>
                   </span>
                 </button>
               </li>

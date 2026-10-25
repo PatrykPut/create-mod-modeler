@@ -32,6 +32,8 @@ export interface ItemInfo {
   name: string
   /** Path relative to the app base, e.g. "textures/minecraft/gravel.png". */
   icon?: string
+  /** The icon is a 64 px isometric render of the block model, not a 16 px texture. */
+  rendered?: boolean
 }
 
 export interface Ingredient {

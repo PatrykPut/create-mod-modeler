@@ -165,6 +165,7 @@ Source: `content/processing/burner/BlazeBurnerBlockEntity.java`. [V unless noted
   - bucket filling (spout) and emptying (drain), 1000 mB, for every fluid with a bucket
 - Tags: Create, NeoForge `c:` (branch `1.21.1`) and vanilla tags are merged. A tag with one supported member becomes that item; otherwise it stays a tag resource (`#minecraft:planks`) that any member can feed. Fluid ingredients become `fluid:` resources in mB; flowing variants are dropped.
 - Icons: item texture, else block texture, else the face texture of the item model (following its parents).
+- Machine icons: the blocks in `src/core/blocks.ts` (machines, power sources, farms) are rendered from their item models like the inventory shows them (`scripts/data/render.ts`): JSON elements or NeoForge OBJ, the model's `display.gui` transform, the GUI lighting of `Lighting.setupFor3DItems`, 64 px with 4× supersampling. Headless Chromium (Playwright) only decodes and encodes the PNGs.
 - Skipped: mod-compat recipes (`neoforge:conditions`), potion fluids (`neoforge:components`), block-tag ingredients (`neoforge:block_tag`, mud only), sequenced assembly.
 - Recipe types in v1: crushing, milling, pressing, mixing, compacting, splashing (washing), haunting, fan smoking/blasting, cutting, deploying, item_application, filling, emptying, mechanical_crafting (approximated), sandpaper_polishing, plus vanilla smelting/crafting.
 - Formulas live in TypeScript modules with unit tests, each citing its Create source file.

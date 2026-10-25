@@ -476,6 +476,12 @@ select:focus-visible,
   object-position: top;
 }
 
+/* isometric renders are larger than the slot they fill: scale them smoothly */
+.item-icon.is-rendered {
+  image-rendering: auto;
+  object-fit: contain;
+}
+
 .item-icon-placeholder {
   display: inline-grid;
   place-items: center;

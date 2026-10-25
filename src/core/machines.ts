@@ -1,4 +1,5 @@
 import type { Recipe, RecipeType } from '../data/types'
+import type { MachineBlock } from './blocks'
 import { crafterCycleTicks } from './formulas/crafter'
 import { crushingCycleTicks } from './formulas/crushing'
 import { deployerCycleTicks } from './formulas/deployer'
@@ -41,6 +42,8 @@ export interface MachineConditions {
 export interface MachineDef {
   id: MachineId
   name: string
+  /** Block shown as the machine's icon. */
+  block: MachineBlock
   /** SU per RPM for one block (a crushing unit counts as one block of 2 × 8). Source: AllBlocks.java. */
   stressImpact: number
   /** Blocks in one machine unit, e.g. one crafter per grid cell. Defaults to 1. */
@@ -78,6 +81,7 @@ function fan(id: MachineId, mode: string, note: string): MachineDef {
   return {
     id,
     name: `Encased Fan (${mode})`,
+    block: 'create:encased_fan',
     stressImpact: 2,
     usesRpm: false,
     usesStackSize: true,
@@ -91,7 +95,7 @@ function fan(id: MachineId, mode: string, note: string): MachineDef {
 // Source: vanilla AbstractFurnaceBlockEntity (serverTick); blast furnace and smoker halve
 // the burn duration of their fuel (BlastFurnaceBlockEntity / SmokerBlockEntity.getBurnDuration).
 function furnace(
-  id: MachineId,
+  id: 'furnace' | 'blast_furnace' | 'smoker',
   name: string,
   defaultTime: number,
   burnSpeed: number,
@@ -99,6 +103,7 @@ function furnace(
   return {
     id,
     name,
+    block: `minecraft:${id}`,
     stressImpact: 0,
     usesRpm: false,
     usesStackSize: false,
@@ -115,6 +120,7 @@ export const MACHINES: Record<MachineId, MachineDef> = {
   crushing_wheels: {
     id: 'crushing_wheels',
     name: 'Crushing Wheels',
+    block: 'create:crushing_wheel',
     stressImpact: 2 * 8,
     usesRpm: true,
     usesStackSize: true,
@@ -133,6 +139,7 @@ export const MACHINES: Record<MachineId, MachineDef> = {
   millstone: {
     id: 'millstone',
     name: 'Millstone',
+    block: 'create:millstone',
     stressImpact: 4,
     usesRpm: true,
     usesStackSize: false,
@@ -160,6 +167,7 @@ export const MACHINES: Record<MachineId, MachineDef> = {
   mechanical_press: {
     id: 'mechanical_press',
     name: 'Mechanical Press',
+    block: 'create:mechanical_press',
     stressImpact: 8,
     usesRpm: true,
     usesStackSize: false,
@@ -171,6 +179,7 @@ export const MACHINES: Record<MachineId, MachineDef> = {
   press_basin: {
     id: 'press_basin',
     name: 'Mechanical Press + Basin',
+    block: 'create:mechanical_press',
     stressImpact: 8,
     usesRpm: true,
     usesStackSize: false,
@@ -183,6 +192,7 @@ export const MACHINES: Record<MachineId, MachineDef> = {
   mixer: {
     id: 'mixer',
     name: 'Mechanical Mixer + Basin',
+    block: 'create:mechanical_mixer',
     stressImpact: 4,
     usesRpm: true,
     usesStackSize: false,
@@ -196,6 +206,7 @@ export const MACHINES: Record<MachineId, MachineDef> = {
   mechanical_saw: {
     id: 'mechanical_saw',
     name: 'Mechanical Saw',
+    block: 'create:mechanical_saw',
     stressImpact: 4,
     usesRpm: true,
     usesStackSize: false,
@@ -213,6 +224,7 @@ export const MACHINES: Record<MachineId, MachineDef> = {
   deployer: {
     id: 'deployer',
     name: 'Deployer',
+    block: 'create:deployer',
     stressImpact: 4,
     usesRpm: true,
     usesStackSize: false,
@@ -224,6 +236,7 @@ export const MACHINES: Record<MachineId, MachineDef> = {
   spout: {
     id: 'spout',
     name: 'Spout',
+    block: 'create:spout',
     stressImpact: 0,
     usesRpm: false,
     usesStackSize: false,
@@ -234,6 +247,7 @@ export const MACHINES: Record<MachineId, MachineDef> = {
   item_drain: {
     id: 'item_drain',
     name: 'Item Drain',
+    block: 'create:item_drain',
     stressImpact: 0,
     usesRpm: false,
     usesStackSize: false,
@@ -244,6 +258,7 @@ export const MACHINES: Record<MachineId, MachineDef> = {
   mechanical_crafter: {
     id: 'mechanical_crafter',
     name: 'Mechanical Crafter',
+    block: 'create:mechanical_crafter',
     stressImpact: 2,
     blocksPerUnit: (recipe) => recipe.gridSize ?? 1,
     usesRpm: true,
@@ -299,6 +314,7 @@ export const GENERATED_BLOCKS: Record<string, { hardness: number }> = {
 export const DRILL = {
   id: 'mechanical_drill',
   name: 'Mechanical Drill',
+  block: 'create:mechanical_drill',
   stressImpact: 4,
   note: 'Assumes an optimised generator: a belt, hopper or chute right next to the generated block takes the drops, so nothing has to regrow.',
   /** Blocks per minute for one drill, or undefined if the item cannot be generated. */
@@ -311,12 +327,14 @@ export const DRILL = {
 export const BLAZE_BURNER = {
   id: 'blaze_burner',
   name: 'Blaze Burner',
+  block: 'create:blaze_burner',
 } as const
 
 /** Pipes and boiler water supply: 4 SU/RPM (AllBlocks.java). */
 export const PUMP = {
   id: 'mechanical_pump',
   name: 'Mechanical Pump',
+  block: 'create:mechanical_pump',
   stressImpact: 4,
 } as const
 

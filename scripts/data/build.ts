@@ -12,6 +12,8 @@ import {
 } from 'node:fs'
 import { dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { chromium, type Page } from 'playwright'
+import { MACHINE_BLOCKS } from '../../src/core/blocks.ts'
 import type { GameData, ItemInfo, Recipe } from '../../src/data/types.ts'
 import {
   bucketRecipes,
@@ -19,6 +21,14 @@ import {
   type Normalizer,
 } from './normalize.ts'
 import { iconTexture } from './models.ts'
+import {
+  elementPolygons,
+  objPolygons,
+  rasterize,
+  resolveModel,
+  type Model,
+  type Texture,
+} from './render.ts'
 import { runtimeRecipes } from './runtime.ts'
 import { TagIndex, type TagKind } from './tags.ts'
 
@@ -232,6 +242,34 @@ function titleCase(path: string) {
   return path.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
 }
 
+/** Model JSON files for an id such as "create:block/millstone/item", most specific first. */
+const modelFiles = (namespace: string, path: string) =>
+  namespace === 'create'
+    ? ['generated', 'main'].map((set) =>
+        join(
+          sources.create.dir,
+          `src/${set}/resources/assets/create/models/${path}.json`,
+        ),
+      )
+    : [join(sources.vanillaLang.dir, `assets/${namespace}/models/${path}.json`)]
+const readModel = (id: string) => {
+  const [namespace, path] = id.split(':')
+  const file = modelFiles(namespace, path).find(existsSync)
+  return file ? (readJson(file) as Model) : undefined
+}
+const textureFile = (texture: string) => {
+  const [namespace, path] = texture.split(':')
+  return namespace === 'create'
+    ? join(
+        sources.create.dir,
+        `src/main/resources/assets/create/textures/${path}.png`,
+      )
+    : join(
+        sources.vanillaTextures.dir,
+        `assets/${namespace}/textures/${path}.png`,
+      )
+}
+
 const MAX_LISTED_MEMBERS = 3
 
 function collectItems(
@@ -246,42 +284,12 @@ function collectItems(
   }
   for (const id of [...ids])
     for (const member of normalizer.tags.get(id) ?? []) ids.add(member)
+  // named like any item; renderIcons draws their icons
+  const machineBlocks = new Set<string>(MACHINE_BLOCKS)
+  for (const block of machineBlocks) ids.add(block)
 
   rmSync(textureDir, { recursive: true, force: true })
   const items: Record<string, ItemInfo> = {}
-
-  /** Copies the item's (or block's) texture and returns its icon path. */
-  const modelFiles = (namespace: string, path: string) =>
-    namespace === 'create'
-      ? ['generated', 'main'].map((set) =>
-          join(
-            sources.create.dir,
-            `src/${set}/resources/assets/create/models/${path}.json`,
-          ),
-        )
-      : [
-          join(
-            sources.vanillaLang.dir,
-            `assets/${namespace}/models/${path}.json`,
-          ),
-        ]
-  const readModel = (id: string) => {
-    const [namespace, path] = id.split(':')
-    const file = modelFiles(namespace, path).find(existsSync)
-    return file ? readJson(file) : undefined
-  }
-  const textureFile = (texture: string) => {
-    const [namespace, path] = texture.split(':')
-    return namespace === 'create'
-      ? join(
-          sources.create.dir,
-          `src/main/resources/assets/create/textures/${path}.png`,
-        )
-      : join(
-          sources.vanillaTextures.dir,
-          `assets/${namespace}/textures/${path}.png`,
-        )
-  }
 
   /** Copies the texture that best shows the item and returns its icon path. */
   function icon(namespace: string, path: string): string | undefined {
@@ -313,7 +321,9 @@ function collectItems(
         lang[`block.${namespace}.${path}`] ??
         titleCase(path))
     const item: ItemInfo = { id, name }
-    const iconPath = icon(namespace, fluid ? `${path}_bucket` : path)
+    const iconPath = machineBlocks.has(id)
+      ? undefined
+      : icon(namespace, fluid ? `${path}_bucket` : path)
     if (iconPath) item.icon = iconPath
     items[id] = item
   }
@@ -331,20 +341,102 @@ function collectItems(
     items[id] = item
   }
 
-  const withoutIcon = Object.values(items).filter((i) => !i.icon).length
+  const withoutIcon = Object.values(items).filter(
+    (i) => !i.icon && !machineBlocks.has(i.id),
+  ).length
   console.log(
     `${sorted.length} items, fluids and tags (${withoutIcon} without icon)`,
   )
   return items
 }
 
-function main() {
+const ICON_SIZE = 64
+
+/** Decodes a PNG file to RGBA in the browser. */
+function decodePng(page: Page, file: string): Promise<Texture> {
+  const url = `data:image/png;base64,${readFileSync(file).toString('base64')}`
+  return page.evaluate(async (url) => {
+    const image = new Image()
+    image.src = url
+    await image.decode()
+    const canvas = new OffscreenCanvas(image.width, image.height)
+    const context = canvas.getContext('2d')!
+    context.drawImage(image, 0, 0)
+    const { data } = context.getImageData(0, 0, image.width, image.height)
+    return { width: image.width, height: image.height, data: Array.from(data) }
+  }, url)
+}
+
+/** Encodes square RGBA pixels as PNG in the browser. */
+async function encodePng(page: Page, pixels: Uint8ClampedArray, size: number) {
+  const base64 = await page.evaluate(
+    async ({ data, size }) => {
+      const canvas = new OffscreenCanvas(size, size)
+      const image = new ImageData(new Uint8ClampedArray(data), size, size)
+      canvas.getContext('2d')!.putImageData(image, 0, 0)
+      const bytes = new Uint8Array(
+        await (await canvas.convertToBlob()).arrayBuffer(),
+      )
+      return btoa(Array.from(bytes, (b) => String.fromCharCode(b)).join(''))
+    },
+    { data: Array.from(pixels), size },
+  )
+  return Buffer.from(base64, 'base64')
+}
+
+/** Renders the machine blocks' item models into isometric icons (Chromium does the PNG I/O). */
+async function renderIcons(items: Record<string, ItemInfo>) {
+  const browser = await chromium.launch()
+  try {
+    const page = await browser.newPage()
+    const textures = new Map<string, Texture>()
+    for (const block of MACHINE_BLOCKS) {
+      const model = resolveModel(block, readModel)
+      if (!model) throw new Error(`${block}: no 3D item model`)
+      let polygons
+      if (model.obj) {
+        // "create:models/block/x.obj" lives under assets/create/
+        const [namespace, path] = model.obj.model.split(':')
+        const objFile = join(
+          sources.create.dir,
+          `src/main/resources/assets/${namespace}/${path}`,
+        )
+        const obj = readFileSync(objFile, 'utf8')
+        const mtlName = /^mtllib\s+(\S+)/m.exec(obj)?.[1] ?? ''
+        const mtl = readFileSync(join(dirname(objFile), mtlName), 'utf8')
+        polygons = objPolygons(obj, mtl, model.textures, model.obj.flipV)
+      } else {
+        polygons = elementPolygons(model.elements!, model.textures)
+      }
+      for (const { texture } of polygons) {
+        if (textures.has(texture)) continue
+        const file = textureFile(texture)
+        if (!existsSync(file))
+          throw new Error(`${block}: no texture ${texture}`)
+        textures.set(texture, await decodePng(page, file))
+      }
+      const pixels = rasterize(polygons, model.gui, textures, ICON_SIZE)
+      const [namespace, path] = block.split(':')
+      const target = join(textureDir, 'rendered', namespace, `${path}.png`)
+      mkdirSync(dirname(target), { recursive: true })
+      writeFileSync(target, await encodePng(page, pixels, ICON_SIZE))
+      items[block].icon = `textures/rendered/${namespace}/${path}.png`
+      items[block].rendered = true
+    }
+    console.log(`Rendered ${MACHINE_BLOCKS.length} machine icons`)
+  } finally {
+    await browser.close()
+  }
+}
+
+async function main() {
   for (const source of Object.values(sources)) fetchSource(source)
 
   const lang = readLang()
   const normalizer = createNormalizer(collectTags())
   const recipes = collectRecipes(normalizer, lang)
   const items = collectItems(recipes, normalizer, lang)
+  await renderIcons(items)
   const tags = Object.fromEntries(
     [...normalizer.tags].sort(([a], [b]) => a.localeCompare(b)),
   )
@@ -368,10 +460,11 @@ function main() {
       '',
       `- \`create/\`: © The Create Team / The Creators of Create, from ${sources.create.repo} @ ${CREATE_TAG} (all rights reserved).`,
       `- \`minecraft/\`: © Mojang AB / Microsoft, via ${sources.vanillaTextures.repo} @ ${sources.vanillaTextures.ref}.`,
+      '- `rendered/`: isometric icons rendered from the models and textures above; same owners.',
       '',
     ].join('\n'),
   )
   console.log(`Wrote ${relative(root, outFile)}`)
 }
 
-main()
+await main()

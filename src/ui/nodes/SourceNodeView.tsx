@@ -5,6 +5,7 @@ import { SOURCE_KINDS, sourceKind } from '../../core/sources'
 import { fromPerMinute, toPerMinute } from '../../core/units'
 import { useAnalysis } from '../analysis'
 import { formatNumber, formatPercent, formatStress } from '../format'
+import { ItemIcon, MACHINE_ICON_SIZE } from '../ItemIcon'
 import { usePlanStore } from '../store'
 import { Info } from '../Tooltip'
 import { NumberField } from './NumberField'
@@ -26,6 +27,10 @@ export function SourceNodeView({ data: { node } }: NodeProps<SourceFlowNode>) {
   return (
     <div className="node node-source">
       <header className="node-header">
+        <ItemIcon
+          item={drilled ? DRILL.block : kind.block}
+          size={MACHINE_ICON_SIZE}
+        />
         <span className="node-title">
           Source · {drilled ? DRILL.name : kind.name}
         </span>

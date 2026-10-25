@@ -3,6 +3,7 @@ import type { PowerNode, PowerSourceId } from '../../core/model/plan'
 import { DEFAULT_SAILS, POWER_SOURCES } from '../../core/power'
 import { useAnalysis } from '../analysis'
 import { formatStress } from '../format'
+import { ItemIcon, MACHINE_ICON_SIZE } from '../ItemIcon'
 import { usePlanStore } from '../store'
 import { Info } from '../Tooltip'
 import { NumberField } from './NumberField'
@@ -20,6 +21,7 @@ export function PowerNodeView({ data: { node } }: NodeProps<PowerFlowNode>) {
   return (
     <div className="node node-power">
       <header className="node-header">
+        <ItemIcon item={source.block} size={MACHINE_ICON_SIZE} />
         <select
           className="nodrag"
           value={node.source}

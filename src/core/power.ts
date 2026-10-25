@@ -5,6 +5,7 @@ import {
   windmillStress,
   type BoilerSetup,
 } from './formulas/power'
+import type { MachineBlock } from './blocks'
 import { PUMP } from './machines'
 import type { PowerNode, PowerSourceId } from './model/plan'
 
@@ -13,6 +14,8 @@ export const DEFAULT_SAILS = 8
 export interface PowerSourceDef {
   id: PowerSourceId
   name: string
+  /** Block shown as the source's icon. */
+  block: MachineBlock
   usesSails?: boolean
   /** Creative motor speed / steam engine pump speed. */
   usesRpm?: boolean
@@ -25,18 +28,21 @@ export const POWER_SOURCES: Record<PowerSourceId, PowerSourceDef> = {
   water_wheel: {
     id: 'water_wheel',
     name: 'Water Wheel',
+    block: 'create:water_wheel',
     note: '32 SU/RPM at 8 RPM, with flowing water on one side.',
     stressPerUnit: () => 32 * 8,
   },
   large_water_wheel: {
     id: 'large_water_wheel',
     name: 'Large Water Wheel',
+    block: 'create:large_water_wheel',
     note: '128 SU/RPM at 4 RPM, with flowing water on one side.',
     stressPerUnit: () => 128 * 4,
   },
   windmill: {
     id: 'windmill',
     name: 'Windmill',
+    block: 'create:windmill_bearing',
     usesSails: true,
     note: '512 SU/RPM; 1 RPM per 8 sail blocks, at most 16 RPM.',
     stressPerUnit: (node) => windmillStress(node.sails ?? DEFAULT_SAILS),
@@ -44,12 +50,14 @@ export const POWER_SOURCES: Record<PowerSourceId, PowerSourceDef> = {
   hand_crank: {
     id: 'hand_crank',
     name: 'Hand Crank',
+    block: 'create:hand_crank',
     note: '8 SU/RPM at 32 RPM while a player turns it.',
     stressPerUnit: () => 8 * 32,
   },
   creative_motor: {
     id: 'creative_motor',
     name: 'Creative Motor',
+    block: 'create:creative_motor',
     usesRpm: true,
     note: '16384 SU/RPM at its set speed.',
     stressPerUnit: (node, globalRpm) => 16384 * Math.abs(node.rpm ?? globalRpm),
@@ -57,6 +65,7 @@ export const POWER_SOURCES: Record<PowerSourceId, PowerSourceDef> = {
   steam_engine: {
     id: 'steam_engine',
     name: 'Steam Engine',
+    block: 'create:steam_engine',
     usesRpm: true,
     note: '16384 SU per engine at full efficiency: the boiler needs one level per engine (up to 18). Its water pumps (1 up to level 12, 2 from level 13) count as stress at the pump RPM. Heat sources, water and tank size are not modelled.',
     stressPerUnit: () => STEAM_ENGINE_STRESS,

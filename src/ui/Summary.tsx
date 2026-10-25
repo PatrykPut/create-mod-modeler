@@ -1,5 +1,5 @@
 import type { ItemRate } from '../core/derive'
-import { machineName } from '../core/names'
+import { machineBlock, machineName } from '../core/names'
 import { useAnalysis } from './analysis'
 import { formatPercent, formatRate, formatStress } from './format'
 import { ItemIcon, ItemName } from './ItemIcon'
@@ -122,8 +122,9 @@ export function Summary() {
           <ul>
             {summary.machines.map(({ machine, count }) => (
               <li key={machine}>
-                <span className="summary-count">{count}×</span>
+                <ItemIcon item={machineBlock(machine)} />
                 <span className="summary-name">{machineName(machine)}</span>
+                <span className="summary-count">{count}×</span>
               </li>
             ))}
           </ul>

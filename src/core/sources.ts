@@ -1,29 +1,36 @@
 // What a source node may supply: items Create automates renewably (DESIGN §3).
 // Anything else a recipe needs stays an open input of the plan.
+import type { MachineBlock } from './blocks'
 import { GENERATED_BLOCKS } from './machines'
 import type { Plan } from './model/plan'
 
 export type SourceKind = 'generator' | 'tree' | 'crop' | 'fluid'
 
-export const SOURCE_KINDS: Record<SourceKind, { name: string; note: string }> =
-  {
-    generator: {
-      name: 'Generator',
-      note: 'Mined by Mechanical Drills on a block generator.',
-    },
-    tree: {
-      name: 'Tree farm',
-      note: 'Trees felled by Mechanical Saws or Drills; leaves drop saplings, sticks and apples.',
-    },
-    crop: {
-      name: 'Crop farm',
-      note: 'Harvested by Mechanical Harvesters, Ploughs, Saws or Drills.',
-    },
-    fluid: {
-      name: 'Pump',
-      note: 'Pumped from a bottomless source (tag create:bottomless/allow).',
-    },
-  }
+export const SOURCE_KINDS: Record<
+  SourceKind,
+  { name: string; note: string; /** Shown as the icon. */ block: MachineBlock }
+> = {
+  generator: {
+    name: 'Generator',
+    block: 'create:mechanical_drill',
+    note: 'Mined by Mechanical Drills on a block generator.',
+  },
+  tree: {
+    name: 'Tree farm',
+    block: 'create:mechanical_saw',
+    note: 'Trees felled by Mechanical Saws or Drills; leaves drop saplings, sticks and apples.',
+  },
+  crop: {
+    name: 'Crop farm',
+    block: 'create:mechanical_harvester',
+    note: 'Harvested by Mechanical Harvesters, Ploughs, Saws or Drills.',
+  },
+  fluid: {
+    name: 'Pump',
+    block: 'create:mechanical_pump',
+    note: 'Pumped from a bottomless source (tag create:bottomless/allow).',
+  },
+}
 
 const WOODS = [
   'oak',

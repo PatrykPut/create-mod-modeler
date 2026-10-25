@@ -100,7 +100,8 @@ Left for later: fan-driven chutes, funnel extraction rates, separate kinetic net
 ### After M4
 
 - [x] Sources limited to generators, tree farms, crop farms and pumps; limestone and scoria generators with drills; invalid sources removed on load (store version 3) and on import with a notice
-- Left for later: harvesters, saws and farm sizes per farm source
+- [x] Machine icons: isometric renders of the machine blocks in node headers, the add dialog and the summary's machine list
+- Left for later: harvesters, saws and farm sizes per farm source; isometric icons for all block items
 
 ## Open verifications
 

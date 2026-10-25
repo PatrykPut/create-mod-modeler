@@ -6,6 +6,7 @@ import { fuelOf } from '../../core/model/ports'
 import { fromPerMinute, toPerMinute } from '../../core/units'
 import { useAnalysis } from '../analysis'
 import { catalog } from '../catalog'
+import { ItemIcon, MACHINE_ICON_SIZE } from '../ItemIcon'
 import { formatNumber, formatPercent, formatStress } from '../format'
 import { usePlanStore } from '../store'
 import { Info } from '../Tooltip'
@@ -37,6 +38,7 @@ export function RecipeNodeView({ data: { node } }: NodeProps<RecipeFlowNode>) {
   return (
     <div className="node node-recipe">
       <header className="node-header">
+        <ItemIcon item={machine.block} size={MACHINE_ICON_SIZE} />
         {machineOptions.length > 1 ? (
           <select
             className="nodrag"

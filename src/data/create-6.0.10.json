@@ -105,6 +105,12 @@
    "name": "Black Valve Handle",
    "icon": "textures/create/black_valve_handle.png"
   },
+  "create:blaze_burner": {
+   "id": "create:blaze_burner",
+   "name": "Blaze Burner",
+   "icon": "textures/rendered/create/blaze_burner.png",
+   "rendered": true
+  },
   "create:blaze_cake": {
    "id": "create:blaze_cake",
    "name": "Blaze Cake",
@@ -360,6 +366,12 @@
    "name": "Crafting Blueprint",
    "icon": "textures/create/crafting_blueprint.png"
   },
+  "create:creative_motor": {
+   "id": "create:creative_motor",
+   "name": "Creative Motor",
+   "icon": "textures/rendered/create/creative_motor.png",
+   "rendered": true
+  },
   "create:crimsite": {
    "id": "create:crimsite",
    "name": "Crimsite",
@@ -398,7 +410,8 @@
   "create:crushing_wheel": {
    "id": "create:crushing_wheel",
    "name": "Crushing Wheel",
-   "icon": "textures/create/crushing_wheel.png"
+   "icon": "textures/rendered/create/crushing_wheel.png",
+   "rendered": true
   },
   "create:cut_andesite": {
    "id": "create:cut_andesite",
@@ -995,6 +1008,12 @@
    "name": "Deepslate Zinc Ore",
    "icon": "textures/create/deepslate_zinc_ore.png"
   },
+  "create:deployer": {
+   "id": "create:deployer",
+   "name": "Deployer",
+   "icon": "textures/rendered/create/deployer.png",
+   "rendered": true
+  },
   "create:depot": {
    "id": "create:depot",
    "name": "Depot",
@@ -1034,6 +1053,12 @@
    "id": "create:encased_chain_drive",
    "name": "Encased Chain Drive",
    "icon": "textures/create/encased_chain_drive.png"
+  },
+  "create:encased_fan": {
+   "id": "create:encased_fan",
+   "name": "Encased Fan",
+   "icon": "textures/rendered/create/encased_fan.png",
+   "rendered": true
   },
   "create:experience_block": {
    "id": "create:experience_block",
@@ -1170,6 +1195,12 @@
    "name": "Green Valve Handle",
    "icon": "textures/create/green_valve_handle.png"
   },
+  "create:hand_crank": {
+   "id": "create:hand_crank",
+   "name": "Hand Crank",
+   "icon": "textures/rendered/create/hand_crank.png",
+   "rendered": true
+  },
   "create:haunted_bell": {
    "id": "create:haunted_bell",
    "name": "Haunted Bell",
@@ -1215,6 +1246,12 @@
    "name": "Iron Sheet",
    "icon": "textures/create/iron_sheet.png"
   },
+  "create:item_drain": {
+   "id": "create:item_drain",
+   "name": "Item Drain",
+   "icon": "textures/rendered/create/item_drain.png",
+   "rendered": true
+  },
   "create:item_hatch": {
    "id": "create:item_hatch",
    "name": "Item Hatch",
@@ -1229,6 +1266,12 @@
    "id": "create:large_cogwheel",
    "name": "Large Cogwheel",
    "icon": "textures/create/large_cogwheel.png"
+  },
+  "create:large_water_wheel": {
+   "id": "create:large_water_wheel",
+   "name": "Large Water Wheel",
+   "icon": "textures/rendered/create/large_water_wheel.png",
+   "rendered": true
   },
   "create:layered_andesite": {
    "id": "create:layered_andesite",
@@ -1395,10 +1438,53 @@
    "name": "Mangrove Window Pane",
    "icon": "textures/create/mangrove_window_pane.png"
   },
+  "create:mechanical_crafter": {
+   "id": "create:mechanical_crafter",
+   "name": "Mechanical Crafter",
+   "icon": "textures/rendered/create/mechanical_crafter.png",
+   "rendered": true
+  },
+  "create:mechanical_drill": {
+   "id": "create:mechanical_drill",
+   "name": "Mechanical Drill",
+   "icon": "textures/rendered/create/mechanical_drill.png",
+   "rendered": true
+  },
+  "create:mechanical_harvester": {
+   "id": "create:mechanical_harvester",
+   "name": "Mechanical Harvester",
+   "icon": "textures/rendered/create/mechanical_harvester.png",
+   "rendered": true
+  },
+  "create:mechanical_mixer": {
+   "id": "create:mechanical_mixer",
+   "name": "Mechanical Mixer",
+   "icon": "textures/rendered/create/mechanical_mixer.png",
+   "rendered": true
+  },
+  "create:mechanical_press": {
+   "id": "create:mechanical_press",
+   "name": "Mechanical Press",
+   "icon": "textures/rendered/create/mechanical_press.png",
+   "rendered": true
+  },
   "create:mechanical_pump": {
    "id": "create:mechanical_pump",
    "name": "Mechanical Pump",
-   "icon": "textures/create/mechanical_pump.png"
+   "icon": "textures/rendered/create/mechanical_pump.png",
+   "rendered": true
+  },
+  "create:mechanical_saw": {
+   "id": "create:mechanical_saw",
+   "name": "Mechanical Saw",
+   "icon": "textures/rendered/create/mechanical_saw.png",
+   "rendered": true
+  },
+  "create:millstone": {
+   "id": "create:millstone",
+   "name": "Millstone",
+   "icon": "textures/rendered/create/millstone.png",
+   "rendered": true
   },
   "create:nixie_tube": {
    "id": "create:nixie_tube",
@@ -2230,10 +2316,22 @@
    "name": "Small Veridium Bricks",
    "icon": "textures/create/small_veridium_bricks.png"
   },
+  "create:spout": {
+   "id": "create:spout",
+   "name": "Spout",
+   "icon": "textures/rendered/create/spout.png",
+   "rendered": true
+  },
   "create:spruce_window_pane": {
    "id": "create:spruce_window_pane",
    "name": "Spruce Window Pane",
    "icon": "textures/create/spruce_window_pane.png"
+  },
+  "create:steam_engine": {
+   "id": "create:steam_engine",
+   "name": "Steam Engine",
+   "icon": "textures/rendered/create/steam_engine.png",
+   "rendered": true
   },
   "create:stock_link": {
    "id": "create:stock_link",
@@ -2324,6 +2422,12 @@
    "id": "create:warped_window_pane",
    "name": "Warped Window Pane",
    "icon": "textures/create/warped_window_pane.png"
+  },
+  "create:water_wheel": {
+   "id": "create:water_wheel",
+   "name": "Water Wheel",
+   "icon": "textures/rendered/create/water_wheel.png",
+   "rendered": true
   },
   "create:waxed_copper_shingle_slab": {
    "id": "create:waxed_copper_shingle_slab",
@@ -2514,6 +2618,12 @@
    "id": "create:white_valve_handle",
    "name": "White Valve Handle",
    "icon": "textures/create/white_valve_handle.png"
+  },
+  "create:windmill_bearing": {
+   "id": "create:windmill_bearing",
+   "name": "Windmill Bearing",
+   "icon": "textures/rendered/create/windmill_bearing.png",
+   "rendered": true
   },
   "create:yellow_postbox": {
    "id": "create:yellow_postbox",
@@ -2988,6 +3098,12 @@
    "id": "minecraft:blackstone_wall",
    "name": "Blackstone Wall",
    "icon": "textures/minecraft/blackstone_wall.png"
+  },
+  "minecraft:blast_furnace": {
+   "id": "minecraft:blast_furnace",
+   "name": "Blast Furnace",
+   "icon": "textures/rendered/minecraft/blast_furnace.png",
+   "rendered": true
   },
   "minecraft:blaze_powder": {
    "id": "minecraft:blaze_powder",
@@ -4182,7 +4298,8 @@
   "minecraft:furnace": {
    "id": "minecraft:furnace",
    "name": "Furnace",
-   "icon": "textures/minecraft/furnace.png"
+   "icon": "textures/rendered/minecraft/furnace.png",
+   "rendered": true
   },
   "minecraft:furnace_minecart": {
    "id": "minecraft:furnace_minecart",
@@ -6128,6 +6245,12 @@
    "id": "minecraft:slime_block",
    "name": "Slime Block",
    "icon": "textures/minecraft/slime_block.png"
+  },
+  "minecraft:smoker": {
+   "id": "minecraft:smoker",
+   "name": "Smoker",
+   "icon": "textures/rendered/minecraft/smoker.png",
+   "rendered": true
   },
   "minecraft:smooth_basalt": {
    "id": "minecraft:smooth_basalt",

@@ -7,12 +7,15 @@ function hue(id: string) {
   return h
 }
 
+/** Machine icons in node headers. */
+export const MACHINE_ICON_SIZE = 28
+
 export function ItemIcon({ item, size = 20 }: { item: string; size?: number }) {
   const info = catalog.item(item)
   if (info.icon)
     return (
       <img
-        className="item-icon"
+        className={info.rendered ? 'item-icon is-rendered' : 'item-icon'}
         src={import.meta.env.BASE_URL + info.icon}
         alt=""
         data-tip={info.name}
