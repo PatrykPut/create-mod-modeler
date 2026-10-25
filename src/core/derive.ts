@@ -68,7 +68,7 @@ export interface PlanAnalysis {
 export function conditionsOf(node: RecipeNode, plan: Plan): MachineConditions {
   return {
     rpm: node.rpm ?? plan.settings.rpm,
-    stackSize: node.stackSize ?? DEFAULT_STACK_SIZE,
+    stackSize: node.stackSize ?? plan.settings.stackSize ?? DEFAULT_STACK_SIZE,
     parallelStacks: node.parallelStacks ?? DEFAULT_PARALLEL_STACKS,
   }
 }

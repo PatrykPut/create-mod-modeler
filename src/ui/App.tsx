@@ -1,6 +1,7 @@
 import { ReactFlowProvider } from '@xyflow/react'
 import { useEffect, useMemo, useState } from 'react'
-import { analyze } from '../core/derive'
+import { analyze, DEFAULT_STACK_SIZE } from '../core/derive'
+import { MAX_STACK_SIZE } from '../core/model/plan'
 import type { TimeUnit } from '../core/units'
 import { AnalysisContext } from './analysis'
 import { Canvas } from './Canvas'
@@ -62,6 +63,16 @@ export function App() {
               min={1}
               max={256}
               onChange={(rpm) => rpm !== undefined && updateSettings({ rpm })}
+            />
+            <NumberField
+              label="Stack size"
+              value={plan.settings.stackSize}
+              placeholder={String(DEFAULT_STACK_SIZE)}
+              min={1}
+              max={MAX_STACK_SIZE}
+              step={1}
+              title="Items per stack for fans and crushing wheels, unless a node sets its own"
+              onChange={(stackSize) => updateSettings({ stackSize })}
             />
             <label className="field">
               <span>Rates</span>

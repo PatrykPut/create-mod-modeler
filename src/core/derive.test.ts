@@ -183,6 +183,22 @@ describe('analyze: cobblestone → gravel → iron nuggets → iron ingot at 256
     expect(nodes.wash.machines.count).toBe(1)
   })
 
+  it('uses the plan-wide stack size unless a node sets its own', () => {
+    const chain = ironChain({ wash: { parallelStacks: 2 } })
+    const withDefault = {
+      ...chain,
+      settings: { ...chain.settings, stackSize: 64 },
+    }
+    expect(analyze(withDefault, catalog).nodes.wash.machines.count).toBe(1)
+    const overridden = ironChain({ wash: { stackSize: 1, parallelStacks: 2 } })
+    expect(
+      analyze(
+        { ...overridden, settings: { ...overridden.settings, stackSize: 64 } },
+        catalog,
+      ).nodes.wash.machines.count,
+    ).toBe(analyze(overridden, catalog).nodes.wash.machines.count)
+  })
+
   it('uses crushing wheels for milling recipes when no crushing recipe exists', () => {
     expect(
       catalog.machinesFor(catalog.recipe('create:milling/cobblestone')!),

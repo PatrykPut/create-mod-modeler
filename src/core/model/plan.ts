@@ -7,7 +7,11 @@ export const DEFAULT_RPM = 256
 export interface Settings {
   rpm: number
   timeUnit: TimeUnit
+  /** Items per stack for machines that take stacks (fans, crushing wheels); absent = 1. */
+  stackSize?: number
 }
+
+export const MAX_STACK_SIZE = 64
 
 export interface Position {
   x: number
@@ -21,6 +25,7 @@ export interface RecipeNode {
   machineId: MachineId
   /** Overrides Settings.rpm. */
   rpm?: number
+  /** Overrides Settings.stackSize. */
   stackSize?: number
   parallelStacks?: number
   /** Fixes this node's production of one output item (per minute). */

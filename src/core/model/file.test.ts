@@ -58,6 +58,16 @@ describe('plan files', () => {
     })
   })
 
+  it('keeps a valid default stack size and drops an invalid one', () => {
+    const read = (stackSize: unknown) =>
+      parsePlanFile(
+        JSON.stringify({ ...plan, settings: { ...plan.settings, stackSize } }),
+      ).plan.settings
+    expect(read(16)).toEqual({ rpm: 128, timeUnit: 'second', stackSize: 16 })
+    expect(read(100)).toEqual({ rpm: 128, timeUnit: 'second' })
+    expect(read('x')).toEqual({ rpm: 128, timeUnit: 'second' })
+  })
+
   it('drops edges whose nodes are missing', () => {
     const broken = {
       ...plan,

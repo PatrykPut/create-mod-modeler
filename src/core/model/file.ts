@@ -1,7 +1,14 @@
 // Plans as files (JSON export/import) and as share links (compressed into the URL).
 import { removeInvalidSources } from '../sources'
 import type { TimeUnit } from '../units'
-import { SCHEMA_VERSION, type Plan, type PlanEdge, type PlanNode } from './plan'
+import {
+  MAX_STACK_SIZE,
+  SCHEMA_VERSION,
+  type Plan,
+  type PlanEdge,
+  type PlanNode,
+  type Settings,
+} from './plan'
 
 export const FILE_FORMAT = 'create-mod-modeler/plan'
 const DEFAULT_NAME = 'Imported plan'
@@ -60,9 +67,17 @@ function checkPlan(value: unknown): Plan {
     throw new PlanFileError(
       'The plan was made with a newer version of the modeler.',
     )
-  const { rpm, timeUnit } = value.settings
+  const { rpm, timeUnit, stackSize } = value.settings
   if (typeof rpm !== 'number' || !TIME_UNITS.includes(timeUnit as TimeUnit))
     throw new PlanFileError('The plan has invalid settings.')
+  const settings: Settings = { rpm, timeUnit: timeUnit as TimeUnit }
+  // optional, so files from before it existed stay valid
+  if (
+    typeof stackSize === 'number' &&
+    stackSize >= 1 &&
+    stackSize <= MAX_STACK_SIZE
+  )
+    settings.stackSize = stackSize
 
   const nodes = value.nodes.map(checkNode)
   const ids = new Set(nodes.map((n) => n.id))
@@ -77,7 +92,7 @@ function checkPlan(value: unknown): Plan {
   )
   return {
     schemaVersion: SCHEMA_VERSION,
-    settings: { rpm, timeUnit: timeUnit as TimeUnit },
+    settings,
     nodes,
     edges,
   }

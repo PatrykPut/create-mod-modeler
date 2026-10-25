@@ -120,6 +120,7 @@ Left for later: fan-driven chutes, funnel extraction rates, separate kinetic net
 
 - [x] Sources limited to generators, tree farms, crop farms and pumps; limestone and scoria generators with drills; invalid sources removed on load (store version 3) and on import with a notice
 - [x] Machine icons: isometric renders of the machine blocks in node headers, the add dialog and the summary's machine list
+- [x] Plan-wide default stack size in the header (`settings.stackSize`, optional; nodes override it)
 - Left for later: harvesters, saws and farm sizes per farm source; isometric icons for all block items
 
 ## Open verifications

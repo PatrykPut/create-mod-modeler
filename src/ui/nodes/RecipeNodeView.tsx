@@ -1,7 +1,8 @@
 import type { Node, NodeProps } from '@xyflow/react'
 import { burnerFuels, FUELS } from '../../core/fuels'
 import { MACHINES, recipeMachineName } from '../../core/machines'
-import type { RecipeNode } from '../../core/model/plan'
+import { DEFAULT_STACK_SIZE } from '../../core/derive'
+import { MAX_STACK_SIZE, type RecipeNode } from '../../core/model/plan'
 import { fuelOf } from '../../core/model/ports'
 import { fromPerMinute, toPerMinute } from '../../core/units'
 import { useAnalysis } from '../analysis'
@@ -125,11 +126,11 @@ export function RecipeNodeView({ data: { node } }: NodeProps<RecipeFlowNode>) {
           <NumberField
             label="Stack size"
             value={node.stackSize}
-            placeholder="1"
+            placeholder={String(settings.stackSize ?? DEFAULT_STACK_SIZE)}
             min={1}
-            max={64}
+            max={MAX_STACK_SIZE}
             step={1}
-            title="Items per stack fed into the machine"
+            title="Items per stack fed into the machine; overrides the plan's stack size"
             onChange={(stackSize) => updateNode(node.id, { stackSize })}
           />
         )}
