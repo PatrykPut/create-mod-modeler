@@ -17,6 +17,7 @@ import {
   type Settings,
   type SourceNode,
 } from '../core/model/plan'
+import { removeInvalidSources } from '../core/sources'
 
 export interface SavedPlan {
   id: string
@@ -98,14 +99,27 @@ export function uniqueName(name: string, taken: string[]): string {
 
 type Persisted = Pick<PlanState, 'currentId' | 'library'>
 
-/** Version 1 stored a single plan; it becomes the first plan of the library. */
+/**
+ * Version 1 stored a single plan; it becomes the first plan of the library.
+ * Version 3 drops sources no farm or generator makes (core/sources.ts).
+ */
 export function migrate(persisted: unknown, version: number): Persisted {
+  let state = persisted as Persisted
   if (version < 2) {
     const { plan } = (persisted ?? {}) as { plan?: Plan }
     const first = savedPlan(DEFAULT_NAME, plan ?? emptyPlan())
-    return { currentId: first.id, library: { [first.id]: first } }
+    state = { currentId: first.id, library: { [first.id]: first } }
   }
-  return persisted as Persisted
+  if (version < 3) {
+    const library = Object.fromEntries(
+      Object.entries(state.library).map(([id, saved]) => [
+        id,
+        { ...saved, plan: removeInvalidSources(saved.plan).plan },
+      ]),
+    )
+    state = { ...state, library }
+  }
+  return state
 }
 
 const initial = savedPlan(DEFAULT_NAME, emptyPlan())
@@ -232,7 +246,7 @@ export const usePlanStore = create<PlanState>()(
     },
     {
       name: 'create-mod-modeler:plan',
-      version: 2,
+      version: 3,
       storage: createJSONStorage(() => safeStorage),
       // the open plan is stored once, inside the library
       partialize: ({ currentId, library }): Persisted => ({

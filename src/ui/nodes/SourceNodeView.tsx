@@ -1,6 +1,7 @@
 import type { Node, NodeProps } from '@xyflow/react'
 import { DRILL, GENERATED_BLOCKS } from '../../core/machines'
 import type { SourceNode } from '../../core/model/plan'
+import { SOURCE_KINDS, sourceKind } from '../../core/sources'
 import { fromPerMinute, toPerMinute } from '../../core/units'
 import { useAnalysis } from '../analysis'
 import { formatNumber, formatPercent, formatStress } from '../format'
@@ -20,14 +21,15 @@ export function SourceNodeView({ data: { node } }: NodeProps<SourceFlowNode>) {
   const unlimited = node.perMinute === null
   const drillable = node.item in GENERATED_BLOCKS
   const drilled = drillable && node.drill !== false
+  const kind = SOURCE_KINDS[sourceKind(node.item) ?? 'generator']
 
   return (
     <div className="node node-source">
       <header className="node-header">
         <span className="node-title">
-          {drilled ? `Source · ${DRILL.name}` : 'Source'}
+          Source · {drilled ? DRILL.name : kind.name}
         </span>
-        {drilled && <Info tip={DRILL.note} />}
+        <Info tip={drilled ? DRILL.note : kind.note} />
       </header>
       <div className="node-ports">
         <div />

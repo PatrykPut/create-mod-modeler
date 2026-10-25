@@ -47,13 +47,14 @@ const plan: Plan = {
 describe('plan files', () => {
   it('round-trips a plan with its name', () => {
     const text = JSON.stringify(toPlanFile('Iron', plan))
-    expect(parsePlanFile(text)).toEqual({ name: 'Iron', plan })
+    expect(parsePlanFile(text)).toEqual({ name: 'Iron', plan, removed: [] })
   })
 
   it('also reads a bare plan', () => {
     expect(parsePlanFile(JSON.stringify(plan))).toEqual({
       name: 'Imported plan',
       plan,
+      removed: [],
     })
   })
 
@@ -66,6 +67,17 @@ describe('plan files', () => {
       ],
     }
     expect(parsePlanFile(JSON.stringify(broken)).plan.edges).toEqual(plan.edges)
+  })
+
+  it('removes sources that no farm or generator makes', () => {
+    const boat = {
+      ...plan,
+      nodes: [{ ...plan.nodes[0], item: 'minecraft:acacia_boat' }],
+    }
+    const { plan: read, removed } = parsePlanFile(JSON.stringify(boat))
+    expect(read.nodes).toEqual([])
+    expect(read.edges).toEqual([])
+    expect(removed).toEqual(['minecraft:acacia_boat'])
   })
 
   it('rejects files that are not plans', () => {
@@ -89,7 +101,7 @@ describe('share links', () => {
     const code = await encodeShare('Iron', plan)
     expect(code).toMatch(/^[A-Za-z0-9_-]+$/)
     expect(code.length).toBeLessThan(JSON.stringify(plan).length)
-    expect(await decodeShare(code)).toEqual({ name: 'Iron', plan })
+    expect(await decodeShare(code)).toEqual({ name: 'Iron', plan, removed: [] })
   })
 
   it('rejects broken codes', async () => {

@@ -26,6 +26,12 @@ function download(fileName: string, text: string, type: string) {
 const fileNameOf = (name: string) =>
   name.trim().replace(/[^\w.-]+/g, '_') || 'plan'
 
+/** Mentions sources dropped on import (core/sources.ts). */
+const removedNote = (removed: string[]) =>
+  removed.length === 0
+    ? ''
+    : ` Removed sources no farm or generator makes: ${removed.map((item) => catalog.item(item).name).join(', ')}.`
+
 const messageOf = (error: unknown) =>
   error instanceof PlanFileError ? error.message : 'Something went wrong.'
 
@@ -38,9 +44,9 @@ function useShareLinks(notify: (text: string) => void) {
       const code = location.hash.slice(SHARE_PREFIX.length)
       history.replaceState(null, '', location.pathname + location.search)
       decodeShare(code)
-        .then(({ name, plan }) => {
+        .then(({ name, plan, removed }) => {
           importPlan(name, plan)
-          notify(`Opened the shared plan "${name}".`)
+          notify(`Opened the shared plan "${name}".${removedNote(removed)}`)
         })
         .catch((error) => notify(messageOf(error)))
     }
@@ -108,9 +114,9 @@ export function PlanMenu() {
     }
   }
   const importFile = async (file: File) => {
-    const { name, plan: imported } = parsePlanFile(await file.text())
+    const { name, plan: imported, removed } = parsePlanFile(await file.text())
     store().importPlan(name, imported)
-    notify(`Imported "${name}".`)
+    notify(`Imported "${name}".${removedNote(removed)}`)
   }
 
   return (

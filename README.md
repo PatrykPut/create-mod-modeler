@@ -11,7 +11,7 @@ Targets Create 6.0.10 on Minecraft 1.21.1 (NeoForge). See [docs/IMPLEMENTATION.m
 ## Features
 
 - **Recipe nodes** for all Create processing types plus vanilla smelting and crafting, with machine counts, utilisation and stress per node; RPM, stack size and targets per node
-- **Sources** with an optional rate; cobblestone and basalt show the Mechanical Drills they need
+- **Sources** only for what Create automates (block generators, tree and crop farms, pumped water and lava); generator blocks show the Mechanical Drills they need. Anything else stays an open input
 - **One solver for the whole graph**: chance outputs as averages, cycles, surplus and shortage instead of errors
 - **Heat and fuel**: Blaze Burners per basin and their fuel as a wireable input
 - **Transport** per edge: belt, chute or pipe with its limit and the lanes needed when it is exceeded

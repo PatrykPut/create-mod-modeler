@@ -97,6 +97,11 @@ Left for later: fan-driven chutes, funnel extraction rates, separate kinetic net
 - **Plans & sharing done** (2026-10-23): the iron chain renames, duplicates, exports to JSON and CSV, and reopens from a share link as "Iron chain (2)"; a foreign JSON file is rejected with a message.
 - **Done** (2026-10-25): smoke test green in CI (empty start, recipe search, import, belt RPM on an edge, share link, tooltip); README shows the iron chain.
 
+### After M4
+
+- [x] Sources limited to generators, tree farms, crop farms and pumps; limestone and scoria generators with drills; invalid sources removed on load (store version 3) and on import with a notice
+- Left for later: harvesters, saws and farm sizes per farm source
+
 ## Open verifications
 
 - ~~Mixer cycle formula~~ — recomputed from source (DESIGN §4.1)

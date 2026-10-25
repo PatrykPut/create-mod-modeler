@@ -1,4 +1,5 @@
 // Plans as files (JSON export/import) and as share links (compressed into the URL).
+import { removeInvalidSources } from '../sources'
 import type { TimeUnit } from '../units'
 import { SCHEMA_VERSION, type Plan, type PlanEdge, type PlanNode } from './plan'
 
@@ -82,19 +83,24 @@ function checkPlan(value: unknown): Plan {
   }
 }
 
-function fromJson(value: unknown): { name: string; plan: Plan } {
-  if (isObject(value) && value.format === FILE_FORMAT) {
-    const name =
-      typeof value.name === 'string' && value.name.trim()
-        ? value.name
-        : DEFAULT_NAME
-    return { name, plan: checkPlan(value.plan) }
-  }
-  return { name: DEFAULT_NAME, plan: checkPlan(value) }
+export interface ReadPlan {
+  name: string
+  plan: Plan
+  /** Items of source nodes that were dropped (see core/sources.ts). */
+  removed: string[]
+}
+
+function fromJson(value: unknown): ReadPlan {
+  const file = isObject(value) && value.format === FILE_FORMAT
+  const name =
+    file && typeof value.name === 'string' && value.name.trim()
+      ? value.name
+      : DEFAULT_NAME
+  return { name, ...removeInvalidSources(checkPlan(file ? value.plan : value)) }
 }
 
 /** Reads an exported plan file (or a bare plan). Throws PlanFileError. */
-export function parsePlanFile(text: string): { name: string; plan: Plan } {
+export function parsePlanFile(text: string): ReadPlan {
   let value: unknown
   try {
     value = JSON.parse(text)
@@ -130,9 +136,7 @@ export async function encodeShare(name: string, plan: Plan): Promise<string> {
   return toBase64Url(await pipe(json, new CompressionStream('deflate-raw')))
 }
 
-export async function decodeShare(
-  code: string,
-): Promise<{ name: string; plan: Plan }> {
+export async function decodeShare(code: string): Promise<ReadPlan> {
   let text: string
   try {
     const bytes = await pipe(

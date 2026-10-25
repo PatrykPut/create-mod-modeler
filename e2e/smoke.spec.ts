@@ -32,6 +32,18 @@ test('adds a recipe through the search', async ({ page }) => {
   )
 })
 
+test('offers only farms, generators and pumps as sources', async ({ page }) => {
+  await page.goto('./')
+  await page.getByRole('button', { name: '+ Source' }).click()
+  const search = page.getByPlaceholder('Search sources…')
+  await search.fill('boat')
+  await expect(page.locator('.dialog-results')).toContainText('Nothing found.')
+  await search.fill('oak log')
+  await expect(page.locator('.dialog-results button').first()).toContainText(
+    'Source of Oak Log · Tree farm',
+  )
+})
+
 test('imports a plan and solves it', async ({ page }) => {
   await openIronChain(page)
   const summary = page.locator('.summary')

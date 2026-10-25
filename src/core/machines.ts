@@ -290,6 +290,10 @@ export const MACHINES_BY_TYPE: Record<RecipeType, MachineId[]> = {
 export const GENERATED_BLOCKS: Record<string, { hardness: number }> = {
   'minecraft:cobblestone': { hardness: 2 },
   'minecraft:basalt': { hardness: 1.25 },
+  // lava meeting flowing honey / chocolate (AllFluids.registerFluidInteractions);
+  // properties copied from sandstone / blackstone (AllPaletteStoneTypes)
+  'create:limestone': { hardness: 0.8 },
+  'create:scoria': { hardness: 1.5 },
 }
 
 export const DRILL = {

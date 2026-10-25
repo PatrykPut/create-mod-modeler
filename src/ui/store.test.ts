@@ -11,6 +11,25 @@ describe('migrate', () => {
     expect(library[currentId]).toMatchObject({ name: 'My plan', plan })
     expect(Object.keys(library)).toHaveLength(1)
   })
+
+  it('removes sources from version 2 that no farm or generator makes', () => {
+    const boat: Plan = {
+      ...plan,
+      nodes: [
+        {
+          id: 'b',
+          kind: 'source',
+          item: 'minecraft:acacia_boat',
+          perMinute: 1,
+          position: { x: 0, y: 0 },
+        },
+      ],
+    }
+    const saved = { id: 'x', name: 'Boats', updatedAt: 1, plan: boat }
+    const { library } = migrate({ currentId: 'x', library: { x: saved } }, 2)
+    expect(library.x.plan.nodes).toEqual([])
+    expect(library.x.name).toBe('Boats')
+  })
 })
 
 describe('uniqueName', () => {

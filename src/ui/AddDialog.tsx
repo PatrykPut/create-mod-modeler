@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { RecipeOption } from '../core/catalog'
 import { MACHINES } from '../core/machines'
+import { SOURCE_KINDS, SOURCES, sourceKind } from '../core/sources'
 import { catalog } from './catalog'
 import { ItemIcon } from './ItemIcon'
 
@@ -86,17 +87,17 @@ export function AddDialog({
   const sourceResults = useMemo(() => {
     if (kind !== 'source') return []
     const fixed = request.kind === 'source' ? request.item : request.produces
-    if (fixed) return [fixed]
-    return Object.values(catalog.data.items)
-      .filter((item) => matches(query, item.id))
-      .sort((a, b) => a.name.localeCompare(b.name))
+    // only what a farm, generator or pump makes; a tag port takes any such member
+    return (fixed ? catalog.members(fixed) : SOURCES.map((s) => s.item))
+      .filter((item) => sourceKind(item) && matches(query, item))
       .slice(0, MAX_RESULTS)
-      .map((item) => item.id)
   }, [kind, request, query])
 
-  // an input port can also be fed from a source
+  // an input port can also be fed from a source, if one can make its item
   const canSwitchToSource =
-    request.kind === 'recipe' && request.produces !== undefined
+    request.kind === 'recipe' &&
+    request.produces !== undefined &&
+    catalog.members(request.produces).some((item) => sourceKind(item))
 
   return (
     <div className="dialog-backdrop" onMouseDown={onClose}>
@@ -112,7 +113,7 @@ export function AddDialog({
             ref={input}
             className="dialog-search"
             placeholder={
-              kind === 'recipe' ? 'Search recipes by item…' : 'Search items…'
+              kind === 'recipe' ? 'Search recipes by item…' : 'Search sources…'
             }
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -142,6 +143,7 @@ export function AddDialog({
                   <ItemIcon item={item} />
                   <span className="recipe-label">
                     Source of {catalog.item(item).name}
+                    <small> · {SOURCE_KINDS[sourceKind(item)!].name}</small>
                   </span>
                 </button>
               </li>
