@@ -33,7 +33,7 @@ export function NumberField({
   }
 
   return (
-    <label className="field nodrag" title={title}>
+    <label className="field nodrag" data-tip={title}>
       <span>{label}</span>
       <input
         type="number"

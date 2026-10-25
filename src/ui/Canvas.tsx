@@ -257,7 +257,7 @@ export function Canvas() {
           </button>
           <button
             className="button"
-            title="Add a stress source; it covers the whole plan"
+            data-tip="Add a stress source; it covers the whole plan"
             onClick={() =>
               store().addPowerNode(
                 'water_wheel',

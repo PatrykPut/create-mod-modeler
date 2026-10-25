@@ -9,6 +9,7 @@ import { NumberField } from './nodes/NumberField'
 import { PlanMenu } from './PlanMenu'
 import { usePlanStore } from './store'
 import { Summary } from './Summary'
+import { TooltipLayer } from './Tooltip'
 
 const UNITS: { value: TimeUnit; label: string }[] = [
   { value: 'second', label: 'per second' },
@@ -27,7 +28,14 @@ export function App() {
     <AnalysisContext.Provider value={analysis}>
       <div className="app">
         <header className="app-header">
-          <h1>Create Mod Modeler</h1>
+          <h1 className="app-title">
+            <img
+              className="app-logo"
+              src={import.meta.env.BASE_URL + 'favicon.svg'}
+              alt=""
+            />
+            Create Mod Modeler
+          </h1>
           <span className="app-version">
             Create {meta.create} · Minecraft {meta.minecraft}
           </span>
@@ -70,6 +78,7 @@ export function App() {
           Not affiliated with Mojang, Microsoft or the Create team. Textures ©
           their owners.
         </footer>
+        <TooltipLayer />
       </div>
     </AnalysisContext.Provider>
   )

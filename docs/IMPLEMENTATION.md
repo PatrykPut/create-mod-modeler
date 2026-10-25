@@ -88,10 +88,14 @@ Left for later: fan-driven chutes, funnel extraction rates, separate kinetic net
 
 - [x] Multiple named plans, JSON export/import, share link (compressed plan in URL), CSV export of the summary
   - Plan library in browser storage (v1 single plan migrates to "My plan"); file format `create-mod-modeler/plan`; share link `#plan=` with deflate-raw + base64url; CSV `section,id,name,amount,unit` in the chosen time unit
-- [ ] Create-style dark theme (andesite / brass / copper), readable font, pixel icons
-- [ ] Tooltips for approximations and assumptions; "Not affiliated" notice
-- [ ] Playwright smoke test; README with screenshots
+- [x] Create-style dark theme (andesite / brass / copper), readable font, pixel icons
+  - System font for text, Pixelify Sans (OFL, bundled) for the logo, pixel-art cog as logo and favicon
+- [x] Tooltips for approximations and assumptions; "Not affiliated" notice
+  - One styled tooltip layer for every `data-tip` (hover and keyboard focus); ⓘ notes on machines, drills, power sources, transport types and summary sections
+- [x] Playwright smoke test; README with screenshots
+  - `npm run e2e` runs in CI against the production build; `npm run screenshots` regenerates `docs/screenshots/` from `e2e/fixtures/iron-chain.json`
 - **Plans & sharing done** (2026-10-23): the iron chain renames, duplicates, exports to JSON and CSV, and reopens from a share link as "Iron chain (2)"; a foreign JSON file is rejected with a message.
+- **Done** (2026-10-25): smoke test green in CI (empty start, recipe search, import, belt RPM on an edge, share link, tooltip); README shows the iron chain.
 
 ## Open verifications
 

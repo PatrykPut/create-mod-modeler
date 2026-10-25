@@ -4,6 +4,7 @@ import { useAnalysis } from './analysis'
 import { formatPercent, formatRate, formatStress } from './format'
 import { ItemIcon, ItemName } from './ItemIcon'
 import { usePlanStore } from './store'
+import { Info } from './Tooltip'
 
 function RateList({
   title,
@@ -45,7 +46,10 @@ function StressSection() {
   const over = hasPower && stress > capacity + 1e-6
   return (
     <section className="summary-section">
-      <h2>Stress</h2>
+      <h2>
+        Stress{' '}
+        <Info tip="Stress of every built machine, drill and pump at its RPM, against all power sources as one kinetic network" />
+      </h2>
       <p className={`summary-stress ${over ? 'is-over' : ''}`}>
         {formatStress(stress)}
         {hasPower && (
@@ -55,7 +59,7 @@ function StressSection() {
       {hasPower && capacity > 0 && (
         <div
           className={`stress-bar ${over ? 'is-over' : ''}`}
-          title={`${formatPercent(stress / capacity)} of the capacity used`}
+          data-tip={`${formatPercent(stress / capacity)} of the capacity used`}
         >
           <div
             style={{ width: `${Math.min(100, (stress / capacity) * 100)}%` }}
@@ -79,7 +83,10 @@ function Bottlenecks() {
   if (summary.bottlenecks.length === 0) return null
   return (
     <section className="summary-section is-shortage">
-      <h2>Bottlenecks</h2>
+      <h2>
+        Bottlenecks{' '}
+        <Info tip="Belts, chutes and pipes that carry more than one lane can; click the edge label to change it" />
+      </h2>
       <ul>
         {summary.bottlenecks.map(({ edge, item, lanes }) => (
           <li key={edge}>
@@ -108,7 +115,10 @@ export function Summary() {
       <RateList title="Shortage" rates={summary.shortage} tone="is-shortage" />
       {summary.machines.length > 0 && (
         <section className="summary-section">
-          <h2>Machines</h2>
+          <h2>
+            Machines{' '}
+            <Info tip="Rounded up per node; idle machines still draw stress" />
+          </h2>
           <ul>
             {summary.machines.map(({ machine, count }) => (
               <li key={machine}>

@@ -1,0 +1,69 @@
+{
+  "format": "create-mod-modeler/plan",
+  "name": "Iron chain",
+  "plan": {
+    "schemaVersion": 1,
+    "settings": { "rpm": 256, "timeUnit": "minute" },
+    "nodes": [
+      {
+        "id": "cobble",
+        "kind": "source",
+        "item": "minecraft:cobblestone",
+        "perMinute": null,
+        "position": { "x": 0, "y": 0 }
+      },
+      {
+        "id": "mill",
+        "kind": "recipe",
+        "recipeId": "create:milling/cobblestone",
+        "machineId": "millstone",
+        "position": { "x": 380, "y": 0 }
+      },
+      {
+        "id": "wash",
+        "kind": "recipe",
+        "recipeId": "create:splashing/gravel",
+        "machineId": "fan_washing",
+        "parallelStacks": 4,
+        "position": { "x": 760, "y": 0 }
+      },
+      {
+        "id": "press",
+        "kind": "recipe",
+        "recipeId": "minecraft:iron_ingot_from_nuggets",
+        "machineId": "press_basin",
+        "target": { "item": "minecraft:iron_ingot", "perMinute": 2 },
+        "position": { "x": 1260, "y": 0 }
+      },
+      {
+        "id": "wheels",
+        "kind": "power",
+        "source": "large_water_wheel",
+        "position": { "x": 380, "y": 260 }
+      }
+    ],
+    "edges": [
+      {
+        "id": "e1",
+        "source": "cobble",
+        "target": "mill",
+        "item": "minecraft:cobblestone",
+        "transport": { "type": "belt", "rpm": 32 }
+      },
+      {
+        "id": "e2",
+        "source": "mill",
+        "target": "wash",
+        "item": "minecraft:gravel",
+        "transport": { "type": "belt" }
+      },
+      {
+        "id": "e3",
+        "source": "wash",
+        "target": "press",
+        "item": "minecraft:iron_nugget",
+        "transport": { "type": "chute" }
+      }
+    ]
+  }
+}

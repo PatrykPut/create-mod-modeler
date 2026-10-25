@@ -4,6 +4,7 @@ import { DEFAULT_SAILS, POWER_SOURCES } from '../../core/power'
 import { useAnalysis } from '../analysis'
 import { formatStress } from '../format'
 import { usePlanStore } from '../store'
+import { Info } from '../Tooltip'
 import { NumberField } from './NumberField'
 
 export type PowerFlowNode = Node<{ node: PowerNode }, 'power'>
@@ -32,11 +33,7 @@ export function PowerNodeView({ data: { node } }: NodeProps<PowerFlowNode>) {
             </option>
           ))}
         </select>
-        {source.note && (
-          <span className="node-info" title={source.note}>
-            ⓘ
-          </span>
-        )}
+        {source.note && <Info tip={source.note} />}
       </header>
 
       <div className="node-stats">
@@ -50,13 +47,13 @@ export function PowerNodeView({ data: { node } }: NodeProps<PowerFlowNode>) {
       </div>
       {steam && analysis.boiler && analysis.boiler.boilers > 0 && (
         <div className="node-stats">
-          <span title="One boiler level per engine; level 18 at most">
+          <span data-tip="One boiler level per engine; level 18 at most">
             Boiler level {analysis.boiler.level}
             {analysis.boiler.boilers > 1 && ` × ${analysis.boiler.boilers}`}
           </span>
           <span
             className="node-stress"
-            title="Water pumps: 1 per boiler up to level 12, 2 from level 13"
+            data-tip="Water pumps: 1 per boiler up to level 12, 2 from level 13"
           >
             {analysis.pumps}× pump · {formatStress(analysis.stress)}
           </span>

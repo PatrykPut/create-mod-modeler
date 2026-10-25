@@ -5,6 +5,7 @@ import { fromPerMinute, toPerMinute } from '../../core/units'
 import { useAnalysis } from '../analysis'
 import { formatNumber, formatPercent, formatStress } from '../format'
 import { usePlanStore } from '../store'
+import { Info } from '../Tooltip'
 import { NumberField } from './NumberField'
 import { PortRow } from './PortRow'
 
@@ -26,11 +27,7 @@ export function SourceNodeView({ data: { node } }: NodeProps<SourceFlowNode>) {
         <span className="node-title">
           {drilled ? `Source · ${DRILL.name}` : 'Source'}
         </span>
-        {drilled && (
-          <span className="node-info" title={DRILL.note}>
-            ⓘ
-          </span>
-        )}
+        {drilled && <Info tip={DRILL.note} />}
       </header>
       <div className="node-ports">
         <div />
@@ -42,7 +39,7 @@ export function SourceNodeView({ data: { node } }: NodeProps<SourceFlowNode>) {
       </div>
       {drilled && (
         <div className="node-stats">
-          <span title="Drills needed (exact → built), utilisation">
+          <span data-tip="Drills needed (exact → built), utilisation">
             {formatNumber(analysis.machines.exact)} →{' '}
             <strong>{analysis.machines.count}×</strong>{' '}
             {analysis.machines.count > 0 &&
@@ -73,7 +70,7 @@ export function SourceNodeView({ data: { node } }: NodeProps<SourceFlowNode>) {
           <span>Unlimited</span>
         </label>
         {drillable && (
-          <label className="field nodrag" title={DRILL.note}>
+          <label className="field nodrag" data-tip={DRILL.note}>
             <input
               type="checkbox"
               checked={drilled}

@@ -15,7 +15,7 @@ export function ItemIcon({ item, size = 20 }: { item: string; size?: number }) {
         className="item-icon"
         src={import.meta.env.BASE_URL + info.icon}
         alt=""
-        title={info.name}
+        data-tip={info.name}
         width={size}
         height={size}
       />
@@ -28,7 +28,7 @@ export function ItemIcon({ item, size = 20 }: { item: string; size?: number }) {
   return (
     <span
       className="item-icon item-icon-placeholder"
-      title={info.name}
+      data-tip={info.name}
       style={{
         width: size,
         height: size,

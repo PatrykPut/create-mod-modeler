@@ -8,6 +8,7 @@ import { useAnalysis } from '../analysis'
 import { catalog } from '../catalog'
 import { formatNumber, formatPercent, formatStress } from '../format'
 import { usePlanStore } from '../store'
+import { Info } from '../Tooltip'
 import { NumberField } from './NumberField'
 import { PortRow } from './PortRow'
 
@@ -58,16 +59,12 @@ export function RecipeNodeView({ data: { node } }: NodeProps<RecipeFlowNode>) {
         {recipe.heat && (
           <span
             className={`node-heat is-${recipe.heat}`}
-            title={`Needs a ${recipe.heat} Blaze Burner under the basin`}
+            data-tip={`Needs a ${recipe.heat} Blaze Burner under the basin`}
           >
             {recipe.heat === 'superheated' ? 'Superheated' : 'Heated'}
           </span>
         )}
-        {machine.note && (
-          <span className="node-info" title={machine.note}>
-            ⓘ
-          </span>
-        )}
+        {machine.note && <Info tip={machine.note} />}
       </header>
       {analysis.warning && <p className="node-warning">{analysis.warning}</p>}
 
@@ -85,14 +82,14 @@ export function RecipeNodeView({ data: { node } }: NodeProps<RecipeFlowNode>) {
       </div>
 
       <div className="node-stats">
-        <span title="Machines needed (exact → built), utilisation">
+        <span data-tip="Machines needed (exact → built), utilisation">
           {formatNumber(analysis.machines.exact)} →{' '}
           <strong>{analysis.machines.count}×</strong>{' '}
           {analysis.machines.count > 0 &&
             `(${formatPercent(analysis.machines.utilization)})`}
         </span>
         {analysis.burners !== undefined && analysis.burners > 0 && (
-          <span title="One Blaze Burner under each basin">
+          <span data-tip="One Blaze Burner under each basin; burners burn fuel all the time, even while the machine idles">
             {analysis.burners}× Blaze Burner
           </span>
         )}
@@ -171,7 +168,10 @@ export function RecipeNodeView({ data: { node } }: NodeProps<RecipeFlowNode>) {
           </select>
         )}
         {burning && (
-          <label className="field" title="What the burners or the furnace burn">
+          <label
+            className="field"
+            data-tip="What the burners or the furnace burn"
+          >
             <span>Fuel</span>
             <select
               className="nodrag"

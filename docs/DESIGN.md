@@ -2,7 +2,7 @@
 
 A node-based production planner for the Minecraft mod [Create](https://github.com/Creators-of-Create/Create), in the spirit of the Satisfactory Modeler. Users wire recipe nodes into production chains (e.g. cobblestone → gravel → iron nuggets → iron ingot) and see rates, machine counts, stress (SU) usage and logistics limits.
 
-Status: design agreed, implementation not started.
+Status: milestones M0–M4 implemented (see `IMPLEMENTATION.md`).
 
 ## 1. Product decisions
 

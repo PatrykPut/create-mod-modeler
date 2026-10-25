@@ -11,11 +11,14 @@
     "lint": "oxlint",
     "test": "vitest run",
     "test:watch": "vitest",
+    "e2e": "playwright test --project=smoke",
+    "screenshots": "playwright test --project=screenshots",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "data": "node scripts/data/build.ts"
   },
   "dependencies": {
+    "@fontsource/pixelify-sans": "^5.3.0",
     "@xyflow/react": "^12.12.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
@@ -23,6 +26,7 @@
     "zustand": "^5.0.16"
   },
   "devDependencies": {
+    "@playwright/test": "^1.64.1",
     "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",

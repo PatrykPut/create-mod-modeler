@@ -14,3 +14,4 @@ Node-based production planner for the Minecraft mod Create (static web app, GitH
 - Target data version: Create 6.0.10, Minecraft 1.21.1 NeoForge.
 - UI text is English only.
 - Before committing: `npm run lint && npm run typecheck && npm test && npm run format:check`.
+- UI changes: also `npm run e2e` (Playwright smoke test); rerun `npm run screenshots` when the README images go stale.

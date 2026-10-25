@@ -6,13 +6,14 @@ import {
   type EdgeProps,
 } from '@xyflow/react'
 import { useEffect, useRef, useState } from 'react'
-import { DEFAULT_ITEMS_PER_ENTRY } from '../core/logistics'
+import { DEFAULT_ITEMS_PER_ENTRY, TRANSPORT_NOTES } from '../core/logistics'
 import type { PlanEdge, Transport } from '../core/model/plan'
 import { isFluid } from '../core/units'
 import { useAnalysis } from './analysis'
 import { formatRate } from './format'
 import { NumberField } from './nodes/NumberField'
 import { usePlanStore } from './store'
+import { Info } from './Tooltip'
 
 export type TransportFlowEdge = Edge<{ edge: PlanEdge }, 'transport'>
 
@@ -86,7 +87,7 @@ export function TransportEdge(props: EdgeProps<TransportFlowEdge>) {
         >
           <button
             className="edge-label-button"
-            title={
+            data-tip={
               analysis?.limit === undefined
                 ? 'Click to choose belt, chute or pipe'
                 : `Limit ${formatRate(analysis.limit, unit, edge.item)} per ${one}`
@@ -137,13 +138,12 @@ export function TransportEdge(props: EdgeProps<TransportFlowEdge>) {
                   onChange={(itemsPerEntry) => setTransport({ itemsPerEntry })}
                 />
               )}
-              {analysis?.limit !== undefined && (
-                <p className="edge-limit">
-                  {formatRate(analysis.limit, unit, edge.item)} per {one}
-                  {type === 'chute' && ', by gravity'}
-                  {type === 'pipe' && ', one pump per pipe'}
-                </p>
-              )}
+              <p className="edge-limit">
+                {analysis?.limit === undefined
+                  ? 'No limit'
+                  : `${formatRate(analysis.limit, unit, edge.item)} per ${one}`}{' '}
+                <Info tip={TRANSPORT_NOTES[type]} />
+              </p>
             </div>
           )}
         </div>

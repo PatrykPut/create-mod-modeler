@@ -31,9 +31,23 @@ export function PortRow({
       <ItemIcon item={port.item} />
       <span className="port-name">
         <ItemName item={port.item} />
-        {port.fuel && <span className="port-tag"> fuel</span>}
+        {port.fuel && (
+          <span
+            className="port-tag"
+            data-tip="Fuel input; choose the fuel on the node"
+          >
+            {' '}
+            fuel
+          </span>
+        )}
         {port.chance !== undefined && (
-          <span className="port-chance"> {formatPercent(port.chance)}</span>
+          <span
+            className="port-chance"
+            data-tip="Chance output: the rate is the average over many operations"
+          >
+            {' '}
+            {formatPercent(port.chance)}
+          </span>
         )}
       </span>
       <span className="port-rate">

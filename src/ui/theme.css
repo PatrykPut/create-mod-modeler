@@ -52,11 +52,22 @@ body,
   border-bottom: 2px solid var(--brass-500);
 }
 
-.app-header h1 {
+.app-title {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
   margin: 0;
   white-space: nowrap;
-  font-size: 1.1rem;
+  font-family: 'Pixelify Sans', system-ui, sans-serif;
+  font-size: 1.3rem;
+  font-weight: 600;
   color: var(--brass-500);
+}
+
+.app-logo {
+  width: 24px;
+  height: 24px;
+  image-rendering: pixelated;
 }
 
 .app-version {
@@ -291,10 +302,40 @@ select:focus-visible,
   color: var(--copper-400);
 }
 
-.node-info {
-  margin-left: auto;
+.info {
   cursor: help;
+  font-weight: normal;
+  text-transform: none;
   color: var(--andesite-400);
+}
+
+.info:hover,
+.info:focus-visible {
+  color: var(--brass-400);
+}
+
+.node-header .info {
+  margin-left: auto;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 2000;
+  max-width: 18rem;
+  padding: 0.35rem 0.55rem;
+  border: 1px solid var(--andesite-600);
+  border-left: 3px solid var(--brass-500);
+  border-radius: 4px;
+  background: var(--andesite-800);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 50%);
+  color: var(--andesite-100);
+  font-size: 0.75rem;
+  font-weight: normal;
+  line-height: 1.35;
+  letter-spacing: normal;
+  text-transform: none;
+  pointer-events: none;
+  visibility: hidden;
 }
 
 .node-ports {

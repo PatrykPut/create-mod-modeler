@@ -5,10 +5,19 @@ import {
   pipeMbPerMinute,
 } from './formulas/transport'
 import { PUMP } from './machines'
-import type { PlanEdge, Settings } from './model/plan'
+import type { PlanEdge, Settings, Transport } from './model/plan'
 
 const EPSILON = 1e-9
 export const DEFAULT_ITEMS_PER_ENTRY = 1
+
+/** What each transport type assumes, for the UI. */
+export const TRANSPORT_NOTES: Record<Transport['type'] | 'ideal', string> = {
+  ideal: 'No limit. Choose belt, chute or pipe to check the throughput.',
+  belt: 'One belt at its RPM. Delays where machines take items on or off the belt are not counted.',
+  chute:
+    'Items fall by gravity, 4 entries per second. Fans on the chute are not modelled.',
+  pipe: 'One mechanical pump per pipe, at the pump RPM; its stress is added. Pipe range is not checked.',
+}
 
 export interface EdgeAnalysis {
   /** Items (fluids: mB) per minute. */
