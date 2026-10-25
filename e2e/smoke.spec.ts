@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { readFileSync } from 'node:fs'
 import { openIronChain, testAddonJar } from './helpers.ts'
 
 let errors: string[]
@@ -109,4 +110,24 @@ test('loads addon recipes from a mod jar', async ({ page }) => {
   await page.reload()
   await expect(page.getByRole('button', { name: 'Addons (1)' })).toBeVisible()
   await expect(page.locator('.react-flow__node')).toContainText('Test Plate')
+
+  // the plan keeps its addon recipe, so exports work without the pack
+  await page.getByText('File', { exact: true }).click()
+  const download = page.waitForEvent('download')
+  await page.getByRole('button', { name: 'Export JSON' }).click()
+  const file = JSON.parse(
+    readFileSync(await (await download).path(), 'utf-8'),
+  ) as { plan: { addons: { recipes: { id: string }[] } } }
+  expect(file.plan.addons.recipes.map((r) => r.id)).toEqual([
+    'testaddon:pressing/test_plate',
+  ])
+
+  await page.getByRole('button', { name: 'Addons (1)' }).click()
+  await page.getByRole('button', { name: 'Remove Test Addon' }).click()
+  await page.getByRole('button', { name: 'Close' }).click()
+  await expect(node).toContainText('Test Plate')
+  await expect(node).toContainText(
+    'Test Addon 1.0 is not loaded; using the copy saved in this plan.',
+  )
+  await expect(node.locator('img[src^="data:image/png"]')).toHaveCount(1)
 })

@@ -2,13 +2,14 @@ import type { Node, NodeProps } from '@xyflow/react'
 import { burnerFuels, FUELS } from '../../core/fuels'
 import { MACHINES, recipeMachineName } from '../../core/machines'
 import { DEFAULT_STACK_SIZE } from '../../core/derive'
+import { snapshotPack } from '../../core/model/addons'
 import { MAX_STACK_SIZE, type RecipeNode } from '../../core/model/plan'
 import { fuelOf } from '../../core/model/ports'
 import { fromPerMinute, toPerMinute } from '../../core/units'
 import { useAnalysis } from '../analysis'
 import { ItemIcon, MACHINE_ICON_SIZE } from '../ItemIcon'
 import { formatNumber, formatPercent, formatStress } from '../format'
-import { useCatalog } from '../packs'
+import { useCatalog, usePackStore } from '../packs'
 import { usePlanStore } from '../store'
 import { Info } from '../Tooltip'
 import { NumberField } from './NumberField'
@@ -21,10 +22,25 @@ export function RecipeNodeView({ data: { node } }: NodeProps<RecipeFlowNode>) {
   const settings = usePlanStore((s) => s.plan.settings)
   const updateNode = usePlanStore((s) => s.updateRecipeNode)
   const catalog = useCatalog()
+  const saved = snapshotPack(
+    usePlanStore((s) => s.plan.addons),
+    usePackStore((s) => s.catalog),
+    node.recipeId,
+  )
+  const packLoaded = usePackStore((s) =>
+    s.packs.some((p) => p.enabled && p.id === saved?.id),
+  )
   const recipe = catalog.recipe(node.recipeId)
   const machine = MACHINES[node.machineId]
   if (!recipe || !analysis)
-    return <div className="node node-recipe">Unknown recipe</div>
+    return (
+      <div className="node node-recipe">
+        <p className="node-warning">
+          Unknown recipe {node.recipeId}. Load the addon it comes from under
+          Addons.
+        </p>
+      </div>
+    )
 
   const unit = settings.timeUnit
   const machineOptions = catalog.machinesFor(recipe)
@@ -80,6 +96,17 @@ export function RecipeNodeView({ data: { node } }: NodeProps<RecipeFlowNode>) {
         )}
         {machine.note && <Info tip={machine.note} />}
       </header>
+      {saved && (
+        <p
+          className="node-warning"
+          data-tip="Load the addon under Addons to use its current recipes"
+        >
+          {packLoaded
+            ? `${saved.name} no longer has this recipe`
+            : `${saved.name}${saved.version && ` ${saved.version}`} is not loaded`}
+          ; using the copy saved in this plan.
+        </p>
+      )}
       {analysis.warning && <p className="node-warning">{analysis.warning}</p>}
 
       <div className="node-ports">

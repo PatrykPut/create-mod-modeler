@@ -1,4 +1,5 @@
 import { useCatalog, usePackStore } from './packs'
+import { usePlanStore } from './store'
 
 // Stable placeholder colour per item, for items without a texture.
 function hue(id: string) {
@@ -13,11 +14,13 @@ export const MACHINE_ICON_SIZE = 28
 export function ItemIcon({ item, size = 20 }: { item: string; size?: number }) {
   const info = useCatalog().item(item)
   const packIcon = usePackStore((s) => s.iconUrls[item])
-  if (info.icon || packIcon)
+  // icons of addon items the plan saved, for packs that are not loaded
+  const savedIcon = usePlanStore((s) => s.plan.addons?.icons?.[item])
+  if (info.icon || packIcon || savedIcon)
     return (
       <img
         className={info.rendered ? 'item-icon is-rendered' : 'item-icon'}
-        src={packIcon ?? import.meta.env.BASE_URL + info.icon}
+        src={packIcon ?? savedIcon ?? import.meta.env.BASE_URL + info.icon}
         alt=""
         data-tip={info.name}
         width={size}

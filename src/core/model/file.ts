@@ -1,6 +1,7 @@
 // Plans as files (JSON export/import) and as share links (compressed into the URL).
 import { removeInvalidSources } from '../sources'
 import type { TimeUnit } from '../units'
+import { readAddons, toBase64 } from './addons'
 import {
   MAX_STACK_SIZE,
   SCHEMA_VERSION,
@@ -90,11 +91,13 @@ function checkPlan(value: unknown): Plan {
       ids.has(edge.source as string) &&
       ids.has(edge.target as string),
   )
+  const addons = readAddons(value.addons)
   return {
     schemaVersion: SCHEMA_VERSION,
     settings,
     nodes,
     edges,
+    ...(addons && { addons }),
   }
 }
 
@@ -130,24 +133,24 @@ async function pipe(bytes: Uint8Array, stream: GenericTransformStream) {
   return new Uint8Array(await new Response(output).arrayBuffer())
 }
 
-// in chunks: spreading a large array into fromCharCode overflows the call stack
-const CHUNK = 0x8000
-
-function toBase64Url(bytes: Uint8Array) {
-  let binary = ''
-  for (let i = 0; i < bytes.length; i += CHUNK)
-    binary += String.fromCharCode(...bytes.subarray(i, i + CHUNK))
-  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
-}
+const toBase64Url = (bytes: Uint8Array) =>
+  toBase64(bytes).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
 
 const fromBase64Url = (code: string) =>
   Uint8Array.from(atob(code.replace(/-/g, '+').replace(/_/g, '/')), (c) =>
     c.charCodeAt(0),
   )
 
-/** A URL-safe code for the plan: deflated JSON in base64url. */
+/** A URL-safe code for the plan: deflated JSON in base64url, without addon icons. */
 export async function encodeShare(name: string, plan: Plan): Promise<string> {
-  const json = new TextEncoder().encode(JSON.stringify(toPlanFile(name, plan)))
+  let shared = plan
+  if (plan.addons?.icons) {
+    const { icons: _icons, ...addons } = plan.addons
+    shared = { ...plan, addons }
+  }
+  const json = new TextEncoder().encode(
+    JSON.stringify(toPlanFile(name, shared)),
+  )
   return toBase64Url(await pipe(json, new CompressionStream('deflate-raw')))
 }
 

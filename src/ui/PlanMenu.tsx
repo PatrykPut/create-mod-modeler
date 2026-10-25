@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { summaryCsv } from '../core/export'
+import { missingPacks } from '../core/model/addons'
 import {
   decodeShare,
   encodeShare,
@@ -7,6 +8,7 @@ import {
   PlanFileError,
   toPlanFile,
 } from '../core/model/file'
+import type { Plan } from '../core/model/plan'
 import { useAnalysis } from './analysis'
 import type { Catalog } from '../core/catalog'
 import { useCatalog, usePackStore } from './packs'
@@ -33,6 +35,16 @@ const removedNote = (removed: string[], catalog: Catalog) =>
     ? ''
     : ` Removed sources no farm or generator makes: ${removed.map((item) => catalog.item(item).name).join(', ')}.`
 
+/** Names addons the plan needs that are not loaded (core/model/addons.ts). */
+function addonNote(plan: Plan) {
+  const { catalog, loaded } = usePackStore.getState()
+  // before the stored packs are loaded every addon would look missing
+  const missing = loaded ? missingPacks(plan.addons, catalog) : []
+  return missing.length === 0
+    ? ''
+    : ` Uses recipes saved in the plan from addons that are not loaded: ${missing.map((p) => `${p.name} ${p.version}`.trim()).join(', ')}.`
+}
+
 const messageOf = (error: unknown) =>
   error instanceof PlanFileError ? error.message : 'Something went wrong.'
 
@@ -48,7 +60,7 @@ function useShareLinks(notify: (text: string) => void) {
         .then(({ name, plan, removed }) => {
           importPlan(name, plan)
           notify(
-            `Opened the shared plan "${name}".${removedNote(removed, usePackStore.getState().catalog)}`,
+            `Opened the shared plan "${name}".${removedNote(removed, usePackStore.getState().catalog)}${addonNote(plan)}`,
           )
         })
         .catch((error) => notify(messageOf(error)))
@@ -120,7 +132,9 @@ export function PlanMenu() {
   const importFile = async (file: File) => {
     const { name, plan: imported, removed } = parsePlanFile(await file.text())
     store().importPlan(name, imported)
-    notify(`Imported "${name}".${removedNote(removed, catalog)}`)
+    notify(
+      `Imported "${name}".${removedNote(removed, catalog)}${addonNote(imported)}`,
+    )
   }
 
   return (

@@ -113,7 +113,8 @@ Left for later: fan-driven chutes, funnel extraction rates, separate kinetic net
   - `src/ui/packs.ts` (`usePackStore`, `useCatalog`); base tags load as their own chunk only when a pack is active; pack icons as object URLs
 - [x] Import dialog: drop jars/zips, import report, pack list with on/off and remove; packs in IndexedDB
   - "Addons" in the header; a jar with the same mod id replaces the old pack; skipped recipes by reason in a tooltip
-- [ ] Plan files and share links embed the pack recipes they use; missing recipes shown on the node
+- [x] Plan files and share links embed the pack recipes they use; missing recipes shown on the node
+  - `src/core/model/addons.ts`: `plan.addons` kept current by `src/ui/packs.ts` (also in the local library); loaded pack wins, saved copy as fallback with a node warning; icons as data URIs, not in share links
 - [x] Smoke test with a small fixture jar (built in `e2e/helpers.ts`, no binary in the repo)
 
 ### After M4

@@ -7,6 +7,7 @@ import {
 import type { MachineId } from '../core/machines'
 import {
   emptyPlan,
+  type AddonRecipes,
   type Plan,
   type PlanEdge,
   type PlanNode,
@@ -55,6 +56,8 @@ interface PlanState {
   updateEdge(id: string, patch: Partial<PlanEdge>): void
   removeEdges(ids: string[]): void
   updateSettings(patch: Partial<Settings>): void
+  /** Replaces the plan's saved addon recipes (kept current by packs.ts). */
+  setAddons(addons: AddonRecipes | undefined): void
 }
 
 // Storage can be unavailable (private mode, blocked site data); the app then works without autosave.
@@ -242,6 +245,7 @@ export const usePlanStore = create<PlanState>()(
           })),
         updateSettings: (patch) =>
           update((plan) => ({ settings: { ...plan.settings, ...patch } })),
+        setAddons: (addons) => update(() => ({ addons })),
       }
     },
     {

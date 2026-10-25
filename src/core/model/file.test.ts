@@ -6,7 +6,7 @@ import {
   PlanFileError,
   toPlanFile,
 } from './file'
-import { emptyPlan, type Plan } from './plan'
+import { emptyPlan, type AddonRecipes, type Plan } from './plan'
 
 const plan: Plan = {
   ...emptyPlan(),
@@ -44,10 +44,32 @@ const plan: Plan = {
   ],
 }
 
+const addons: AddonRecipes = {
+  packs: { addon: { name: 'Addon', version: '1.0' } },
+  recipes: [
+    {
+      id: 'addon:pressing/plate',
+      type: 'pressing',
+      inputs: [{ item: 'minecraft:iron_ingot', amount: 1 }],
+      outputs: [{ item: 'addon:plate', amount: 1, chance: 1 }],
+    },
+  ],
+  recipePack: { 'addon:pressing/plate': 'addon' },
+  items: { 'addon:plate': { id: 'addon:plate', name: 'Plate' } },
+  tags: {},
+  icons: { 'addon:plate': 'data:image/png;base64,AQID' },
+}
+const withAddons: Plan = { ...plan, addons }
+
 describe('plan files', () => {
   it('round-trips a plan with its name', () => {
     const text = JSON.stringify(toPlanFile('Iron', plan))
     expect(parsePlanFile(text)).toEqual({ name: 'Iron', plan, removed: [] })
+  })
+
+  it('keeps the addon recipes the plan carries', () => {
+    const text = JSON.stringify(toPlanFile('Plates', withAddons))
+    expect(parsePlanFile(text).plan).toEqual(withAddons)
   })
 
   it('also reads a bare plan', () => {
@@ -112,6 +134,12 @@ describe('share links', () => {
     expect(code).toMatch(/^[A-Za-z0-9_-]+$/)
     expect(code.length).toBeLessThan(JSON.stringify(plan).length)
     expect(await decodeShare(code)).toEqual({ name: 'Iron', plan, removed: [] })
+  })
+
+  it('leaves addon icons out of share links', async () => {
+    const { icons: _icons, ...rest } = addons
+    const code = await encodeShare('Plates', withAddons)
+    expect((await decodeShare(code)).plan).toEqual({ ...plan, addons: rest })
   })
 
   it('rejects broken codes', async () => {

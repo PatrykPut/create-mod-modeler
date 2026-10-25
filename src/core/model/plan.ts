@@ -1,3 +1,4 @@
+import type { ItemInfo, Recipe, ResourceId } from '../../data/types'
 import type { MachineId } from '../machines'
 import type { TimeUnit } from '../units'
 
@@ -95,11 +96,27 @@ export interface PlanEdge {
 /** The resource of the input port an edge feeds. */
 export const targetPortOf = (edge: PlanEdge) => edge.targetItem ?? edge.item
 
+/** Addon recipes the plan uses, so it still works without their packs (core/model/addons.ts). */
+export interface AddonRecipes {
+  /** Name and version of each pack by pack id. */
+  packs: Record<string, { name: string; version: string }>
+  recipes: Recipe[]
+  /** Pack id of every recipe. */
+  recipePack: Record<string, string>
+  /** Addon items, fluids and tags the recipes use (base ones are left out). */
+  items: Record<ResourceId, ItemInfo>
+  /** Members of the addon tags the recipes use. */
+  tags: Record<ResourceId, ResourceId[]>
+  /** PNG icons as data URIs; left out of share links. */
+  icons?: Record<ResourceId, string>
+}
+
 export interface Plan {
   schemaVersion: typeof SCHEMA_VERSION
   settings: Settings
   nodes: PlanNode[]
   edges: PlanEdge[]
+  addons?: AddonRecipes
 }
 
 export function emptyPlan(): Plan {
