@@ -19,8 +19,13 @@ import {
   bucketRecipes,
   createNormalizer,
   type Normalizer,
-} from './normalize.ts'
-import { iconTexture } from './models.ts'
+} from '../../src/core/gamedata/normalize.ts'
+import { iconTexture } from '../../src/core/gamedata/models.ts'
+import {
+  resourceName,
+  tagName,
+  type Lang,
+} from '../../src/core/gamedata/names.ts'
 import {
   elementPolygons,
   objPolygons,
@@ -29,8 +34,8 @@ import {
   type Model,
   type Texture,
 } from './render.ts'
-import { runtimeRecipes } from './runtime.ts'
-import { TagIndex, type TagKind } from './tags.ts'
+import { runtimeRecipes } from '../../src/core/gamedata/runtime.ts'
+import { TagIndex, type TagKind } from '../../src/core/gamedata/tags.ts'
 
 const CREATE_VERSION = '6.0.10'
 const MINECRAFT_VERSION = '1.21.1'
@@ -39,6 +44,8 @@ const CREATE_TAG = `mc${MINECRAFT_VERSION}-${CREATE_VERSION}`
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const cache = join(root, '.cache', 'sources')
 const outFile = join(root, 'src', 'data', `create-${CREATE_VERSION}.json`)
+/** Raw base tags, merged with addon packs' tags in the browser (DESIGN §6). */
+const tagsFile = join(root, 'src', 'data', `tags-${MINECRAFT_VERSION}.json`)
 const textureDir = join(root, 'public', 'textures')
 
 interface Source {
@@ -222,8 +229,6 @@ function collectRecipes(normalizer: Normalizer, lang: Lang): Recipe[] {
   return recipes
 }
 
-type Lang = Record<string, string>
-
 function readLang(): Lang {
   return {
     ...readJson(
@@ -236,10 +241,6 @@ function readLang(): Lang {
       ),
     ),
   } as Lang
-}
-
-function titleCase(path: string) {
-  return path.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
 }
 
 /** Model JSON files for an id such as "create:block/millstone/item", most specific first. */
@@ -269,8 +270,6 @@ const textureFile = (texture: string) => {
         `assets/${namespace}/textures/${path}.png`,
       )
 }
-
-const MAX_LISTED_MEMBERS = 3
 
 function collectItems(
   recipes: Recipe[],
@@ -313,14 +312,7 @@ function collectItems(
   for (const id of sorted.filter((id) => !id.includes('#'))) {
     const fluid = id.startsWith('fluid:')
     const [namespace, path] = (fluid ? id.slice(6) : id).split(':')
-    const name = fluid
-      ? (lang[`fluid.${namespace}.${path}`] ??
-        lang[`block.${namespace}.${path}`] ??
-        titleCase(path))
-      : (lang[`item.${namespace}.${path}`] ??
-        lang[`block.${namespace}.${path}`] ??
-        titleCase(path))
-    const item: ItemInfo = { id, name }
+    const item: ItemInfo = { id, name: resourceName(id, lang) }
     const iconPath = machineBlocks.has(id)
       ? undefined
       : icon(namespace, fluid ? `${path}_bucket` : path)
@@ -329,12 +321,11 @@ function collectItems(
   }
   for (const id of sorted.filter((id) => id.includes('#'))) {
     const members = normalizer.tags.get(id) ?? []
-    const names = members.map((member) => items[member].name)
-    let name: string
-    if (names.length <= MAX_LISTED_MEMBERS) name = names.join(' / ')
-    else if (normalizer.syntheticTags.has(id))
-      name = `${names[0]} (or ${names.length - 1} others)`
-    else name = `${titleCase(id.split(/[:/]/).at(-1)!)} (any)`
+    const name = tagName(
+      id,
+      members.map((member) => items[member].name),
+      normalizer.syntheticTags.has(id),
+    )
     const item: ItemInfo = { id, name }
     const iconPath = items[members[0]]?.icon
     if (iconPath) item.icon = iconPath
@@ -433,7 +424,8 @@ async function main() {
   for (const source of Object.values(sources)) fetchSource(source)
 
   const lang = readLang()
-  const normalizer = createNormalizer(collectTags())
+  const tagIndex = collectTags()
+  const normalizer = createNormalizer(tagIndex)
   const recipes = collectRecipes(normalizer, lang)
   const items = collectItems(recipes, normalizer, lang)
   await renderIcons(items)
@@ -451,6 +443,7 @@ async function main() {
     recipes,
   }
   writeFileSync(outFile, JSON.stringify(data, null, 1) + '\n')
+  writeFileSync(tagsFile, JSON.stringify(tagIndex) + '\n')
   writeFileSync(
     join(textureDir, 'NOTICE.md'),
     [
@@ -464,7 +457,9 @@ async function main() {
       '',
     ].join('\n'),
   )
-  console.log(`Wrote ${relative(root, outFile)}`)
+  console.log(
+    `Wrote ${relative(root, outFile)} and ${relative(root, tagsFile)}`,
+  )
 }
 
 await main()

@@ -6,7 +6,7 @@ import type {
   RecipeType,
   ResourceId,
   Result,
-} from '../../src/data/types.ts'
+} from '../../data/types.ts'
 import type { TagIndex } from './tags.ts'
 
 const CREATE_TYPES: ReadonlySet<string> = new Set<RecipeType>([
@@ -25,6 +25,10 @@ const CREATE_TYPES: ReadonlySet<string> = new Set<RecipeType>([
   'emptying',
   'mechanical_crafting',
 ])
+
+/** Whether `type` (e.g. "create:milling") is a Create recipe type we model. */
+export const isCreateType = (type: string) =>
+  type.startsWith('create:') && CREATE_TYPES.has(type.slice(7))
 
 const COOKING_TYPES: ReadonlySet<string> = new Set<RecipeType>([
   'smelting',

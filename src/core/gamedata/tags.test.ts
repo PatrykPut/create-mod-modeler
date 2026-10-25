@@ -40,4 +40,26 @@ describe('TagIndex', () => {
     expect(tags.resolve('fluid', 'c:milk')).toEqual(['minecraft:milk'])
     expect(tags.resolve('item', 'c:milk')).toEqual([])
   })
+
+  it('round-trips through JSON with another set of supported namespaces', () => {
+    const copy = TagIndex.fromJSON(JSON.parse(JSON.stringify(tags)), (id) =>
+      /^(minecraft|create|othermod):/.test(id),
+    )
+    expect(copy.resolve('item', 'c:ingots/zinc')).toEqual([
+      'othermod:zinc_ingot',
+      'create:zinc_ingot',
+    ])
+  })
+
+  it('lets a later tag file replace the earlier ones', () => {
+    const copy = TagIndex.fromJSON(tags.toJSON(), () => true)
+    copy.add('item', 'minecraft:planks', {
+      replace: true,
+      values: ['minecraft:birch_planks'],
+    })
+    expect(copy.resolve('item', 'minecraft:planks')).toEqual([
+      'minecraft:birch_planks',
+    ])
+    expect(tags.resolve('item', 'minecraft:planks')).toHaveLength(2)
+  })
 })

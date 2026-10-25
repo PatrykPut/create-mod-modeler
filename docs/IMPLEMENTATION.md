@@ -6,8 +6,10 @@ Companion to [DESIGN.md](DESIGN.md). Build order: **vertical slice first** (one 
 
 ```
 scripts/data/        Node build script: Create + vanilla sources → normalized data file
-src/data/            generated data (create-6.0.10.json) + its TypeScript types
+src/data/            generated data (create-6.0.10.json, tags-1.21.1.json) + its TypeScript types
 src/core/            pure TypeScript, no React
+  gamedata/          raw recipe/tag JSON → data model (build script and addon packs)
+  packs/             addon jars → recipe packs
   model/             plan graph types, settings, (de)serialization with schema version
   formulas/          one module per machine, each citing its Create source file
   solver/            graph → linear program → rates, flows, shortage/surplus
@@ -96,6 +98,19 @@ Left for later: fan-driven chutes, funnel extraction rates, separate kinetic net
   - `npm run e2e` runs in CI against the production build; `npm run screenshots` regenerates `docs/screenshots/` from `e2e/fixtures/iron-chain.json`
 - **Plans & sharing done** (2026-10-23): the iron chain renames, duplicates, exports to JSON and CSV, and reopens from a share link as "Iron chain (2)"; a foreign JSON file is rejected with a message.
 - **Done** (2026-10-25): smoke test green in CI (empty start, recipe search, import, belt RPM on an edge, share link, tooltip); README shows the iron chain.
+
+### M5 — Addon recipe packs (DESIGN §6)
+
+- [x] Normalizer, tag index, model icon lookup and runtime recipes move from `scripts/data/` to `src/core/gamedata/` (shared by build script and browser)
+- [x] `npm run data` also writes the base tag files (`src/data/tags-1.21.1.json`)
+- [x] Mod archive reader (`fflate`): recipes, tags, lang, textures, models, mod ids/names/versions; 1.20.1 layout detected
+- [x] Pack normalization: conditions against loaded mods, merged tags, derived recipes, items with names and icon textures, report of skipped recipes by reason
+  - `src/core/packs/`: `readArchive` (incl. nested `META-INF/jarjar` jars) → `buildPacks` → `mergeGameData`; tested on hand-made archives, not yet on a real addon jar
+- [ ] Custom machine for unknown recipe types (time per operation and SU/RPM on the node)
+- [ ] Dynamic catalog (base + active packs) in the store instead of the module singleton
+- [ ] Import dialog: drop jars/zips, import report, pack list with on/off and remove; packs in IndexedDB
+- [ ] Plan files and share links embed the pack recipes they use; missing recipes shown on the node
+- [ ] Smoke test with a small fixture jar
 
 ### After M4
 

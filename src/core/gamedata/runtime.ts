@@ -1,6 +1,6 @@
 // Recipes Create generates at load time instead of shipping them as JSON.
 // Source: foundation/data/RuntimeDataGenerator.java (cuttingRecipes, washingRecipes).
-import type { Recipe } from '../../src/data/types.ts'
+import type { Recipe } from '../../data/types.ts'
 
 // same patterns as RuntimeDataGenerator
 const STRIPPED_WOODS_PREFIX =

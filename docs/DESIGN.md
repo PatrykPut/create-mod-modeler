@@ -2,7 +2,7 @@
 
 A node-based production planner for the Minecraft mod [Create](https://github.com/Creators-of-Create/Create), in the spirit of the Satisfactory Modeler. Users wire recipe nodes into production chains (e.g. cobblestone → gravel → iron nuggets → iron ingot) and see rates, machine counts, stress (SU) usage and logistics limits.
 
-Status: milestones M0–M4 implemented (see `IMPLEMENTATION.md`).
+Status: milestones M0–M4 implemented, M5 (addon recipe packs) in progress (see `IMPLEMENTATION.md`).
 
 ## 1. Product decisions
 
@@ -14,7 +14,7 @@ Status: milestones M0–M4 implemented (see `IMPLEMENTATION.md`).
 | License             | MIT                                                                                                                                                                                                                                                                                             |
 | Audience / language | Public community tool, English UI only (no i18n infrastructure)                                                                                                                                                                                                                                 |
 | Target version      | Create **6.0.10**, Minecraft **1.21.1 NeoForge**. Data model carries a version field so 1.20.1 / other versions can be added later                                                                                                                                                              |
-| Recipe scope (v1)   | Base Create + the vanilla recipes needed for chains (smelting, crafting, stonecutting). Addon recipe packs later                                                                                                                                                                                |
+| Recipe scope        | Base Create + the vanilla recipes needed for chains (smelting, crafting, stonecutting). Addon recipes come from the player's own mod jars (§6), none are bundled                                                                                                                                |
 | Data source         | Recipe JSONs + textures from the Create repo/jar via a build script; machine formulas and stress values ported from Create source code. The [Fandom wiki](https://create.fandom.com/wiki/Wiki) is only for cross-checking and descriptions                                                      |
 | Icons               | Create + vanilla textures copied into `public/textures/` (with `NOTICE.md`). Create's assets are "All Rights Reserved" (only its code is MIT) — shipped anyway like other community tools, isolated so they can be removed quickly; items without a texture fall back to a coloured placeholder |
 | Persistence         | Autosave of multiple named plans in browser storage, export/import as `.json`, share link with the compressed plan in the URL                                                                                                                                                                   |
@@ -170,10 +170,23 @@ Source: `content/processing/burner/BlazeBurnerBlockEntity.java`. [V unless noted
 - Recipe types in v1: crushing, milling, pressing, mixing, compacting, splashing (washing), haunting, fan smoking/blasting, cutting, deploying, item_application, filling, emptying, mechanical_crafting (approximated), sandpaper_polishing, plus vanilla smelting/crafting.
 - Formulas live in TypeScript modules with unit tests, each citing its Create source file.
 
-## 6. Out of scope for v1
+## 6. Addon recipe packs
+
+Players load addon recipes (Create Aeronautics, Crafts & Additions, …) from their own files; the app bundles no addon data.
+
+- **Input:** mod `.jar` files (and datapack / KubeJS export `.zip` files, same layout) dropped into the app. They are unzipped **in the browser**; nothing is uploaded and nothing is redistributed. Only these entries are read: `data/<ns>/recipe/**`, `data/<ns>/tags/{item,fluid}/**`, `assets/<ns>/lang/en_us.json`, `assets/<ns>/textures/{item,block}/**`, `assets/<ns>/models/{item,block}/**`, `META-INF/neoforge.mods.toml` (+ `MANIFEST.MF` for `${file.jarVersion}`). Archives in the 1.20.1 layout (`data/<ns>/recipes/`) are rejected with a notice.
+- **Storage:** the extracted raw entries of each archive are a **recipe pack** in IndexedDB, switchable on and off. Packs are normalized at load time, all active packs together, so cross-addon tags and conditions see every loaded mod.
+- **Normalization** reuses the build script's normalizer (`src/core/gamedata/`): same recipe types, crafting → compacting/mixing, stonecutting → saw, bucket filling/emptying, Create's runtime wood recipes. Tags merge the base tag files (`src/data/tags-1.21.1.json`, written by `npm run data`) with the packs' tag files. Base recipes keep their build-time tag resolution, so a single-member base tag that an addon extends stays the old item.
+- **Conditions:** `neoforge:conditions` are evaluated against the loaded mods (`minecraft`, `create`, `neoforge`, `c` plus every pack's mod ids): `mod_loaded`, `not`, `and`, `or`, `true`, `false`. Unknown conditions fail. (The base data still skips all conditional recipes.)
+- **Overrides:** a pack recipe with the id of a base recipe replaces it, like a datapack.
+- **Unknown recipe types** (an addon's own machine) run on a **custom machine**: time per operation and SU/RPM are set on the node (default time from `processing_time`), clearly marked as an assumption. Formulas for popular addon machines can be ported later, citing their source like Create's.
+- **Icons:** item texture, block texture or the item model's face texture from the jar, as object URLs; otherwise the coloured placeholder. No isometric renders.
+- **Sharing:** plan files and share links embed the pack recipes (and item names) the plan uses, so they open without the jar; icons then fall back to placeholders.
+
+## 7. Out of scope for v1
 
 - Sequenced assembly (e.g. precision mechanism)
-- Addon recipes (Create: New Age, Crafts & Additions, …) and modpack/KubeJS changes
+- Bundled addon recipes; KubeJS scripts (only their exported data); Create's own `compat/` recipes for addons
 - Create 1.20.1 / other versions
 - Mechanical Arm and funnels as separate transport elements
 - Drill on arbitrary blocks / non-optimised generators
@@ -181,7 +194,7 @@ Source: `content/processing/burner/BlazeBurnerBlockEntity.java`. [V unless noted
 - Full kinetic network (shafts, gearboxes, ratios)
 - Desktop wrapper (Tauri) and an in-game recipe export mod
 
-## 7. Existing tools (Oct 2026)
+## 8. Existing tools (Oct 2026)
 
 - [createfactoryplanner.com](https://www.createfactoryplanner.com/) — JEI-like recipe browser and BOM resolution, addons selectable; RPM/SU handling unclear.
 - [CreateFlow](https://create-flow-dev.vercel.app/) — "CAD" with simulation, could not be checked (HTTP 500).

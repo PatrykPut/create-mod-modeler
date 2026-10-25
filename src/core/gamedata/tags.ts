@@ -1,8 +1,11 @@
-// Item and fluid tags merged from all data sources (vanilla, NeoForge `c:` tags, Create).
+// Item and fluid tags merged from all data sources (vanilla, NeoForge `c:` tags, Create, addon packs).
 
 export type TagKind = 'item' | 'fluid'
 
-type TagEntry = string | { id: string; required?: boolean }
+export type TagEntry = string | { id: string; required?: boolean }
+
+/** Raw entries per tag, keyed "<kind>:<tag>" (e.g. "item:c:ingots/zinc"). */
+export type TagEntries = Record<string, TagEntry[]>
 
 export class TagIndex {
   private entries = new Map<string, TagEntry[]>()
@@ -13,12 +16,30 @@ export class TagIndex {
     this.supported = supported
   }
 
-  add(kind: TagKind, tag: string, json: { values?: TagEntry[] }) {
+  static fromJSON(entries: TagEntries, supported: (id: string) => boolean) {
+    const index = new TagIndex(supported)
+    for (const [key, values] of Object.entries(entries))
+      index.entries.set(key, [...values])
+    return index
+  }
+
+  /** Later files add to a tag, unless they set `replace` (as datapacks do). */
+  add(
+    kind: TagKind,
+    tag: string,
+    json: { replace?: boolean; values?: TagEntry[] },
+  ) {
     const key = `${kind}:${tag}`
     this.entries.set(key, [
-      ...(this.entries.get(key) ?? []),
+      ...(json.replace ? [] : (this.entries.get(key) ?? [])),
       ...(json.values ?? []),
     ])
+  }
+
+  toJSON(): TagEntries {
+    return Object.fromEntries(
+      [...this.entries].sort(([a], [b]) => a.localeCompare(b)),
+    )
   }
 
   /** All supported members, in file order, without duplicates. */
