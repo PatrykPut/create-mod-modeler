@@ -1,11 +1,12 @@
 import { ReactFlowProvider } from '@xyflow/react'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { analyze } from '../core/derive'
 import type { TimeUnit } from '../core/units'
 import { AnalysisContext } from './analysis'
 import { Canvas } from './Canvas'
-import { catalog } from './catalog'
 import { NumberField } from './nodes/NumberField'
+import { PackDialog } from './PackDialog'
+import { useCatalog, usePackStore } from './packs'
 import { PlanMenu } from './PlanMenu'
 import { usePlanStore } from './store'
 import { Summary } from './Summary'
@@ -21,7 +22,15 @@ export function App() {
   const plan = usePlanStore((s) => s.plan)
   const currentId = usePlanStore((s) => s.currentId)
   const updateSettings = usePlanStore((s) => s.updateSettings)
-  const analysis = useMemo(() => analyze(plan, catalog), [plan])
+  const catalog = useCatalog()
+  const activePacks = usePackStore(
+    (s) => s.packs.filter((p) => p.enabled).length,
+  )
+  const [packsOpen, setPacksOpen] = useState(false)
+  const analysis = useMemo(() => analyze(plan, catalog), [plan, catalog])
+  useEffect(() => {
+    void usePackStore.getState().load()
+  }, [])
   const { meta } = catalog.data
 
   return (
@@ -40,6 +49,12 @@ export function App() {
             Create {meta.create} · Minecraft {meta.minecraft}
           </span>
           <PlanMenu />
+          <button
+            className="button app-addons"
+            onClick={() => setPacksOpen(true)}
+          >
+            Addons{activePacks > 0 && ` (${activePacks})`}
+          </button>
           <div className="app-settings">
             <NumberField
               label="Global RPM"
@@ -78,6 +93,7 @@ export function App() {
           Not affiliated with Mojang, Microsoft or the Create team. Textures ©
           their owners.
         </footer>
+        {packsOpen && <PackDialog onClose={() => setPacksOpen(false)} />}
         <TooltipLayer />
       </div>
     </AnalysisContext.Provider>

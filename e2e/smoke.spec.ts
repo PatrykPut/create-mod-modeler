@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { openIronChain } from './helpers.ts'
+import { openIronChain, testAddonJar } from './helpers.ts'
 
 let errors: string[]
 
@@ -83,4 +83,30 @@ test('explains assumptions in tooltips', async ({ page }) => {
   await openIronChain(page)
   await page.locator('.react-flow__node .info').first().hover()
   await expect(page.getByRole('tooltip')).toContainText('optimised generator')
+})
+
+test('loads addon recipes from a mod jar', async ({ page }) => {
+  await page.goto('./')
+  await page.getByRole('button', { name: 'Addons' }).click()
+  const chooser = page.waitForEvent('filechooser')
+  await page.getByRole('button', { name: /Drop mod \.jar/ }).click()
+  await (await chooser).setFiles(testAddonJar())
+  const dialog = page.getByRole('dialog', { name: 'Addon recipes' })
+  await expect(dialog).toContainText('Loaded Test Addon.')
+  await expect(dialog.locator('.pack-row')).toContainText(
+    'Test Addon 1.01 recipe · 1 skipped',
+  )
+  await dialog.getByRole('button', { name: 'Close' }).click()
+
+  await page.getByRole('button', { name: '+ Recipe' }).click()
+  await page.getByPlaceholder('Search recipes by item…').fill('Test Plate')
+  await page.locator('.dialog-results button').first().click()
+  const node = page.locator('.react-flow__node')
+  await expect(node).toContainText('Test Plate')
+  await expect(node.locator('img[src^="blob:"]')).toHaveCount(1)
+
+  // packs and the plan survive a reload
+  await page.reload()
+  await expect(page.getByRole('button', { name: 'Addons (1)' })).toBeVisible()
+  await expect(page.locator('.react-flow__node')).toContainText('Test Plate')
 })

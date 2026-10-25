@@ -5,9 +5,9 @@ import type { RecipeNode } from '../../core/model/plan'
 import { fuelOf } from '../../core/model/ports'
 import { fromPerMinute, toPerMinute } from '../../core/units'
 import { useAnalysis } from '../analysis'
-import { catalog } from '../catalog'
 import { ItemIcon, MACHINE_ICON_SIZE } from '../ItemIcon'
 import { formatNumber, formatPercent, formatStress } from '../format'
+import { useCatalog } from '../packs'
 import { usePlanStore } from '../store'
 import { Info } from '../Tooltip'
 import { NumberField } from './NumberField'
@@ -19,6 +19,7 @@ export function RecipeNodeView({ data: { node } }: NodeProps<RecipeFlowNode>) {
   const analysis = useAnalysis().nodes[node.id]
   const settings = usePlanStore((s) => s.plan.settings)
   const updateNode = usePlanStore((s) => s.updateRecipeNode)
+  const catalog = useCatalog()
   const recipe = catalog.recipe(node.recipeId)
   const machine = MACHINES[node.machineId]
   if (!recipe || !analysis)

@@ -1,6 +1,6 @@
 import { strToU8, zipSync, type Zippable } from 'fflate'
 import { describe, expect, it } from 'vitest'
-import { ArchiveError, readArchive } from './archive'
+import { ArchiveError, describePack, readArchive } from './archive'
 
 const json = (value: unknown) => strToU8(JSON.stringify(value))
 const PNG = new Uint8Array([0x89, 0x50, 0x4e, 0x47])
@@ -114,9 +114,13 @@ describe('readArchive', () => {
           'data/inner/recipe/x.json': json({ type: 'create:milling' }),
         }),
         'data/outer/recipe/y.json': json({ type: 'create:milling' }),
+        'META-INF/neoforge.mods.toml': strToU8(
+          '[[mods]]\nmodId="outer"\nversion="1.0"\n',
+        ),
       }),
     )
-    expect(outer.mods).toEqual([{ id: 'inner', name: 'inner', version: '2.0' }])
+    // the jar's own mod first: it names the pack
+    expect(outer.mods.map((m) => m.id)).toEqual(['outer', 'inner'])
     expect(Object.keys(outer.recipes).sort()).toEqual(['inner:x', 'outer:y'])
     expect(outer.namespaces).toEqual(['inner', 'outer'])
   })
@@ -147,5 +151,30 @@ describe('readArchive', () => {
     expect(() =>
       readArchive(jar({ 'assets/x/lang/en_us.json': json({}) })),
     ).toThrow(/no recipes/)
+  })
+})
+
+describe('describePack', () => {
+  const empty = {
+    mods: [],
+    namespaces: [],
+    recipes: {},
+    tags: [],
+    lang: {},
+    models: {},
+    textures: {},
+  }
+
+  it('uses the mod of the jar', () => {
+    const mod = { id: 'a', name: 'A', version: '1' }
+    expect(describePack({ ...empty, mods: [mod] }, 'a-1.jar')).toBe(mod)
+  })
+
+  it('names datapacks after their file', () => {
+    expect(describePack(empty, 'my_tweaks.zip')).toEqual({
+      id: 'file:my_tweaks',
+      name: 'my_tweaks',
+      version: '',
+    })
   })
 })

@@ -8,7 +8,8 @@ import {
   toPlanFile,
 } from '../core/model/file'
 import { useAnalysis } from './analysis'
-import { catalog } from './catalog'
+import type { Catalog } from '../core/catalog'
+import { useCatalog, usePackStore } from './packs'
 import { usePlanStore } from './store'
 
 const SHARE_PREFIX = '#plan='
@@ -27,7 +28,7 @@ const fileNameOf = (name: string) =>
   name.trim().replace(/[^\w.-]+/g, '_') || 'plan'
 
 /** Mentions sources dropped on import (core/sources.ts). */
-const removedNote = (removed: string[]) =>
+const removedNote = (removed: string[], catalog: Catalog) =>
   removed.length === 0
     ? ''
     : ` Removed sources no farm or generator makes: ${removed.map((item) => catalog.item(item).name).join(', ')}.`
@@ -46,7 +47,9 @@ function useShareLinks(notify: (text: string) => void) {
       decodeShare(code)
         .then(({ name, plan, removed }) => {
           importPlan(name, plan)
-          notify(`Opened the shared plan "${name}".${removedNote(removed)}`)
+          notify(
+            `Opened the shared plan "${name}".${removedNote(removed, usePackStore.getState().catalog)}`,
+          )
         })
         .catch((error) => notify(messageOf(error)))
     }
@@ -60,6 +63,7 @@ export function PlanMenu() {
   const { plan, currentId, library } = usePlanStore()
   const store = usePlanStore.getState
   const analysis = useAnalysis()
+  const catalog = useCatalog()
   const fileInput = useRef<HTMLInputElement>(null)
   const menu = useRef<HTMLDetailsElement>(null)
   const [notice, setNotice] = useState<string>()
@@ -116,7 +120,7 @@ export function PlanMenu() {
   const importFile = async (file: File) => {
     const { name, plan: imported, removed } = parsePlanFile(await file.text())
     store().importPlan(name, imported)
-    notify(`Imported "${name}".${removedNote(removed)}`)
+    notify(`Imported "${name}".${removedNote(removed, catalog)}`)
   }
 
   return (

@@ -134,6 +134,8 @@ function collect(
   })
   let jarVersion = ''
   let toml: string | undefined
+  // this jar's own mods go before those of its nested jars
+  const firstMod = into.mods.length
 
   for (const [name, data] of Object.entries(files)) {
     let match: RegExpExecArray | null
@@ -167,7 +169,7 @@ function collect(
     } else if ((match = TEXTURE.exec(name)))
       into.textures[`${match[1]}:${match[2]}`] = data
   }
-  if (toml) into.mods.push(...parseModsToml(toml, jarVersion))
+  if (toml) into.mods.splice(firstMod, 0, ...parseModsToml(toml, jarVersion))
   // a nested jar has already added its namespaces to `into`
   into.namespaces = [...new Set([...into.namespaces, ...namespaces])].sort()
 }
@@ -185,4 +187,12 @@ export function readArchive(bytes: Uint8Array): PackArchive {
   if (recipes === 0 && archive.tags.length === 0)
     throw new ArchiveError('This archive contains no recipes or tags.')
   return archive
+}
+
+/** Id and name of a pack: the jar's own mod, else (datapacks) the file name. */
+export function describePack(archive: PackArchive, fileName: string): ModInfo {
+  const [mod] = archive.mods
+  if (mod) return mod
+  const name = fileName.replace(/\.(jar|zip)$/i, '')
+  return { id: `file:${name}`, name, version: '' }
 }

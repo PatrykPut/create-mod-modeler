@@ -1,4 +1,4 @@
-import { catalog } from './catalog'
+import { useCatalog, usePackStore } from './packs'
 
 // Stable placeholder colour per item, for items without a texture.
 function hue(id: string) {
@@ -11,12 +11,13 @@ function hue(id: string) {
 export const MACHINE_ICON_SIZE = 28
 
 export function ItemIcon({ item, size = 20 }: { item: string; size?: number }) {
-  const info = catalog.item(item)
-  if (info.icon)
+  const info = useCatalog().item(item)
+  const packIcon = usePackStore((s) => s.iconUrls[item])
+  if (info.icon || packIcon)
     return (
       <img
         className={info.rendered ? 'item-icon is-rendered' : 'item-icon'}
-        src={import.meta.env.BASE_URL + info.icon}
+        src={packIcon ?? import.meta.env.BASE_URL + info.icon}
         alt=""
         data-tip={info.name}
         width={size}
@@ -45,5 +46,5 @@ export function ItemIcon({ item, size = 20 }: { item: string; size?: number }) {
 }
 
 export function ItemName({ item }: { item: string }) {
-  return <>{catalog.item(item).name}</>
+  return <>{useCatalog().item(item).name}</>
 }

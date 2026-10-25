@@ -107,10 +107,12 @@ Left for later: fan-driven chutes, funnel extraction rates, separate kinetic net
 - [x] Pack normalization: conditions against loaded mods, merged tags, derived recipes, items with names and icon textures, report of skipped recipes by reason
   - `src/core/packs/`: `readArchive` (incl. nested `META-INF/jarjar` jars) → `buildPacks` → `mergeGameData`; tested on hand-made archives, not yet on a real addon jar
 - [ ] Custom machine for unknown recipe types (time per operation and SU/RPM on the node)
-- [ ] Dynamic catalog (base + active packs) in the store instead of the module singleton
-- [ ] Import dialog: drop jars/zips, import report, pack list with on/off and remove; packs in IndexedDB
+- [x] Dynamic catalog (base + active packs) in the store instead of the module singleton
+  - `src/ui/packs.ts` (`usePackStore`, `useCatalog`); base tags load as their own chunk only when a pack is active; pack icons as object URLs
+- [x] Import dialog: drop jars/zips, import report, pack list with on/off and remove; packs in IndexedDB
+  - "Addons" in the header; a jar with the same mod id replaces the old pack; skipped recipes by reason in a tooltip
 - [ ] Plan files and share links embed the pack recipes they use; missing recipes shown on the node
-- [ ] Smoke test with a small fixture jar
+- [x] Smoke test with a small fixture jar (built in `e2e/helpers.ts`, no binary in the repo)
 
 ### After M4
 

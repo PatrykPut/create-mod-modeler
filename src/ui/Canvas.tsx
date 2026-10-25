@@ -16,8 +16,8 @@ import {
 import { useCallback, useMemo, useState } from 'react'
 import { targetPortOf, type PlanEdge, type Position } from '../core/model/plan'
 import { AddDialog, type AddChoice, type AddRequest } from './AddDialog'
-import { catalog } from './catalog'
 import { handleId, itemOfHandle } from './nodes/handles'
+import { useCatalog } from './packs'
 import { PowerNodeView, type PowerFlowNode } from './nodes/PowerNodeView'
 import { RecipeNodeView, type RecipeFlowNode } from './nodes/RecipeNodeView'
 import { SourceNodeView, type SourceFlowNode } from './nodes/SourceNodeView'
@@ -56,6 +56,7 @@ function edgeBetween(
 export function Canvas() {
   const plan = usePlanStore((s) => s.plan)
   const store = usePlanStore.getState
+  const catalog = useCatalog()
   const { screenToFlowPosition } = useReactFlow()
   const [dialog, setDialog] = useState<DialogState>()
 

@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import type { RecipeOption } from '../core/catalog'
+import type { Catalog, RecipeOption } from '../core/catalog'
 import { MACHINES } from '../core/machines'
 import { SOURCE_KINDS, SOURCES, sourceKind } from '../core/sources'
-import { catalog } from './catalog'
+import { useCatalog } from './packs'
 import { ItemIcon } from './ItemIcon'
 
 /** What the dialog offers: recipes (optionally producing/consuming an item) or a source. */
@@ -15,7 +15,7 @@ export type AddChoice =
 
 const MAX_RESULTS = 60
 
-function matches(query: string, ...items: string[]) {
+function matches(catalog: Catalog, query: string, ...items: string[]) {
   if (!query) return true
   const q = query.toLowerCase()
   return items.some(
@@ -26,6 +26,7 @@ function matches(query: string, ...items: string[]) {
 
 function RecipeSummary({ option }: { option: RecipeOption }) {
   const { recipe, machine } = option
+  const catalog = useCatalog()
   return (
     <>
       <span className="recipe-io">
@@ -65,6 +66,7 @@ export function AddDialog({
   onChoose(choice: AddChoice): void
   onClose(): void
 }) {
+  const catalog = useCatalog()
   const [query, setQuery] = useState('')
   const [kind, setKind] = useState(request.kind)
   const input = useRef<HTMLInputElement>(null)
@@ -80,22 +82,23 @@ export function AddDialog({
     return pool
       .filter(({ recipe }) =>
         matches(
+          catalog,
           query,
           ...recipe.outputs.map((o) => o.item),
           ...recipe.inputs.map((i) => i.item),
         ),
       )
       .slice(0, MAX_RESULTS)
-  }, [kind, request, query])
+  }, [catalog, kind, request, query])
 
   const sourceResults = useMemo(() => {
     if (kind !== 'source') return []
     const fixed = request.kind === 'source' ? request.item : request.produces
     // only what a farm, generator or pump makes; a tag port takes any such member
     return (fixed ? catalog.members(fixed) : SOURCES.map((s) => s.item))
-      .filter((item) => sourceKind(item) && matches(query, item))
+      .filter((item) => sourceKind(item) && matches(catalog, query, item))
       .slice(0, MAX_RESULTS)
-  }, [kind, request, query])
+  }, [catalog, kind, request, query])
 
   // an input port can also be fed from a source, if one can make its item
   const canSwitchToSource =
