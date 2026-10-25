@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { Catalog, RecipeOption } from '../core/catalog'
-import { MACHINES } from '../core/machines'
+import { MACHINES, recipeMachineName } from '../core/machines'
 import { SOURCE_KINDS, SOURCES, sourceKind } from '../core/sources'
 import { useCatalog } from './packs'
 import { ItemIcon } from './ItemIcon'
@@ -50,7 +50,8 @@ function RecipeSummary({ option }: { option: RecipeOption }) {
         <small>
           {' · '}
           <ItemIcon item={MACHINES[machine].block} size={16} />{' '}
-          {MACHINES[machine].name}
+          {recipeMachineName(machine, recipe)}
+          {recipe.fan?.catalyst && ` behind ${recipe.fan.catalyst}`}
         </small>
       </span>
     </>

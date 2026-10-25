@@ -11,6 +11,7 @@ import {
 import { runtimeRecipes } from '../gamedata/runtime.ts'
 import { TagIndex, type TagEntries } from '../gamedata/tags.ts'
 import type { PackArchive } from './archive'
+import { addonFanTypes } from './fans.ts'
 
 export interface PackInput {
   id: string
@@ -63,6 +64,11 @@ export function buildPacks(
   const normalizer = createNormalizer(tagIndex)
 
   const lang: Lang = Object.assign({}, ...packs.map((p) => p.archive.lang))
+  const fans = addonFanTypes(
+    packs.flatMap((p) => p.archive.tags),
+    tagIndex,
+    (id) => base.items[id]?.name ?? resourceName(id, lang),
+  )
   const recipes = new Map<string, Recipe>()
   const recipePack: Record<string, string> = {}
   const reports: PackReport[] = []
@@ -88,6 +94,10 @@ export function buildPacks(
         normalizer.vanillaRecipes(id, rest).forEach(add)
       } else if (isCreateType(type)) {
         const recipe = normalizer.createRecipe(id, rest)
+        if (recipe) add(recipe)
+        else skip('unsupported ingredients')
+      } else if (fans.has(type)) {
+        const recipe = normalizer.fanRecipe(id, rest, fans.get(type)!)
         if (recipe) add(recipe)
         else skip('unsupported ingredients')
       } else skip(`unknown type ${type}`)

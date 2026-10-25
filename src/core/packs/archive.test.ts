@@ -45,6 +45,11 @@ describe('readArchive', () => {
       'data/createaddition/tags/fluid/bioethanol.json': json({
         values: ['createaddition:bioethanol'],
       }),
+      'data/createaddition/tags/block/fan_processing_catalysts/charging.json':
+        json({ values: ['createaddition:tesla_coil'] }),
+      'data/minecraft/tags/block/mineable/pickaxe.json': json({
+        values: ['createaddition:tesla_coil'],
+      }),
       'assets/createaddition/lang/en_us.json': json({
         'item.createaddition.iron_rod': 'Iron Rod',
       }),
@@ -77,7 +82,7 @@ describe('readArchive', () => {
     })
   })
 
-  it('reads item and fluid tags', () => {
+  it('reads item and fluid tags, and block tags only for fan catalysts', () => {
     expect(archive.tags).toEqual([
       {
         kind: 'item',
@@ -88,6 +93,11 @@ describe('readArchive', () => {
         kind: 'fluid',
         tag: 'createaddition:bioethanol',
         json: { values: ['createaddition:bioethanol'] },
+      },
+      {
+        kind: 'block',
+        tag: 'createaddition:fan_processing_catalysts/charging',
+        json: { values: ['createaddition:tesla_coil'] },
       },
     ])
   })

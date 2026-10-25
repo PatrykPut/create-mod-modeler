@@ -36,7 +36,9 @@ export class ArchiveError extends Error {}
 
 const RECIPE = /^data\/([a-z0-9_.-]+)\/recipe\/(.+)\.json$/
 const LEGACY_RECIPE = /^data\/[a-z0-9_.-]+\/recipes\/.+\.json$/
-const TAG = /^data\/([a-z0-9_.-]+)\/tags\/(item|fluid)\/(.+)\.json$/
+/** Item and fluid tags; block tags only for fan processing catalysts. */
+const TAG =
+  /^data\/([a-z0-9_.-]+)\/tags\/(item|fluid|block(?=\/fan_processing_catalysts\/))\/(.+)\.json$/
 const LANG = /^assets\/([a-z0-9_.-]+)\/lang\/en_us\.json$/
 const MODEL = /^assets\/([a-z0-9_.-]+)\/models\/((?:item|block)\/.+)\.json$/
 const TEXTURE = /^assets\/([a-z0-9_.-]+)\/textures\/((?:item|block)\/.+)\.png$/

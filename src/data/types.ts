@@ -18,6 +18,8 @@ export type RecipeType =
   | 'smelting'
   | 'blasting'
   | 'smoking'
+  /** An addon's own fan processing type, e.g. Dragons Plus "ending"; see `Recipe.fan`. */
+  | 'fan_processing'
 
 export type HeatRequirement = 'heated' | 'superheated'
 
@@ -63,6 +65,15 @@ export interface Recipe {
   gridSize?: number
   /** Set for recipes Create derives from vanilla ones (e.g. 3×3 crafting → compacting). */
   derivedFrom?: string
+  /** Addon fan processing: the mode and what has to sit in the air current. */
+  fan?: FanProcessing
+}
+
+export interface FanProcessing {
+  /** e.g. "Ending" */
+  mode: string
+  /** e.g. "Dragon Head or Dragon Breath"; absent when the addon names none. */
+  catalyst?: string
 }
 
 export interface GameData {

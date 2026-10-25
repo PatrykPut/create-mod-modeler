@@ -1,6 +1,6 @@
 import type { Node, NodeProps } from '@xyflow/react'
 import { burnerFuels, FUELS } from '../../core/fuels'
-import { MACHINES } from '../../core/machines'
+import { MACHINES, recipeMachineName } from '../../core/machines'
 import type { RecipeNode } from '../../core/model/plan'
 import { fuelOf } from '../../core/model/ports'
 import { fromPerMinute, toPerMinute } from '../../core/units'
@@ -52,12 +52,22 @@ export function RecipeNodeView({ data: { node } }: NodeProps<RecipeFlowNode>) {
           >
             {machineOptions.map((id) => (
               <option key={id} value={id}>
-                {MACHINES[id].name}
+                {recipeMachineName(id, recipe)}
               </option>
             ))}
           </select>
         ) : (
-          <span className="node-title">{machine.name}</span>
+          <span className="node-title">
+            {recipeMachineName(node.machineId, recipe)}
+          </span>
+        )}
+        {recipe.fan?.catalyst && (
+          <span
+            className="node-heat is-catalyst"
+            data-tip="Catalyst: what the air current has to pass through"
+          >
+            {recipe.fan.catalyst}
+          </span>
         )}
         {recipe.heat && (
           <span

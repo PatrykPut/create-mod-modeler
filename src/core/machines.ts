@@ -19,6 +19,7 @@ export type MachineId =
   | 'fan_haunting'
   | 'fan_smoking'
   | 'fan_blasting'
+  | 'fan_addon'
   | 'mechanical_press'
   | 'press_basin'
   | 'mixer'
@@ -164,6 +165,12 @@ export const MACHINES: Record<MachineId, MachineDef> = {
     'Blasting',
     'Air passes through lava. Runs smelting recipes, blasting ones only for items without a smelting recipe; food burns.',
   ),
+  // addon fan processing types run on Create's fan timer as well (packs/fans.ts)
+  fan_addon: fan(
+    'fan_addon',
+    'Addon',
+    "Fan processing of an addon: air passes through the recipe's catalyst.",
+  ),
   mechanical_press: {
     id: 'mechanical_press',
     name: 'Mechanical Press',
@@ -296,7 +303,14 @@ export const MACHINES_BY_TYPE: Record<RecipeType, MachineId[]> = {
   smelting: ['fan_blasting', 'furnace'],
   blasting: ['blast_furnace', 'fan_blasting'],
   smoking: ['fan_smoking', 'smoker'],
+  fan_processing: ['fan_addon'],
 }
+
+/** Name of a machine running a recipe; the addon fan is named after the recipe's mode. */
+export const recipeMachineName = (id: MachineId, recipe: Recipe): string =>
+  id === 'fan_addon' && recipe.fan
+    ? `Encased Fan (${recipe.fan.mode})`
+    : MACHINES[id].name
 
 /**
  * Blocks a fluid generator makes that a drill can mine with CobbleGenOptimisation,

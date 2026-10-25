@@ -106,6 +106,8 @@ Left for later: fan-driven chutes, funnel extraction rates, separate kinetic net
 - [x] Mod archive reader (`fflate`): recipes, tags, lang, textures, models, mod ids/names/versions; 1.20.1 layout detected
 - [x] Pack normalization: conditions against loaded mods, merged tags, derived recipes, items with names and icon textures, report of skipped recipes by reason
   - `src/core/packs/`: `readArchive` (incl. nested `META-INF/jarjar` jars) → `buildPacks` → `mergeGameData`; tested on hand-made archives, not yet on a real addon jar
+- [x] Addon fan processing types (e.g. Dragons Plus ending/freezing, Create Nuclear enriched) run on the fan, catalyst shown on the node
+  - `src/core/packs/fans.ts`: types from `fan_processing_catalysts` block/fluid tags plus catalysts addons check in code; recipe type `fan_processing`, machine `fan_addon`; packs imported before this need a re-import for their block catalyst tags
 - [ ] Custom machine for unknown recipe types (time per operation and SU/RPM on the node)
 - [x] Dynamic catalog (base + active packs) in the store instead of the module singleton
   - `src/ui/packs.ts` (`usePackStore`, `useCatalog`); base tags load as their own chunk only when a pack is active; pack icons as object URLs

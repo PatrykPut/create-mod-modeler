@@ -38,6 +38,15 @@ const data: GameData = {
       'minecraft:iron_ingot',
     ),
     recipe('only_blast', 'blasting', 'minecraft:x_ore', 'minecraft:x'),
+    {
+      ...recipe(
+        'ending',
+        'fan_processing',
+        'minecraft:cobblestone',
+        'minecraft:end_stone',
+      ),
+      fan: { mode: 'Ending', catalyst: 'Dragon Head' },
+    },
   ],
 }
 const catalog = createCatalog(data)
@@ -71,5 +80,11 @@ describe('fan blasting', () => {
   it('runs blasting recipes only for items without a smelting recipe', () => {
     expect(machines('iron_blast')).toEqual(['blast_furnace'])
     expect(machines('only_blast')).toEqual(['blast_furnace', 'fan_blasting'])
+  })
+})
+
+describe('addon fan processing', () => {
+  it('runs on the addon fan', () => {
+    expect(machines('ending')).toEqual(['fan_addon'])
   })
 })

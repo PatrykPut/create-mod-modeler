@@ -1,5 +1,6 @@
 // Pure conversion from raw recipe JSON (Create 6.0.10 / MC 1.21.1 format) to our data model.
 import type {
+  FanProcessing,
   HeatRequirement,
   Ingredient,
   Recipe,
@@ -44,7 +45,8 @@ const isObject = (value: unknown): value is Json =>
 export const fluidId = (id: string) => `fluid:${id}`
 
 /** Flowing fluids are only the moving form of their source fluid. */
-const isSourceFluid = (id: string) => !id.split(':')[1].startsWith('flowing_')
+export const isSourceFluid = (id: string) =>
+  !id.split(':')[1].startsWith('flowing_')
 
 function mergeIngredients(ingredients: Ingredient[]): Ingredient[] {
   const merged = new Map<ResourceId, number>()
@@ -157,6 +159,24 @@ export function createNormalizer(tagIndex: TagIndex) {
   function createRecipe(id: string, raw: Json): Recipe | undefined {
     const type = String(raw.type ?? '').replace(/^create:/, '')
     if (!CREATE_TYPES.has(type)) return undefined
+    return processingRecipe(id, raw, type as RecipeType)
+  }
+
+  /** A recipe of an addon's fan processing type, in Create's processing format. */
+  function fanRecipe(
+    id: string,
+    raw: Json,
+    fan: FanProcessing,
+  ): Recipe | undefined {
+    const recipe = processingRecipe(id, raw, 'fan_processing')
+    return recipe && { ...recipe, fan }
+  }
+
+  function processingRecipe(
+    id: string,
+    raw: Json,
+    type: RecipeType,
+  ): Recipe | undefined {
     // e.g. neoforge:mod_loaded — recipes for other mods' items
     if (raw['neoforge:conditions'] !== undefined) return undefined
 
@@ -191,7 +211,7 @@ export function createNormalizer(tagIndex: TagIndex) {
 
     const recipe: Recipe = {
       id,
-      type: type as RecipeType,
+      type,
       inputs: mergeIngredients(inputs),
       outputs: outputs as Result[],
     }
@@ -285,7 +305,7 @@ export function createNormalizer(tagIndex: TagIndex) {
     return [recipe]
   }
 
-  return { tags, syntheticTags, createRecipe, vanillaRecipes }
+  return { tags, syntheticTags, createRecipe, fanRecipe, vanillaRecipes }
 }
 
 export type Normalizer = ReturnType<typeof createNormalizer>

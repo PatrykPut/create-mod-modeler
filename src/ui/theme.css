@@ -403,6 +403,11 @@ select:focus-visible,
   background: var(--superheated);
 }
 
+.node-heat.is-catalyst {
+  color: var(--andesite-100);
+  background: var(--andesite-600);
+}
+
 .node-warning {
   margin: 0;
   padding: 0.3rem 0.6rem;

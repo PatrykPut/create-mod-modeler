@@ -1,6 +1,7 @@
-// Item and fluid tags merged from all data sources (vanilla, NeoForge `c:` tags, Create, addon packs).
+// Item and fluid tags merged from all data sources (vanilla, NeoForge `c:` tags, Create, addon packs);
+// block tags only for fan processing catalysts of addon packs.
 
-export type TagKind = 'item' | 'fluid'
+export type TagKind = 'item' | 'fluid' | 'block'
 
 export type TagEntry = string | { id: string; required?: boolean }
 

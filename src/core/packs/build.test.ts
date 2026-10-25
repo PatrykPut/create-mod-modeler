@@ -242,6 +242,118 @@ describe('buildPacks', () => {
   })
 })
 
+describe('addon fan processing', () => {
+  const dragons = archive({
+    mods: [{ id: 'create_dragons_plus', name: 'Dragons Plus', version: '1' }],
+    namespaces: ['create_dragons_plus'],
+    recipes: {
+      'create_dragons_plus:ending/end_stone_from_cobblestone': {
+        type: 'create_dragons_plus:ending',
+        ingredients: [{ item: 'minecraft:cobblestone' }],
+        results: [{ id: 'minecraft:end_stone' }],
+      },
+      'create_dragons_plus:freezing/packed_ice_from_ice': {
+        type: 'create_dragons_plus:freezing',
+        ingredients: [{ item: 'minecraft:ice' }],
+        results: [{ id: 'minecraft:packed_ice' }],
+      },
+    },
+    tags: [
+      {
+        kind: 'block',
+        tag: 'create_dragons_plus:fan_processing_catalysts/ending',
+        json: { values: [] },
+      },
+      {
+        kind: 'fluid',
+        tag: 'create_dragons_plus:fan_processing_catalysts/ending',
+        json: {
+          values: [
+            'create_dragons_plus:flowing_dragon_breath',
+            'create_dragons_plus:dragon_breath',
+          ],
+        },
+      },
+    ],
+  })
+  const nuclear = archive({
+    mods: [{ id: 'createnuclear', name: 'Create Nuclear', version: '1' }],
+    namespaces: ['createnuclear'],
+    recipes: {
+      'createnuclear:enriched/enriched_yellowcake': {
+        type: 'createnuclear:enriched',
+        ingredients: [{ item: 'createnuclear:yellowcake' }],
+        results: [{ id: 'createnuclear:enriched_yellowcake' }],
+      },
+      'createnuclear:snow_powder/cooled_nitrogen': {
+        type: 'createnuclear:snow_powder',
+        ingredients: [{ item: 'createnuclear:nitrogen_concentrate' }],
+        results: [{ id: 'createnuclear:cooled_nitrogen_concentrate' }],
+      },
+    },
+    tags: [
+      {
+        kind: 'block',
+        tag: 'createnuclear:fan_processing_catalysts/enriched',
+        json: {
+          values: [
+            'createnuclear:enriching_fire',
+            'createnuclear:enriching_campfire',
+          ],
+        },
+      },
+      {
+        kind: 'block',
+        tag: 'createnuclear:fan_processing_catalysts/snow_powder',
+        json: { values: ['minecraft:powder_snow'] },
+      },
+    ],
+    lang: {
+      'block.createnuclear.enriching_fire': 'Enriching Fire',
+      'block.createnuclear.enriching_campfire': 'Enriching Campfire',
+    },
+  })
+  const built = buildPacks(
+    [
+      { id: 'dragons', archive: dragons },
+      { id: 'nuclear', archive: nuclear },
+    ],
+    base,
+    baseTags,
+  )
+  const recipe = (id: string) => built.data.recipes.find((r) => r.id === id)
+
+  it('runs addon fan types on the fan, with the catalyst the addon checks in code', () => {
+    expect(
+      recipe('create_dragons_plus:ending/end_stone_from_cobblestone'),
+    ).toEqual({
+      id: 'create_dragons_plus:ending/end_stone_from_cobblestone',
+      type: 'fan_processing',
+      inputs: [{ item: 'minecraft:cobblestone', amount: 1 }],
+      outputs: [{ item: 'minecraft:end_stone', amount: 1, chance: 1 }],
+      fan: { mode: 'Ending', catalyst: 'Dragon Head or Dragon Breath' },
+    })
+    expect(
+      recipe('create_dragons_plus:freezing/packed_ice_from_ice')?.fan,
+    ).toEqual({ mode: 'Freezing', catalyst: 'Powder Snow' })
+  })
+
+  it('finds fan types of other addons by their catalyst tags', () => {
+    expect(recipe('createnuclear:enriched/enriched_yellowcake')?.fan).toEqual({
+      mode: 'Enriched',
+      catalyst: 'Enriching Fire or Enriching Campfire',
+    })
+    expect(recipe('createnuclear:snow_powder/cooled_nitrogen')?.fan).toEqual({
+      mode: 'Snow Powder',
+      catalyst: 'Powder Snow',
+    })
+  })
+
+  it('reports nothing skipped', () => {
+    expect(built.reports.map((r) => r.skipped)).toEqual([{}, {}])
+  })
+})
+
 describe('mergeGameData', () => {
   it('adds pack data to the base; pack recipes replace base recipes with their id', () => {
     const built = buildPacks([{ id: 'a', archive: additions }], base, baseTags)
