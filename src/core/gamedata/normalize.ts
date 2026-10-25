@@ -56,8 +56,14 @@ function mergeIngredients(ingredients: Ingredient[]): Ingredient[] {
 }
 
 function readResult(raw: unknown): Result | undefined {
-  if (!isObject(raw) || typeof raw.id !== 'string') return undefined
+  if (!isObject(raw)) return undefined
   const chance = typeof raw.chance === 'number' ? raw.chance : 1
+  // deprecated format { item: ItemStack, chance } (ProcessingOutput.CODEC_OLD, still read by 6.0.10)
+  if (isObject(raw.item) && typeof raw.item.id === 'string') {
+    const amount = typeof raw.item.count === 'number' ? raw.item.count : 1
+    return { item: raw.item.id, amount, chance }
+  }
+  if (typeof raw.id !== 'string') return undefined
   // FluidStack results carry `amount` (mB), ItemStack results `count`
   if (typeof raw.amount === 'number')
     return { item: fluidId(raw.id), amount: raw.amount, chance }
@@ -113,15 +119,25 @@ export function createNormalizer(tagIndex: TagIndex) {
       return item ? { item, amount: 1 } : undefined
     }
     if (!isObject(raw)) return undefined
-    if (raw.type === 'neoforge:single' && typeof raw.fluid === 'string') {
+    // "fluid_stack" / "fluid_tag": deprecated formats (FluidIngredientOld, still read by 6.0.10)
+    if (
+      (raw.type === 'neoforge:single' || raw.type === 'fluid_stack') &&
+      typeof raw.fluid === 'string'
+    ) {
       return { item: fluidId(raw.fluid), amount: Number(raw.amount) }
     }
-    if (raw.type === 'neoforge:tag' && typeof raw.tag === 'string') {
+    const fluidTag =
+      raw.type === 'neoforge:tag'
+        ? raw.tag
+        : raw.type === 'fluid_tag'
+          ? raw.fluid_tag
+          : undefined
+    if (typeof fluidTag === 'string') {
       const members = tagIndex
-        .resolve('fluid', raw.tag)
+        .resolve('fluid', fluidTag)
         .filter(isSourceFluid)
         .map(fluidId)
-      const item = oneOf(members, fluidId(`#${raw.tag}`))
+      const item = oneOf(members, fluidId(`#${fluidTag}`))
       return item ? { item, amount: Number(raw.amount) } : undefined
     }
     const members = itemMembers(raw)

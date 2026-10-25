@@ -129,6 +129,34 @@ describe('createRecipe', () => {
     ).toEqual({ item: 'fluid:minecraft:lava', amount: 250 })
   })
 
+  it('reads the deprecated fluid ingredient and item result formats', () => {
+    const recipe = setup().createRecipe(
+      'create_copper_and_zinc:mixing_asurine',
+      {
+        type: 'create:mixing',
+        ingredients: [
+          { item: 'minecraft:clay_ball' },
+          { item: 'minecraft:clay_ball' },
+          { type: 'fluid_stack', amount: 250, fluid: 'minecraft:water' },
+          { type: 'fluid_tag', amount: 100, fluid_tag: 'c:milk' },
+        ],
+        results: [
+          { item: { id: 'create:asurine' } },
+          { item: { id: 'minecraft:flint', count: 2 }, chance: 0.5 },
+        ],
+      },
+    )
+    expect(recipe?.inputs).toEqual([
+      { item: 'minecraft:clay_ball', amount: 2 },
+      { item: 'fluid:minecraft:water', amount: 250 },
+      { item: 'fluid:minecraft:milk', amount: 100 },
+    ])
+    expect(recipe?.outputs).toEqual([
+      { item: 'create:asurine', amount: 1, chance: 1 },
+      { item: 'minecraft:flint', amount: 2, chance: 0.5 },
+    ])
+  })
+
   it('splits off a deployer tool that is kept', () => {
     const recipe = setup().createRecipe('create:deploying/copper_from_waxed', {
       type: 'create:deploying',
