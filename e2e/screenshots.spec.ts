@@ -8,6 +8,8 @@ test('README screenshots', async ({ page }) => {
   await openIronChain(page)
   await page.getByRole('status').waitFor({ state: 'hidden' })
   await page.screenshot({ path: `${OUT}/overview.png` })
+  // link preview image (og:image in index.html)
+  await page.screenshot({ path: 'public/og-image.png' })
 
   await page.getByRole('button', { name: /needs 2 belts/ }).click()
   // away from the label, so its tooltip does not cover the popover
